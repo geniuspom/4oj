@@ -1,21 +1,34 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-Route::get('/', 'WelcomeController@index');
-
-Route::get('home', 'HomeController@index');
-
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+//Redirect form homepage
+Route::get('/', ['middleware' => 'auth', function() {
+    // Only authenticated users may enter...
+    return View::make('Member.dashboard');
+}]);
+
+//Link to page
+Route::get('login','LoginController@checklogin');
+
+Route::get('register',function(){
+    return View::make('Member.register');
+});
+
+Route::get('forgot',function(){
+    return View::make('Member.forgotpass');
+});
+
+//Function
+//Logout
+Route::get('logout','LoginController@logout');
+
+//Post Register
+Route::post('register','LoginController@register');
+//Post Login
+Route::post('login','LoginController@login');
+//Post Forgot password
+Route::post('forgot','Sendmail@sendEmailReminder');
