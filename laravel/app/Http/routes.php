@@ -6,8 +6,7 @@ Route::controllers([
 ]);
 
 //Redirect form homepage
-Route::get('/', ['middleware' => 'auth', function() {
-    // Only authenticated users may enter...
+Route::get('/', ['middleware' => 'auth.basic', function() {
     return View::make('Member.dashboard');
 }]);
 
