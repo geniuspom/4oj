@@ -31,4 +31,4 @@ Route::post('register','LoginController@register');
 //Post Login
 Route::post('login','LoginController@login');
 //Post Forgot password
-Route::post('forgot','Sendmail@sendEmailReminder');
+Route::post('forgot','Sendmail@sendEmailForgot');
