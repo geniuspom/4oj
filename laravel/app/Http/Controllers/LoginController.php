@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Redirect;
 use Request;
 
 Class LoginController extends Controller{
-    
+
     public function register(Request $request){
-        
+
         $validate = validateuser::validate(Request::all());
-        
+
         if($validate->passes()){
             $user = new Member();
             $user->email = $request::input('email');
@@ -27,34 +27,34 @@ Class LoginController extends Controller{
             $user->education = $request::input('education');
             $user->institute = $request::input('institute');
             $user->reference = $request::input('reference');
-            
+
             $link = '';
-            
+
             if($user->save()) {
                 $userinfo = $request::only('email','password');
 
                 if(Auth::attempt($userinfo)){
                     $link = '/';
                 }
-                
+
                 //ส่ง email
-                
+
                 //จบส่ง email
-                
+
             } else {
                 $link = 'register';
             }
-            
+
             return Redirect::to($link);
-            
+
         }else{
             return redirect::to('register')
                     ->withInput(Request::except('password'))
                     ->withErrors($validate->messages());
         }
-        
+
     }
-    
+
     public function login(Request $request){
         $userinfo = $request::only('email','password');
         if(Auth::attempt($userinfo)){
@@ -65,13 +65,13 @@ Class LoginController extends Controller{
                     ->withInput(Request::except('password'));
         }
     }
-    
+
     public function logout(){
-        
+
         Auth::logout();
         return Redirect::to('login');
     }
-    
+
     public function checklogin(){
         if(Auth::check()){
             return Redirect::to('/');
@@ -79,5 +79,10 @@ Class LoginController extends Controller{
             return View('Member.Login');
         }
     }
-    
+
+    public function index()
+  	{
+  		  return view('Member.dashboard');
+  	}
+
 }

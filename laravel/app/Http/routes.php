@@ -5,10 +5,11 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
-//Redirect form homepage
-Route::get('/', ['middleware' => 'auth.basic', function() {
-    return View::make('Member.dashboard');
-}]);
+
+Route::group(['middleware' => 'auth'], function()
+{
+    Route::get('/', 'LoginController@index');
+});
 
 //Link to page
 Route::get('login','LoginController@checklogin');
