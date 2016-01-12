@@ -1,3 +1,6 @@
+<?php
+  use App\Http\Controllers\GetUser as GetUser;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,22 +15,22 @@
     <title>4oj</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../4oj/public/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/4oj/public/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="../4oj/public/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <link href="/4oj/public/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
     <!-- Timeline CSS -->
-    <link href="../4oj/public/dist/css/timeline.css" rel="stylesheet">
+    <link href="/4oj/public/dist/css/timeline.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../4oj/public/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/4oj/public/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="../4oj/public/bower_components/morrisjs/morris.css" rel="stylesheet">
+    <link href="/4oj/public/bower_components/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="../4oj/public/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/4oj/public/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,13 +48,13 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">4oj</a>
+                </button>-->
+                <a class="navbar-brand" href="../4oj/">4oj</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -103,11 +106,11 @@
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
-                    </ul>
+                    </ul>-->
                     <!-- /.dropdown-messages -->
-                </li>
+                <!--</li>-->
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <!--<li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -182,11 +185,11 @@
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
-                    </ul>
+                    </ul>-->
                     <!-- /.dropdown-tasks -->
-                </li>
+                <!--</li>-->
                 <!-- /.dropdown -->
-                <li class="dropdown">
+                <!--<li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
@@ -242,21 +245,22 @@
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
-                    </ul>
+                    </ul>-->
                     <!-- /.dropdown-alerts -->
-                </li>
+                <!--</li>-->
                 <!-- /.dropdown -->
+                <span style="color:#777777;">{{ GetUser::getuser(Auth::user()->id) }}</span>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="/4oj/user_profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="/4oj/admin"><i class="fa fa-gear fa-fw"></i> Admin</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/4oj/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -381,21 +385,21 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="../4oj/public/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/4oj/public/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../4oj/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/4oj/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="../4oj/public/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="/4oj/public/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="../4oj/public/bower_components/raphael/raphael-min.js"></script>
+    <!--<script src="../4oj/public/bower_components/raphael/raphael-min.js"></script>
     <script src="../4oj/public/bower_components/morrisjs/morris.min.js"></script>
-    <script src="../4oj/public/js/morris-data.js"></script>
+    <script src="../4oj/public/js/morris-data.js"></script>-->
 
     <!-- Custom Theme JavaScript -->
-    <script src="../4oj/public/dist/js/sb-admin-2.js"></script>
+    <script src="/4oj/public/dist/js/sb-admin-2.js"></script>
 
 </body>
 
