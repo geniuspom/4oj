@@ -76,13 +76,11 @@ class sendmail extends Controller{
                 $reset->token = $sforgot_code;
                 $reset->save();
 
-                $profiles = Member::::where('email', '=', Request::input('email'))->get();
+                $profiles = Member::where('email', '=', Request::input('email'))->get();
 
-                foreach ($profiles as $recode){
-                  $recode->name;
+                foreach ($profiles as $record){
+                  $name = $record->name;
                 }
-
-                $name = $record[1];
 
                 $link = 'http://localhost/4oj/reset?token=' . $sforgot_code;
 
