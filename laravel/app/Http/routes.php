@@ -9,6 +9,9 @@ Route::controllers([
 Route::group(['middleware' => 'auth'], function()
 {
     Route::get('/', 'LoginController@index');
+		Route::get('admin',function(){
+		    return View::make('Member.admin');
+		});
 });
 
 //Link to page
@@ -22,6 +25,10 @@ Route::get('forgot',function(){
     return View::make('Member.forgotpass');
 });
 
+Route::get('useredit/{id}', function($id){
+    return View::make('Member.useredit');
+});
+
 //Function
 //Logout
 Route::get('logout','LoginController@logout');
@@ -32,3 +39,5 @@ Route::post('register','LoginController@register');
 Route::post('login','LoginController@login');
 //Post Forgot password
 Route::post('forgot','Sendmail@sendEmailForgot');
+//Post Forgot password
+Route::post('updateuser','GetUser@updateuser');
