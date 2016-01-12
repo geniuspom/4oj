@@ -3,15 +3,15 @@
           <td class="ecxcenterColumn ecxcenterColumnSpacer" style="padding-right:36px;padding-left:40px;">
             <table style="font-size:inherit;line-height:inherit;padding:0px;border:0px;">
               <tbody><tr>
-                <td class="ecxletter_heading_logo" style="padding-top:8px;text-align:right;" align="right"><img src="http://www.ojconsultinggroup.com/images/OJ_6.gif" ></td>
+                <td class="ecxletter_heading_logo" style="padding-top:8px;text-align:right;" align="left"><img src="http://www.ojconsultinggroup.com/images/OJ_6.gif" ></td>
               </tr>
                <tr>
-				   <td class="ecxcontent ecxspacerSalutation" style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:15px;text-align:left;">Dear {{ user }},
+				   <td class="ecxcontent ecxspacerSalutation" style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:15px;text-align:left;">Dear {{ $name }},
 				  </td>
 			   </tr>
 			   <tr>
 				   <td class="ecxcontent ecxspacer1" style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:34px;text-align:left;"><p>Click here to reset your password:</p>
-				     <p><a href="{{ link }}" style="color:rgb(0, 138, 205);text-decoration:none;" target="_blank">{{ link }}</a></p>
+				     <p><a href="{{ $link }}" style="color:rgb(0, 138, 205);text-decoration:none;" target="_blank">{{ $link }}</a></p>
 				   </td>
 			   </tr>
 			   <tr>
