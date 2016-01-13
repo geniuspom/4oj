@@ -6,8 +6,14 @@
 			<div class="panel panel-default" style="margin-top: 5%;margin-bottom: 5%">
 				<div class="panel-heading">Reset Password</div>
 				<div class="panel-body">
-                                    
-                                    @if (count($errors) > 0)
+
+					@if (session('status'))
+						<div class="alert alert-success">
+							{{ session('status') }}
+						</div>
+					@endif
+					
+          @if (count($errors) > 0)
 						<div class="alert alert-danger">
 							<strong>Whoops!</strong> There were some problems with your input.<br><br>
 							<ul>
@@ -16,7 +22,7 @@
 								@endforeach
 							</ul>
 						</div>
-                                    @endif
+          @endif
 
 					<form class="form-horizontal" role="form" method="POST" action="{{ url('/forgot') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -33,6 +39,7 @@
 								<button type="submit" class="btn btn-primary">
 									Send Password Reset Link
 								</button>
+								<a class="btn btn-primary" href="/4oj/"> Cancel </a>
 							</div>
 						</div>
 					</form>

@@ -43,4 +43,29 @@ class validateuser extends Model {
         return Validator::make($input, $rules);
     }
 
+    public static function validatechangepass($input){
+
+      $rules = array(
+          'old_password' => 'Required|AlphaNum|Between:6,16',
+          'password' => 'Required|AlphaNum|Between:6,16|Confirmed',
+          'password_confirmation' => 'Required|AlphaNum|Between:6,16',
+      );
+
+          return Validator::make($input, $rules);
+      }
+
+    public static function validateforgotpass($input){
+
+      $rules = array(
+          'email' => 'Required|Between:3,64|Email',
+          'password' => 'Required|AlphaNum|Between:6,16|Confirmed',
+          'password_confirmation' => 'Required|AlphaNum|Between:6,16',
+      );
+
+          return Validator::make($input, $rules);
+
+    }
+
+
+
 }

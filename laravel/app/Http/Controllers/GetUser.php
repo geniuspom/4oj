@@ -95,6 +95,34 @@ Class GetUser extends Controller{
         }
     }
 
+    public static function getprofile($id,$value){
+
+        $profiles = Member::where('id', '=', $id)->get();
+
+        foreach ($profiles as $record){
+          $vdata = $record->$value;
+        }
+
+        if($value == 'education'){
+          $education = education::orderBy('id')->get();
+
+          foreach ($education as $recode){
+              if ($vdata == $recode->id){
+                echo $recode->name;
+              }
+          }
+        }else if($value == 'bank'){
+          $bank = bank::orderBy('id')->get();
+
+          foreach ($bank as $recode){
+              if ($vdata == $recode->id){
+                echo $recode->name;
+              }
+          }
+        }
+
+    }
+
     //Update user value
     public static function updateuser(){
       $validate = validateuser::validateupdateuser(Request::all());
