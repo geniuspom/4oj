@@ -1,5 +1,5 @@
 @include('Member.header')
-<?php 
+<?php
 use App\Http\Controllers\Getdataform as Getdataform;
 ?>
 
@@ -11,7 +11,7 @@ use App\Http\Controllers\Getdataform as Getdataform;
                                     <h3 class="panel-title">Register</h3>
                                 </div>
 				<div class="panel-body">
-                                    
+
                                     @if (count($errors) > 0)
 						<div class="alert alert-danger">
 							<strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -32,14 +32,14 @@ use App\Http\Controllers\Getdataform as Getdataform;
 								<input type="text" class="form-control" name="name" value="{{ old('name') }}">
 							</div>
 						</div>
-                                                
+
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">SurName *</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="surname" value="{{ old('surname') }}">
 							</div>
 						</div>
-                                                
+
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">Nickname *</label>
 							<div class="col-md-6">
@@ -67,49 +67,49 @@ use App\Http\Controllers\Getdataform as Getdataform;
 								<input type="password" class="form-control" name="password_confirmation">
 							</div>
 						</div>
-                                                
+
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">Phone number *</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
 							</div>
 						</div>
-                                                
+
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">ID Card No. *</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="id_card" value="{{ old('id_card') }}">
 							</div>
 						</div>
-                                                
+
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">Bank name</label>
 							<div class="col-md-6">
                                                                 {{ Getdataform::getbank(old('bank')) }}
 							</div>
 						</div>
-                                                
+
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">Account No.</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="account" value="{{ old('account') }}">
 							</div>
 						</div>
-                                                
+
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">Education</label>
 							<div class="col-md-6">
                                                                 {{ Getdataform::geteducation(old('education')) }}
 							</div>
 						</div>
-                                                
+
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">Institute</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="institute" value="{{ old('institute') }}">
 							</div>
 						</div>
-                                                
+
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">Reference</label>
 							<div class="col-md-6">
@@ -122,12 +122,13 @@ use App\Http\Controllers\Getdataform as Getdataform;
                                                             * Requirement
 							</div>
 						</div>
-                                                
+
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-                                                            <button type="submit" class="btn btn-primary" >
+                <button type="submit" class="btn btn-primary" >
 									Register
 								</button>
+								<a class="btn btn-primary" href="/4oj/"> Cancel </a>
 							</div>
 						</div>
 					</form>
