@@ -7,11 +7,6 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
-                        @if (session('status'))
-              						<div class="alert alert-success">
-              							{{ session('status') }}
-              						</div>
-              					@endif
                         @if(Session::has('message'))
                             <div class="panel-body bg-danger color-red">
                             {{Session::get('message')}}

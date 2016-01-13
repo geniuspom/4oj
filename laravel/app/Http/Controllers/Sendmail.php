@@ -71,27 +71,18 @@ class sendmail extends Controller{
                 $forgot_code = sendmail::generateRandomString();
                 $sforgot_code = MD5($forgot_code);
 
-                $countforgot = Reset::where('email', '=', Request::input('email'))->count();
-
-                if($countforgot == 1){
-                  $reset = Reset::where("email","=",Request::input('email'))->first();
-                  $reset->token = $sforgot_code;
-                  $reset->save();
-                }else{
-                  $reset = new Reset();
-                  $reset->email = Request::input('email');
-                  $reset->token = $sforgot_code;
-                  $reset->save();
-                }
+                $reset = new Reset();
+                $reset->email = Request::input('email');
+                $reset->token = $sforgot_code;
+                $reset->save();
 
                 $profiles = Member::where('email', '=', Request::input('email'))->get();
 
                 foreach ($profiles as $record){
                   $name = $record->name;
-                  $id = $record->id;
                 }
 
-                $link = 'http://localhost/4oj/reset/'. $id . '/token/' . $sforgot_code;
+                $link = 'http://localhost/4oj/reset?token=' . $sforgot_code;
 
                 Mail::send('Member.mailforgot', array('code'=>$sforgot_code,'name'=>$name,'link'=>$link), function ($message) {
 
@@ -99,8 +90,7 @@ class sendmail extends Controller{
 
                 });
 
-                return Redirect::to('forgot')
-                  ->with('status', 'Email forgot has been send.');
+                return Redirect::to('/');
 
             }else{
                 $msg = "Not found email!";

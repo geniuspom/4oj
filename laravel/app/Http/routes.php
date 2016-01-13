@@ -29,15 +29,6 @@ Route::get('useredit/{id}', function($id){
     return View::make('Member.useredit');
 });
 
-Route::get('user_profile', function(){
-		return View::make('Member.profile');
-});
-
-Route::get('reset/{id}/token/{token}', function($id,$token){
-		return View::make('Member.reset');
-});
-//Route::get('reset/{id}/token/{token}', 'Resetpassword@reset');
-
 //Function
 //Logout
 Route::get('logout','LoginController@logout');
@@ -48,7 +39,5 @@ Route::post('register','LoginController@register');
 Route::post('login','LoginController@login');
 //Post Forgot password
 Route::post('forgot','Sendmail@sendEmailForgot');
-//Post Update user
+//Post Forgot password
 Route::post('updateuser','GetUser@updateuser');
-//Post Reset Password
-Route::post('resetpassword','Resetpassword@reset');
