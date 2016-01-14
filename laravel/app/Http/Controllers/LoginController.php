@@ -13,6 +13,9 @@ Class LoginController extends Controller{
 
         $validate = validateuser::validate(Request::all());
 
+        //Generate validate code
+        $validatecode = MD5(sendmail::generateRandomString());
+
         if($validate->passes()){
             $user = new Member();
             $user->email = $request::input('email');
@@ -27,6 +30,10 @@ Class LoginController extends Controller{
             $user->education = $request::input('education');
             $user->institute = $request::input('institute');
             $user->reference = $request::input('reference');
+            $user->userstatus = 1;
+            $user->permission = 1;
+            $user->validate = 1000;
+            $user->email_valid_code = $validatecode;
 
             $link = '';
 
@@ -38,6 +45,8 @@ Class LoginController extends Controller{
                 }
 
                 //ส่ง email
+
+                sendmail::sendEmailReminder($request::input('name') . " " . $request::input('surname'),$request::input('email'),$validatecode);
 
                 //จบส่ง email
 
@@ -80,9 +89,39 @@ Class LoginController extends Controller{
         }
     }
 
-    public function index()
-  	{
+    public function index(){
   		  return view('Member.dashboard');
   	}
+
+    public function activate(){
+
+        $activatecode = Request::input('activatecode');
+
+        $count = Member::where('email_valid_code', '=', $activatecode)->count();
+
+        //found activate code
+        if($count == 1){
+
+          $user = Member::where('email_valid_code', '=', $activatecode)->first();
+
+          $user->validate = 1100;
+          $user->email_valid_code = NULL;
+
+          if($user->save()){
+            return redirect::to('login')
+                ->with('status',"Your account has been activated.");
+          }
+
+        //not found activate code
+        }else{
+
+
+          return redirect::to('login')
+                ->with('message',"Activate code is wrong! Please contact administrator.");
+
+
+        }
+
+    }
 
 }
