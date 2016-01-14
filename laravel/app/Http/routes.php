@@ -36,7 +36,11 @@ Route::get('user_profile', function(){
 Route::get('reset/{id}/token/{token}', function($id,$token){
 		return View::make('Member.reset');
 });
-//Route::get('reset/{id}/token/{token}', 'Resetpassword@reset');
+
+//Activate page
+Route::get('activate/{activatecode}', function($activatecode){
+    return View::make('Member.activate');
+});
 
 //Function
 //Logout
@@ -52,3 +56,5 @@ Route::post('forgot','Sendmail@sendEmailForgot');
 Route::post('updateuser','GetUser@updateuser');
 //Post Reset Password
 Route::post('resetpassword','Resetpassword@reset');
+//Post Activate account
+Route::post('activateaccount','LoginController@activate');
