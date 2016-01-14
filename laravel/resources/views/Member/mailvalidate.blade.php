@@ -3,10 +3,10 @@
           <td style="padding-right:36px;padding-left:40px;">
             <table style="font-size:inherit;line-height:inherit;padding:0px;border:0px;">
               <tbody><tr>
-                <td style="padding-top:8px;text-align:right;" align="right"><img src="" ></td>
+                <td style="padding-top:8px;text-align:right;" align="right"><img src="http://www.ojconsultinggroup.com/images/OJ_6.gif" ></td>
               </tr>
                <tr>
-				   <td style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:15px;text-align:left;">Welcome ,
+				   <td style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:15px;text-align:left;">Welcome {{ $name }},
 				  </td>
 			   </tr>
 			   <tr>
@@ -22,7 +22,7 @@
 			   </tr>
 			   <tr>
 				   <td style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:34px;text-align:left;"><p>Please click the confirmation link below to complete the validation process. Once you have successfully validated your account, you will be able to use all functions on OJ systems.</p>
-				     <p>Confirmation Link: <a href="http://4oj-ojcon.rhcloud.com/activate/{{ $code }}" style="color:rgb(0, 138, 205);text-decoration:none;" target="_blank">http://4oj-ojcon.rhcloud.com/activate/{{ $code }}</a></p>
+				     <p>Confirmation Link: <a href="{{ $link }}" style="color:rgb(0, 138, 205);text-decoration:none;" target="_blank">{{ $link }}</a></p>
 				   </td>
 			   </tr>
 			   <tr>
