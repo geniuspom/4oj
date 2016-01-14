@@ -255,12 +255,12 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="/4oj/user_profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="/4oj/user_profile"><i class="fa fa-user fa-fw"></i> ข้อมูลส่วนตัว</a>
                         </li>
-                        <li><a href="/4oj/admin"><i class="fa fa-gear fa-fw"></i> Admin</a>
+                        <li><a href="/4oj/admin"><i class="fa fa-gear fa-fw"></i> ผู้ดูแลระบบ</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="/4oj/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/4oj/logout"><i class="fa fa-sign-out fa-fw"></i> ออกจากระบบ</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->

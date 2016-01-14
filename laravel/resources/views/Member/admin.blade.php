@@ -7,7 +7,7 @@ use App\Http\Controllers\GetUser as GetUser;
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">Admin</h1>
+      <h1 class="page-header">ผู้ดูแลระบบ</h1>
     </div>
     <!-- /.col-lg-12 -->
   </div>
@@ -20,11 +20,11 @@ use App\Http\Controllers\GetUser as GetUser;
             <thead>
               <tr>
                 <th class="text-center">ID</th>
-                <th class="text-center">Name</th>
-                <th class="text-center">Email</th>
-                <th class="text-center">Phone</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Action</th>
+                <th class="text-center">ชื่อ - นามสกุล</th>
+                <th class="text-center">อีเมล</th>
+                <th class="text-center">โทรศัพท์</th>
+                <th class="text-center">สถานะผู้ใช้</th>
+                <th class="text-center">ดำเนินการ</th>
               </tr>
             </thead>
             <tbody>
