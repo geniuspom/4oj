@@ -14,7 +14,7 @@ Class LoginController extends Controller{
         $validate = validateuser::validate(Request::all());
 
         //Generate validate code
-        $validatecode = MD5(sendmail::generateRandomString());
+        $validatecode = MD5(app('App\Http\Controllers\Sendmail')->generateRandomString());
 
         if($validate->passes()){
             $user = new Member();
@@ -46,7 +46,7 @@ Class LoginController extends Controller{
 
                 //ส่ง email
 
-                sendmail::sendEmailReminder($request::input('name') . " " . $request::input('surname'),$request::input('email'),$validatecode);
+                app('App\Http\Controllers\Sendmail')->sendEmailReminder($request::input('name') . " " . $request::input('surname'),$request::input('email'),$validatecode);
 
                 //จบส่ง email
 
