@@ -12,7 +12,7 @@ use Redirect;
 class sendmail extends Controller{
 
     //gen code
-    public function generateRandomString($length = 15) {
+    public static function generateRandomString($length = 15) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -22,39 +22,15 @@ class sendmail extends Controller{
         return $randomString;
     }
 
-    public function sendEmailReminder(){
+    public static function sendEmailReminder($name,$email,$validatecode){
 
+      $link = 'http://localhost/4oj/activate/'. $validatecode;
 
-        if($validate->passes()){
+      Mail::send('Member.mailvalidate', array('name'=>$name,'link'=>$link), function ($message) use ($email) {
 
-            $count = Member::where('email', '=', Request::input('email'))->count();
+          $message->to($email)->subject('Validate your account!');
 
-            if($count == 1){
-
-                $forgot_code = sendmail::generateRandomString();
-                $sforgot_code = MD5($forgot_code);
-
-                Mail::send('Member.mailvalidate', array('code'=>$sforgot_code), function ($message) {
-
-                    $message->to(Request::input('email'))->subject('Your Reminder!');
-
-                });
-
-                return Redirect::to('/');
-
-            }else{
-                $msg = "Not found email!";
-
-                return Redirect::to('forgot')
-                    ->withInput(Request::except('password'))
-                    ->withErrors($msg);
-            }
-
-        }else{
-            return Redirect::to('forgot')
-                    ->withInput(Request::except('password'))
-                    ->withErrors($validate->messages());
-        }
+      });
 
     }
 
