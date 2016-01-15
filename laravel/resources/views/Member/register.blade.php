@@ -85,7 +85,8 @@ use App\Http\Controllers\Getdataform as Getdataform;
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">ชื่อธนาคาร</label>
 							<div class="col-md-6">
-                                                                {{ Getdataform::getbank(old('bank')) }}
+                  {{ Getdataform::getbank(old('bank')) }}
+									<h6 class="text-muted">*ธนาคารกสิกรไทยจะไม่เสียค่าโอน</h6>
 							</div>
 						</div>
 

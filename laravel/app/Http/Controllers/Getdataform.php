@@ -6,7 +6,7 @@ use App\Models\education as education;
 Class Getdataform extends Controller{
     public static function getbank($id){
 
-        $bank = bank::orderBy('id')->get();
+        $bank = bank::orderBy('name')->get();
 
         echo "<select name='bank' id='bank' class='form-control'>";
             foreach ($bank as $recode){

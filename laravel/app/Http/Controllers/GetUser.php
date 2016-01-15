@@ -79,7 +79,7 @@ Class GetUser extends Controller{
               }
           echo "</select>";
         }else if($value == 'bank'){
-          $bank = bank::orderBy('id')->get();
+          $bank = bank::orderBy('name')->get();
 
           echo "<select name='bank' id='bank' class='form-control'>";
               foreach ($bank as $recode){

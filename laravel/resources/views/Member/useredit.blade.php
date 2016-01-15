@@ -85,6 +85,7 @@ use App\Http\Controllers\GetUser as GetUser;
                       <label class="col-md-4 control-label">ชื่อธนาคาร</label>
                       <div class="col-md-6">
                           {{ GetUser::getedituser($id,'bank') }}
+                          <h6 class="text-muted">*ธนาคารกสิกรไทยจะไม่เสียค่าโอน</h6>
                       </div>
                     </div>
 
