@@ -42,6 +42,24 @@ Route::get('activate/{activatecode}', function($activatecode){
     return View::make('Member.activate');
 });
 
+//Customer
+Route::get('customer', function(){
+		return View::make('Customer.customer');
+});
+//add
+Route::get('add_customer', function(){
+		return View::make('Customer.add');
+});
+//View
+Route::get('customer_detail/{id}', function($id){
+		return View::make('Customer.detail');
+});
+//edit
+Route::get('edit_customer/{id}', function($id){
+		return View::make('Customer.edit');
+});
+//End customer
+
 //Function
 //Logout
 Route::get('logout','LoginController@logout');
@@ -58,3 +76,10 @@ Route::post('updateuser','GetUser@updateuser');
 Route::post('resetpassword','Resetpassword@reset');
 //Post Activate account
 Route::post('activateaccount','LoginController@activate');
+
+//function customer
+//add
+Route::post('add_customer','Customercontrol@add');
+//edit
+Route::post('edit_customer','Customercontrol@edit');
+//end function customer
