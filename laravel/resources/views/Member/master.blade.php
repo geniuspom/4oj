@@ -289,6 +289,9 @@
                         <li>
                             <a href="/4oj/customer"><i class="fa fa-suitcase fa-fw"></i> รายชื่อลูกค้า</a>
                         </li>
+                        <li>
+                            <a href="/4oj/venue"><i class="fa fa-building fa-fw"></i> สถาที่จัดงาน</a>
+                        </li>
                         <!--<li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

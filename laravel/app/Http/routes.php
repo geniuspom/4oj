@@ -42,6 +42,8 @@ Route::get('activate/{activatecode}', function($activatecode){
     return View::make('Member.activate');
 });
 
+
+
 //Customer
 Route::get('customer', function(){
 		return View::make('Customer.customer');
@@ -60,6 +62,28 @@ Route::get('edit_customer/{id}', function($id){
 });
 //End customer
 
+
+
+//Venue
+Route::get('venue', function(){
+		return View::make('Venue.venue');
+});
+//add
+Route::get('add_venue', function(){
+		return View::make('Venue.add');
+});
+//View
+Route::get('venue_detail/{id}', function($id){
+		return View::make('Venue.detail');
+});
+//edit
+Route::get('edit_venue/{id}', function($id){
+		return View::make('Venue.edit');
+});
+//End Venue
+
+
+
 //Function
 //Logout
 Route::get('logout','LoginController@logout');
@@ -77,9 +101,18 @@ Route::post('resetpassword','Resetpassword@reset');
 //Post Activate account
 Route::post('activateaccount','LoginController@activate');
 
+
 //function customer
 //add
 Route::post('add_customer','Customercontrol@add');
 //edit
 Route::post('edit_customer','Customercontrol@edit');
 //end function customer
+
+
+//function venue
+//add
+Route::post('add_venue','VenueControl@add');
+//edit
+Route::post('edit_venue','VenueControl@edit');
+//end function venue
