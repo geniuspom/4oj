@@ -2,6 +2,8 @@
 @section('content')
 <?php
 use App\Http\Controllers\GetUser as GetUser;
+use App\Http\Controllers\UploadController as UploadController;
+
 ?>
 
 <div id="page-wrapper">
@@ -100,6 +102,92 @@ use App\Http\Controllers\GetUser as GetUser;
           </div>
         </div>
       </div>
+      <!-- more detail-->
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">ข้อมูลอื่นๆ</h3>
+                </div>
+                <div class="panel-body">
+                  @if (session('status'))
+                    <div class="alert alert-success">
+                      {{ session('status') }}
+                    </div>
+                  @endif
+
+                  <!-- Profile Image -->
+                  <form action="{{ url('/uploaduser') }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                  <div class="form-horizontal">
+                        <div class="form-group">
+                          <label class="col-md-5 text-right">รูปภาพ</label>
+                          <div class="col-md-6 text-info" >
+
+                            <div style="width:206px;">
+                              <!-- Show image -->
+                              <a href="{{ asset('upload_file/images/default/'.UploadController::getImage(Auth::user()->id,'image')) }}" target="_blank">
+                                <i style="background-image: url('{{ UploadController::getImage(Auth::user()->id,'thumbnail') }}'); display: block; background-position: center center; width: 206px; padding-top: 206px;"></i>
+                              </a>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-md-5 text-right"></label>
+                          <div class="col-md-6 text-info" >
+                            <input type="file" name="uploader" id="uploader" />
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <div class="col-md-6 col-md-offset-4">
+                            <button class="btn btn-success" type="submit" name = "btn-upload" title="Upload image"><i class="fa fa-upload" ></i> Upload</button>
+                          </div>
+                        </div>
+                      </div>
+                  </form>
+                  <!-- End Profile Image -->
+
+                  <!-- ID Card -->
+                  <form action="{{ url('/uploadidcard') }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                  <div class="form-horizontal">
+                        <div class="form-group">
+                          <label class="col-md-5 text-right">บัตรประชาชน</label>
+                          <div class="col-md-6 text-info" >
+
+                            <div style="width:206px;">
+                              <a href="{{ asset('upload_file/idcard/default/'.UploadController::getidcard(Auth::user()->id,'image')) }}" target="_blank">
+                                <i style="background-image: url('{{ UploadController::getidcard(Auth::user()->id,'thumbnail') }}'); display: block; background-position: center center; width: 206px; padding-top: 206px;"></i>
+                              </a>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-md-5 text-right"></label>
+                          <div class="col-md-6 text-info" >
+                            <input type="file" name="uploader" id="uploader" />
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <div class="col-md-6 col-md-offset-4">
+                            <button class="btn btn-success" type="submit" name = "btn-upload" title="Upload image"><i class="fa fa-upload" ></i> Upload</button>
+                          </div>
+                        </div>
+                      </div>
+                  </form>
+                  <!-- End ID Card -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+
 </div>
 
 @stop

@@ -116,3 +116,39 @@ Route::post('add_venue','VenueControl@add');
 //edit
 Route::post('edit_venue','VenueControl@edit');
 //end function venue
+
+
+//upload
+Route::get('upload','UploadController@getIndex');
+Route::post('postupload','UploadController@postAction');
+
+
+//upload profile picture
+Route::post('uploaduser','UploadController@profilepicture');
+
+//upload id card
+Route::post('uploadidcard','UploadController@uploadidcard');
+
+
+//test package
+Route::get('imagepackage', function()
+{
+    $img = Image::make('images/picture.jpg');
+
+		if($img->height() > $img->width()){
+			$imgresult = $img->resize(null, 206, function ($constraint) {
+			$constraint->aspectRatio();
+			});
+		}else{
+			$imgresult = $img->resize(206, null, function ($constraint) {
+			$constraint->aspectRatio();
+			});
+		}
+    //return $imgresult->response('jpg');
+		$imgresult->save('images/new.jpg');
+});
+
+//test calendar
+Route::get('calendar', function(){
+		return View::make('Calendar.test');
+});
