@@ -151,10 +151,11 @@ Class RequestJob extends Controller{
     }
 
     //request one day
-    public static function getrequestonejob($start){
+    public static function getrequestonejob($start,$user_id){
 
       $request = request_job::where('multiple_day', '=', '0')
                               ->where('start_date', '=', $start)
+                              ->where('user_id', '=', $user_id)
                               ->orderBy('start_date')
                               ->get();
 

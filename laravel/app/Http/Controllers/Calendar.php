@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use Request;
+use Auth;
 
 Class Calendar extends Controller{
 
@@ -213,7 +214,7 @@ Class Calendar extends Controller{
 
                         for($r = 0 ; $r < $row_of_dayevent ; $r++){
                           $dayevent .= "<div class='st-c-pos' id='". $currentevent['event'][$r]['id'] ."'>
-                          <div style='border:1px solid #9FE1E7; color:#777777;background-color:#E4F7F8;' class='rb-n'>
+                          <div style='border:1px solid #fdcc8f; color:#777777;background-color:#fdead2;' class='rb-n'>
                           <div class='rb-ni'>" . $currentevent['event'][$r]['request_name'] . "</div>
                           </div>
                           </div>";
@@ -321,7 +322,7 @@ Class Calendar extends Controller{
     public static function getevent($currentday){
 
       //get event current day
-      $event = RequestJob::getrequestonejob($currentday);
+      $event = RequestJob::getrequestonejob($currentday,Auth::user()->id);
 
       $numberevent_of_day = count($event);
 
