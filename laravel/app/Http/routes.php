@@ -84,6 +84,18 @@ Route::get('edit_venue/{id}', function($id){
 
 
 
+//Request job
+Route::get('add_request/{date}', function($date){
+		return View::make('Request_Job.newjob');
+});
+//edit
+Route::get('editjob', function(){
+		return View::make('Request_Job.editjob');
+});
+//End request job
+
+
+
 //Function
 //Logout
 Route::get('logout','LoginController@logout');
@@ -100,6 +112,11 @@ Route::post('updateuser','GetUser@updateuser');
 Route::post('resetpassword','Resetpassword@reset');
 //Post Activate account
 Route::post('activateaccount','LoginController@activate');
+//upload profile picture
+Route::post('uploaduser','UploadController@profilepicture');
+//upload id card
+Route::post('uploadidcard','UploadController@uploadidcard');
+
 
 
 //function customer
@@ -118,16 +135,16 @@ Route::post('edit_venue','VenueControl@edit');
 //end function venue
 
 
+
+//function request job
+Route::post('add_request_job','RequestJob@add');
+//end function request job
+
+
 //upload
 Route::get('upload','UploadController@getIndex');
 Route::post('postupload','UploadController@postAction');
 
-
-//upload profile picture
-Route::post('uploaduser','UploadController@profilepicture');
-
-//upload id card
-Route::post('uploadidcard','UploadController@uploadidcard');
 
 
 //test package
@@ -152,3 +169,7 @@ Route::get('imagepackage', function()
 Route::get('calendar', function(){
 		return View::make('Calendar.test');
 });
+Route::get('calendar2', function(){
+		return View::make('Calendar.test3');
+});
+Route::post('nextcalendar','Calendar@getformjquery');

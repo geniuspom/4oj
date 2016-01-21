@@ -32,6 +32,16 @@
     <!-- Custom Fonts -->
     <link href="/4oj/public/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- datepicker CSS -->
+    <link href="/4oj/public/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="/4oj/public/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- datepicker JavaScript -->
+    <script src="/4oj/public/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="/4oj/public/bootstrap-datepicker/locales/bootstrap-datepicker.th.min.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -385,9 +395,6 @@
 
         </div>
     <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <script src="/4oj/public/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/4oj/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>

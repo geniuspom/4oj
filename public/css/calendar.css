@@ -1,0 +1,162 @@
+.mv-container{
+  font-size: 12px;
+  line-height: 14px;
+  position:relative;
+  height:100%;
+}
+.mv-daynames-table{
+  background: #fff none repeat scroll 0 0;
+  color: #555;
+  table-layout: fixed;
+  width: 100%;
+}
+.mv-dayname{
+  font-size: 12px;
+  font-weight: normal;
+  padding: 0 0 0 5px;
+  text-align: left;
+}
+.mv-event-container{
+  background: white none repeat scroll 0 0;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+}
+.month-row{
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+}
+.st-bg-table{
+  height: 100%;
+  left: 0;
+  position: absolute;
+  table-layout: fixed;
+  top: 0;
+  width: 100%;
+}
+.st-bg{
+  border-left: 1px solid #ddd;
+  background: #fff none repeat scroll 0 0;
+}
+.st-bg-today{
+  background-color: #b9e5f2;
+}
+.st-bg-select{
+  background-color: #e1fee5;
+}
+.st-grid{
+  position: relative;
+  table-layout: fixed;
+  width: 100%;
+}
+.st-dtitle{
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  color: #222;
+  line-height: 16px;
+  overflow: hidden;
+  padding: 0 4px;
+}
+.st-dtitle-fr{
+  border-top: 0 none;
+}
+.st-dtitle-nonmonth{
+  color: #aaa;
+}
+.st-c{
+  vertical-align: top;
+}
+.st-s{
+  cursor: default;
+  padding-bottom: 2px;
+  line-height: 10px;
+}
+.st-c-pos{
+  cursor: pointer;
+  font-family: Arial,sans-serif;
+  padding: 1px 1px 0 2px;
+  position: relative;
+}
+.rb-ni{
+  overflow: hidden;
+  white-space: nowrap;
+}
+.rb-n{
+  padding: 0px 4px;
+  cursor: pointer;
+  line-height: 1.2;
+  background-color: #d1ede0;
+  border: 1px solid #d1ede0;
+  color: #777777;
+}
+.weekrow1_4{
+  top:0%;
+  height:26%;
+}
+.weekrow2_4{
+  top:25%;
+  height:26%;
+}
+.weekrow3_4{
+  top:50%;
+  height:26%;
+}
+.weekrow4_4{
+  top:75%;
+  height:26%;
+}
+.weekrow1_5{
+  top:0%;
+  height:21%;
+}
+.weekrow2_5{
+  top:20%;
+  height:21%;
+}
+.weekrow3_5{
+  top:40%;
+  height:21%;
+}
+.weekrow4_5{
+  top:60%;
+  height:21%;
+}
+.weekrow5_5{
+  top:80%;
+  height:21%;
+}
+.weekrow1_6{
+  top:0%;
+  height:17.666666666666668%;
+}
+.weekrow2_6{
+  top:16.666666666666668%;
+  height:17.666666666666668%;
+}
+.weekrow3_6{
+  top:33.333333333333336%;
+  height:17.666666666666668%;
+}
+.weekrow4_6{
+  top:50%;
+  height:17.666666666666668%;
+}
+.weekrow5_6{
+  top:66.666666666666668%;
+  height:17.666666666666668%;
+}
+.weekrow6_6{
+  top:83.333333333333336%;
+  height:17.666666666666668%;
+}
+table{
+  border-collapse:separate;
+}
