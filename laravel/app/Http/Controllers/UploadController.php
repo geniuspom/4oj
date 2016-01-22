@@ -41,7 +41,9 @@ class UploadController extends Controller{
         //create thumbnail
         $img = Image::make('upload_file/images/default/'.$filename);
 
-        if($img->height() > $img->width()){
+        if($img->height() == $img->width()){
+          $imgresult = $img->resize(206, 206);
+        }else if($img->height() > $img->width()){
           $imgresult = $img->resize(206, null, function ($constraint) {
           $constraint->aspectRatio();
           });
@@ -53,13 +55,34 @@ class UploadController extends Controller{
 
         $imgresult->save('upload_file/images/thumbnail/'.$filename);
         $thunbnail = 'upload_file/images/thumbnail/'.$filename;
+        //end create thumbnail
 
-        //save to batabase
-        $image = new upload;
-        $image->image_name = $filename;
-        $image->image_user = $user_id;
-        $image->image_thumbnail = $thunbnail;
-        $image->save();
+        //find image by userid
+        $count = upload::where('image_user', '=', $user_id)->count();
+
+        if($count == 1){
+          $image = upload::where('image_user', '=', $user_id)->first();
+          $image_path = $_SERVER['DOCUMENT_ROOT'] . '/4oj/upload_file/images/default/' . $image->image_name;
+          $image_thumbnail = $_SERVER['DOCUMENT_ROOT'] . '/4oj/' . $image->image_thumbnail;
+          unlink($image_path);
+          unlink($image_thumbnail);
+
+          //update link
+          $image->image_name = $filename;
+          $image->image_thumbnail = $thunbnail;
+          $image->save();
+
+        }
+        //Not found image
+        else{
+          //save to batabase
+          $image = new upload;
+          $image->image_name = $filename;
+          $image->image_user = $user_id;
+          $image->image_thumbnail = $thunbnail;
+          $image->save();
+        }
+
       }
       return redirect()->back();
 
@@ -102,7 +125,9 @@ class UploadController extends Controller{
           //if image create thumbnail
           $img = Image::make('upload_file/idcard/default/'.$filename);
 
-          if($img->height() > $img->width()){
+          if($img->height() == $img->width()){
+            $imgresult = $img->resize(206, 206);
+          }else if($img->height() > $img->width()){
             $imgresult = $img->resize(206, null, function ($constraint) {
             $constraint->aspectRatio();
             });
@@ -118,12 +143,39 @@ class UploadController extends Controller{
 
         }
 
-        //save to batabase
-        $dbidcard = new idcard;
-        $dbidcard->id_name = $filename;
-        $dbidcard->id_user = $user_id;
-        $dbidcard->id_thumbnail = $thunbnail;
-        $dbidcard->save();
+        $count = idcard::where('id_user', '=', $user_id)->count();
+
+        if($count == 1){
+          $dbidcard = idcard::where('id_user', '=', $user_id)->first();
+
+          $oldext = pathinfo($dbidcard->id_name, PATHINFO_EXTENSION);
+
+          $image_path = $_SERVER['DOCUMENT_ROOT'] . '/4oj/upload_file/idcard/default/' . $dbidcard->id_name;
+
+          if($oldext != 'pdf'){
+            $image_thumbnail = $_SERVER['DOCUMENT_ROOT'] . '/4oj/' . $dbidcard->id_thumbnail;
+            unlink($image_thumbnail);
+          }
+
+          unlink($image_path);
+
+          //update link
+          $dbidcard->id_name = $filename;
+          $dbidcard->id_thumbnail = $thunbnail;
+          $dbidcard->save();
+
+        }
+        //Not found image
+        else{
+
+          //save to batabase
+          $dbidcard = new idcard;
+          $dbidcard->id_name = $filename;
+          $dbidcard->id_user = $user_id;
+          $dbidcard->id_thumbnail = $thunbnail;
+          $dbidcard->save();
+
+        }
 
       }
       return redirect()->back();
