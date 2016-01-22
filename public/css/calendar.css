@@ -80,10 +80,22 @@
   line-height: 10px;
 }
 .st-c-pos{
+  font-size: 10.5px;
   cursor: pointer;
   font-family: Arial,sans-serif;
   padding: 1px 1px 0 2px;
   position: relative;
+}
+.st-more-c{
+  font-size: 10.5px;
+  padding: 0 9px;
+}
+.st-more{
+  cursor: pointer;
+  color: #15c;
+}
+.st-moreul{
+
 }
 .rb-ni{
   overflow: hidden;

@@ -36,6 +36,18 @@ $( document ).ready(function(){
     $("#"+$("#day_select").val()).addClass( "st-bg-select" );
   });
 
+  //select event
+  $('#content_calendar').on('click','.st-c-pos',function(e){
+    /*var eTop = $(this).offset().top;
+    var eLeft = $(this).offset().left;
+    var oldselect = $("#day_select").val();
+    $("#"+oldselect).removeClass( "st-bg-select" );
+    $("#day_select").val($(this).attr('id'));
+    $("#"+$("#day_select").val()).addClass( "st-bg-select" );*/
+    alert($(this).attr('id'));
+  });
+
+
 
 });
 

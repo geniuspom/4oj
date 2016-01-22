@@ -102,7 +102,71 @@ Class RequestJob extends Controller{
 
     }
 
-    public static function getrequestjobmulti($start,$end){
+    public static function getrequestjobmulti($start,$end,$user_id){
+      $request = request_job::where('multiple_day', '=', '1')
+                              ->where('user_id', '=', $user_id)
+                              ->where(function ($query) use ($start,$end){
+                                 $query->whereBetween('start_date', array($start, $end))
+                                        ->whereBetween('end_date', array($start, $end));
+                              })
+                              ->orwhere(function ($query) use ($start,$end){
+                                 $query->whereBetween('start_date', array($start, $end))
+                                        ->where('end_date', ">" , $end);
+                              })
+                              ->orwhere(function ($query) use ($start,$end){
+                                 $query->whereBetween('end_date', array($start, $end))
+                                        ->where('start_date', "<" , $start);
+                              })
+                              ->orwhere(function ($query) use ($start,$end){
+                                 $query->where('start_date', "<" , $start)
+                                        ->where('end_date', ">" , $end);
+                              })
+                              ->orderBy('start_date')
+                              ->get();
+
+      $event = array();
+
+      $i = 0;
+
+      foreach ($request as $record){
+
+        $start = $record->start_date;
+        $end = $record->end_date;
+        $startTimeStamp = strtotime($start);
+        $endTimeStamp = strtotime($end);
+        $timeDiff = abs($endTimeStamp - $startTimeStamp);
+        $numberDays = $timeDiff/86400;  // 86400 seconds in one day
+        $Numberofday = intval($numberDays);
+
+
+        $event[$i] = array('id' => $record->id,
+                      'request_name' => $record->request_name,
+                      'user_id' => $record->user_id,
+                      'start_date' => $record->start_date,
+                      'end_date' => $record->end_date,
+                      'duration' => $record->duration,
+                      'event_id' => $record->event_id,
+                      'multiple_day' => $record->multiple_day,
+                      'remark' => $record->remark,
+                      'Numberofday' => $Numberofday);
+        $i++;
+
+      }
+
+      return $event;
+
+      /*for($r = 0; $r < count($event);$r++){
+
+        echo $event[$r]['Numberofday']."<br>";
+        echo $event[$r]['request_name']."<br>";
+
+      }*/
+
+    }
+
+
+    //old completed code
+    /*public static function getrequestjobmulti($start,$end){
       $request = request_job::where('multiple_day', '=', '1')
                               ->where(function ($query) use ($start,$end){
                                  $query->whereBetween('start_date', array($start, $end))
@@ -142,13 +206,7 @@ Class RequestJob extends Controller{
 
       return $event;
 
-      /*for($r = 0; $r < count($event);$r++){
-
-        echo $event[$r]['Numberofday']."<br>";
-
-      }*/
-
-    }
+    }*/
 
     //request one day
     public static function getrequestonejob($start,$user_id){
