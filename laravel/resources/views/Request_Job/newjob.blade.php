@@ -18,7 +18,7 @@ if($date == "null"){
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">คำร้องงานจัดประชุม</h1>
+      <h1 class="page-header">แจ้งวันและเวลาที่คุณสามารถทำงานได้</h1>
     </div>
     <!-- /.col-lg-12 -->
   </div>
@@ -45,12 +45,12 @@ if($date == "null"){
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 
-                    <div class="form-group">
+                    <!--<div class="form-group">
                       <label class="col-md-4 control-label">ชื่อ *</label>
                       <div class="col-md-6">
                         <input type="text" class="form-control" name="request_name" value="{{ old('request_name') }}">
                       </div>
-                    </div>
+                    </div>-->
 
                     <div class="form-group">
                       <label class="col-md-4 control-label">วันเริ่ม *</label>

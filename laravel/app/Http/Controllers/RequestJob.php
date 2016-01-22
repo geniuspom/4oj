@@ -34,7 +34,7 @@ Class RequestJob extends Controller{
 
           //add to db
           $request = new request_job();
-          $request->request_name = Request::input('request_name');
+          $request->request_name = /*Request::input('request_name')*/" ";
           $request->user_id = Request::input('user_id');
           $request->start_date = $start_date;
           $request->end_date = $end_date;

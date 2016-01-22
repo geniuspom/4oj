@@ -8,7 +8,7 @@ class validaterequestjob extends Model {
     public static function validaterequestjob($input){
 
     $rules = array(
-        'request_name' => 'Required|Between:5,255',
+        //'request_name' => 'Required|Between:5,255',
         'start_date' => 'Required',
         'end_date' => 'Required',
     );

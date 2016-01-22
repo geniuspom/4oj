@@ -396,7 +396,7 @@ if($i == 4){
                                   $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c' colspan='". $colspan ."'>
                                                                         <div id='". $eventmulti[$eventmultincount]['id'] ."' class='st-c-pos'>
                                                                             <div class='rb-n' style='border:1px solid #fdcc8f; color:#777777;background-color:#fdead2;'>
-                                                                            <div class='rb-ni'>".$eventmulti[$eventmultincount]['request_name']. " - " .$current_day."</div>
+                                                                            <div class='rb-ni'>&nbsp;</div>
                                                                             </div>
                                                                         </div>
                                                                         </td>";
@@ -418,7 +418,7 @@ if($i == 4){
                                 $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c' colspan='". $colspan ."'>
                                                                       <div id='". $eventmulti[$eventmultincount]['id'] ."' class='st-c-pos'>
                                                                           <div class='rb-n' style='border:1px solid #fdcc8f; color:#777777;background-color:#fdead2;'>
-                                                                          <div class='rb-ni'>".$eventmulti[$eventmultincount]['request_name']. " - " .$current_day."</div>
+                                                                          <div class='rb-ni'>&nbsp;</div>
                                                                           </div>
                                                                       </div>
                                                                       </td>";
@@ -448,7 +448,7 @@ if($i == 4){
                                 $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c' rowspan='". $rowspan ."'>
                                                                       <div id='". $event[$eventcount]['id'] ."' class='st-c-pos'>
                                                                           <div class='rb-n' style='border:1px solid #fdcc8f; color:#777777;background-color:#fdead2;'>
-                                                                          <div class='rb-ni'>".$current_day."</div>
+                                                                          <div class='rb-ni'>&nbsp;</div>
                                                                           </div>
                                                                       </div>
                                                                       </td>";
@@ -460,7 +460,7 @@ if($i == 4){
                                 $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c'>
                                                                       <div id='". $event[$eventcount]['id'] ."' class='st-c-pos'>
                                                                           <div class='rb-n' style='border:1px solid #fdcc8f; color:#777777;background-color:#fdead2;'>
-                                                                          <div class='rb-ni'>".$current_day."</div>
+                                                                          <div class='rb-ni'>&nbsp;</div>
                                                                           </div>
                                                                       </div>
                                                                       </td>";
