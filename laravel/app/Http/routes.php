@@ -84,6 +84,27 @@ Route::get('edit_venue/{id}', function($id){
 
 
 
+//event
+Route::get('event', function(){
+		return View::make('event.event');
+});
+//add
+Route::get('add_event', function(){
+		return View::make('event.add');
+});
+//View
+Route::get('event_detail/{id}', function($id){
+		return View::make('event.detail');
+});
+//edit
+Route::get('edit_event/{id}', function($id){
+		return View::make('event.edit');
+});
+//End event
+
+
+
+
 //Request job
 Route::get('add_request/{date}', function($date){
 		return View::make('Request_Job.newjob');
@@ -133,6 +154,15 @@ Route::post('add_venue','VenueControl@add');
 //edit
 Route::post('edit_venue','VenueControl@edit');
 //end function venue
+
+
+
+//function event
+//add
+Route::post('add_event','EventControl@add');
+//edit
+Route::post('edit_event','EventControl@edit');
+//end function event
 
 
 

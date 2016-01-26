@@ -35,12 +35,21 @@
     <!-- datepicker CSS -->
     <link href="/4oj/public/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
 
+    <!-- datetimepicker CSS -->
+    <link href="/4oj/public/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
     <!-- jQuery -->
     <script src="/4oj/public/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Moment -->
+    <script src="/4oj/public/js/Moment.js"></script>
 
     <!-- datepicker JavaScript -->
     <script src="/4oj/public/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="/4oj/public/bootstrap-datepicker/locales/bootstrap-datepicker.th.min.js"></script>
+
+    <!-- datetimepicker JavaScript -->
+    <script src="/4oj/public/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -283,18 +292,21 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
+                            <!--<div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
-                            </div>
+                          </div>-->
                             <!-- /input-group -->
                         </li>
                         <li>
                             <a href="/4oj"><i class="fa fa-dashboard fa-fw"></i> หน้าหลัก</a>
+                        </li>
+                        <li>
+                            <a href="/4oj/event"><i class="fa fa-calendar fa-fw"></i> กิจกรรมการประชุม</a>
                         </li>
                         <li>
                             <a href="/4oj/customer"><i class="fa fa-suitcase fa-fw"></i> รายชื่อลูกค้า</a>
