@@ -8,14 +8,14 @@ use App\Http\Controllers\EventControl as EventControl;
 
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">กิจกรรมการประชุม</h1>
+      <h1 class="page-header">งานที่กำลังเปิดรับ</h1>
     </div>
     <!-- /.col-lg-12 -->
   </div>
 
   <div class="row">
     <div class="col-lg-12 form-group">
-      <a class="btn btn-primary text-right" href="add_event">เพิ่มกิจกรมการประชุม</a>
+      <a class="btn btn-primary text-right" href="add_event">เพิ่มงานที่กำลังเปิดรับ</a>
     </div>
     <!-- /.col-lg-12 -->
   </div>

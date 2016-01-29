@@ -306,7 +306,7 @@
                             <a href="/4oj"><i class="fa fa-dashboard fa-fw"></i> หน้าหลัก</a>
                         </li>
                         <li>
-                            <a href="/4oj/event"><i class="fa fa-calendar fa-fw"></i> กิจกรรมการประชุม</a>
+                            <a href="/4oj/event"><i class="fa fa-calendar fa-fw"></i> งานที่กำลังเปิดรับ</a>
                         </li>
                         <li>
                             <a href="/4oj/customer"><i class="fa fa-suitcase fa-fw"></i> รายชื่อลูกค้า</a>

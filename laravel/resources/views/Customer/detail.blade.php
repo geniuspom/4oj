@@ -1,6 +1,7 @@
 @extends('Member.master')
 @section('content')
 <?php
+use App\Http\Controllers\Customer\Contact as Contact;
 use App\Http\Controllers\Customercontrol as Customercontrol;
 $id = Route::Input('id');
 ?>
@@ -78,14 +79,36 @@ $id = Route::Input('id');
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
                         <a class="btn btn-primary" href="/4oj/edit_customer/{{ $id }}"> แก้ไขข้อมูล </a>
+                        <a class="btn btn-primary" href="/4oj/add_contact/{{ $id }}"> เพิ่มผู้ประสานงาน </a>
                         <a class="btn btn-primary" href="/4oj/customer"> ยกเลิก </a>
                       </div>
                     </div>
                   </div>
               </div>
           </div>
-        </div>
       </div>
+    </div>
+
+    {{ Contact::getcontact_person($id) }}
+
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $( ".deletebutton" ).click(function() {
+          var name = this.id;
+          var txt;
+          var r = confirm("คุณต้องการลบผู้ประสานงานชื่อ " + name);
+          if (r == true) {
+              return true;
+          } else {
+              return false;
+          }
+        });
+
+    });
+
+</script>
 
 @stop

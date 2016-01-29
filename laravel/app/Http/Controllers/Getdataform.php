@@ -5,6 +5,7 @@ use App\Models\education as education;
 use App\Models\customer as customer;
 use App\Models\venue as venue;
 use App\Models\event as event;
+use App\Models\Member as Member;
 
 Class Getdataform extends Controller{
     public static function getbank($id){
@@ -46,7 +47,7 @@ Class Getdataform extends Controller{
 
         $customer = customer::orderBy('symbol')->get();
 
-        echo "<select name='customer_id' id='customer_id' class='form-control'>";
+        echo "<select name='customer_id' id='customer_id' class='form-control'><option value='0'>none</option>";
             foreach ($customer as $recode){
                 echo "<option value='".$recode->id."'" ;
                     if ($id == $recode->id){
@@ -212,6 +213,26 @@ Class Getdataform extends Controller{
         }
 
     }
+
+    public static function getuserform($id,$type){
+      $user = Member::orderBy('name')->get();
+
+      if($type == 'edit'){
+        $event = event::where("id","=", $id)->first();
+        $id = $event->staff_contact_id;
+      }
+
+      echo "<select name='staff_contact_id' id='staff_contact_id' class='form-control'>";
+          foreach ($user as $recode){
+              echo "<option value='".$recode->id."'" ;
+                  if ($id == $recode->id){
+                      echo " selected='selected'";
+                  }
+              echo ">".$recode->nickname." - ".$recode->name." ".$recode->surname."</option>";
+          }
+      echo "</select>";
+    }
+
 
 
 }

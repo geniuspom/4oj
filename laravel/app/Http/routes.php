@@ -60,6 +60,15 @@ Route::get('customer_detail/{id}', function($id){
 Route::get('edit_customer/{id}', function($id){
 		return View::make('Customer.edit');
 });
+
+//add_contact
+Route::get('add_contact/{id}', function($id){
+		return View::make('Customer.addcontact');
+});
+//edit contact
+Route::get('edit_contact/{id}', function($id){
+		return View::make('Customer.editcontact');
+});
 //End customer
 
 
@@ -145,6 +154,12 @@ Route::post('uploadidcard','UploadController@uploadidcard');
 Route::post('add_customer','Customercontrol@add');
 //edit
 Route::post('edit_customer','Customercontrol@edit');
+//add Contact
+Route::post('add_contact','Customer\Contact@add_contact');
+//edit Contact
+Route::post('edit_contact','Customer\Contact@edit_contact');
+//delete COntact
+Route::post('delete_contact','Customer\Contact@delete_contact');
 //end function customer
 
 
@@ -162,6 +177,8 @@ Route::post('edit_venue','VenueControl@edit');
 Route::post('add_event','EventControl@add');
 //edit
 Route::post('edit_event','EventControl@edit');
+//jquery get data form
+Route::post('geteventform','EventControl@getformjquery');
 //end function event
 
 

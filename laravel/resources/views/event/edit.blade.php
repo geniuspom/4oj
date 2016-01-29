@@ -1,14 +1,17 @@
 @extends('Member.master')
 @section('content')
+<meta name="_token" content="{!! csrf_token() !!}"/>
 <?php
 use App\Http\Controllers\EventControl as EventControl;
 use App\Http\Controllers\Getdataform as Getdataform;
 $id = Route::Input('id');
+$cusid = EventControl::get($id,'customer');
+$contactid = EventControl::get($id,'custumer_contact_id');
 ?>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">กิจกรรมการประชุม</h1>
+      <h1 class="page-header">งานที่กำลังเปิดรับ</h1>
     </div>
     <!-- /.col-lg-12 -->
   </div>
@@ -18,7 +21,7 @@ $id = Route::Input('id');
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">เพิ่มกิจกรมการประชุม</h3>
+              <h3 class="panel-title">เพิ่มงานที่กำลังเปิดรับ</h3>
             </div>
             <div class="panel-body">
                   @if (count($errors) > 0)
@@ -60,7 +63,7 @@ $id = Route::Input('id');
                       <label class="col-md-4 control-label">วันเริ่ม *</label>
                       <div class="col-md-6" id="sandbox-container">
                         <div class="input-group date">
-                          <input type="text" class="form-control" name="event_date" value="{{ EventControl::get($id,'event_date') }}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                          <input type="text" class="form-control" name="event_date" id="event_date" value="{{ EventControl::get($id,'event_date') }}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                       </div>
                     </div>
@@ -107,11 +110,21 @@ $id = Route::Input('id');
                     </div>
 
                     <div class="form-group">
-                      <label class="col-md-4 control-label">วันเวลาติดตั้งอุปกรณ์ *</label>
+                      <label class="col-md-4 control-label">วันติดตั้งอุปกรณ์ *</label>
+                      <div class="col-md-6" >
+                        <div class="input-group date" id="setup_date">
+                            <input type="text" class="form-control" name="setup_date" value="{{ EventControl::get($id,'setup_date') }}"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">เวลาติดตั้งอุปกรณ์ *</label>
                       <div class="col-md-6" >
                         <div class="input-group date" id="setup_time">
                             <input type="text" class="form-control" name="setup_time" value="{{ EventControl::get($id,'setup_time') }}"/>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
                         </div>
                       </div>
                     </div>
@@ -127,16 +140,47 @@ $id = Route::Input('id');
                     </div>
 
                     <div class="form-group">
-                      <label class="col-md-4 control-label">วันเวลานัดหมาย Supplier*</label>
+                      <label class="col-md-4 control-label">วันนัดหมาย Supplier*</label>
                       <div class="col-md-6" >
-                        <div class="input-group date" id="supplier_time">
-                            <input type="text" class="form-control" name="supplier_time" value="{{ EventControl::get($id,'supplier_time') }}"/>
+                        <div class="input-group date" id="supplier_date">
+                            <input type="text" class="form-control" name="supplier_date" value="{{ EventControl::get($id,'supplier_date') }}"/>
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                       </div>
                     </div>
 
                     <div class="form-group">
+                      <label class="col-md-4 control-label">เวลานัดหมาย Supplier*</label>
+                      <div class="col-md-6" >
+                        <div class="input-group date" id="supplier_time">
+                            <input type="text" class="form-control" name="supplier_time" value="{{ EventControl::get($id,'supplier_time') }}"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">ชื่อผู้ประสานงานลูกค้า</label>
+                      <div class="col-md-6" id="customer_contact">
+                          {{ EventControl::getcontact_form($cusid,$contactid,"edit") }}
+                      </div>
+                    </div>
+
+                    <div class="form-group hidden" id="custumer_contact_name">
+                      <label class="col-md-4 control-label"></label>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" name="custumer_contact_name" value="{{ old('custumer_contact_name') }}">
+                      </div>
+                    </div>
+
+                    <div class="form-group hidden" id="custumer_contact_phone">
+                      <label class="col-md-4 control-label">โทรศัพท์ผู้ประสานงานลูกค้า</label>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" name="custumer_contact_phone" value="{{ old('custumer_contact_phone') }}">
+                      </div>
+                    </div>
+
+                    <!--<div class="form-group">
                       <label class="col-md-4 control-label">ชื่อผู้ประสานงานลูกค้า</label>
                       <div class="col-md-6">
                         <input type="text" class="form-control" name="custumer_contact_name" value="{{ EventControl::get($id,'custumer_contact_name') }}">
@@ -148,7 +192,7 @@ $id = Route::Input('id');
                       <div class="col-md-6">
                         <input type="text" class="form-control" name="custumer_contact_phone" value="{{ EventControl::get($id,'custumer_contact_phone') }}">
                       </div>
-                    </div>
+                    </div>-->
 
                     <div class="form-group">
                       <label class="col-md-4 control-label">ชื่อผู้ประสานงานโรงแรม</label>
@@ -181,16 +225,16 @@ $id = Route::Input('id');
                     <div class="form-group">
                       <label class="col-md-4 control-label">ชื่อผู้ประสานงาน OJ</label>
                       <div class="col-md-6">
-                        <input type="text" class="form-control" name="staff_contact_name" value="{{ EventControl::get($id,'staff_contact_name') }}">
+                        {{ Getdataform::getuserform($id,'edit') }}
                       </div>
                     </div>
 
-                    <div class="form-group">
+                    <!--<div class="form-group">
                       <label class="col-md-4 control-label">โทรศัพท์ผู้ประสานงาน OJ</label>
                       <div class="col-md-6">
                         <input type="text" class="form-control" name="staff_contact_phone" value="{{ EventControl::get($id,'staff_contact_phone') }}">
                       </div>
-                    </div>
+                    </div>-->
 
                     <div class="form-group">
                       <label class="col-md-4 control-label">ช่วงเวลาการประชุม</label>
@@ -209,7 +253,7 @@ $id = Route::Input('id');
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
                         <button type="submit" class="btn btn-primary" >
-                          แก้ไขกิจกรรมการประชุม
+                          แก้ไขงานที่กำลังเปิดรับ
                         </button>
                         <a class="btn btn-primary" href="{{ URL::previous() }}"> ยกเลิก </a>
                       </div>
@@ -255,12 +299,29 @@ $(document).ready(function(){
     locale: 'th'
   });
 
+  $('#setup_date').click(function(event){
+   $('#setup_date input').data("DateTimePicker").show();
+  });
+  $('#setup_date input').datetimepicker({
+    defaultDate: new Date(),
+    format: "DD/MM/YYYY",
+    locale: 'th'
+  });
+
   $('#setup_time').click(function(event){
    $('#setup_time input').data("DateTimePicker").show();
   });
   $('#setup_time input').datetimepicker({
+    format: "LT",
+    locale: 'th'
+  });
+
+  $('#supplier_date').click(function(event){
+   $('#supplier_date input').data("DateTimePicker").show();
+  });
+  $('#supplier_date input').datetimepicker({
     defaultDate: new Date(),
-    format: "DD/MM/YYYY LT",
+    format: "DD/MM/YYYY",
     locale: 'th'
   });
 
@@ -268,17 +329,58 @@ $(document).ready(function(){
    $('#supplier_time input').data("DateTimePicker").show();
   });
   $('#supplier_time input').datetimepicker({
-    defaultDate: new Date(),
-    format: "DD/MM/YYYY LT",
+    format: "LT",
     locale: 'th'
   });
 
-
-
-
-
+  $('#customer_id').change(function(){
+    $customer_id = $( "#customer_id option:selected" ).val();
+    get_customer_contact($customer_id);
+  });
 
 });
+$(document).on('change', '#customer_contact_select', function() {
+  $contact_id = $( "#customer_contact_select option:selected" ).val();
+    if($contact_id == 0){
+      $("#custumer_contact_name").removeClass('hidden');
+      $("#custumer_contact_phone").removeClass('hidden');
+    }else{
+      $("#custumer_contact_name").addClass('hidden');
+      $("#custumer_contact_phone").addClass('hidden');
+    }
+
+});
+
+$(document).on('change', '#event_date', function() {
+    var timevalue = $("#event_date").val();
+    $("#setup_date input").val(timevalue);
+    $("#supplier_date input").val(timevalue);
+});
+
+
+function get_customer_contact($customer_id){
+  $.ajaxSetup({
+     headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+  });
+
+  $.ajax({
+      url: '/4oj/geteventform',
+      type: "post",
+      data: {'customer_id': $customer_id,'function':'getcustomercontact'},
+      success: function(data){
+        $("#customer_contact").html(data);
+        $contact_id = $( "#customer_contact_select option:selected" ).val();
+        if($contact_id == 0){
+          $("#custumer_contact_name").removeClass('hidden');
+          $("#custumer_contact_phone").removeClass('hidden');
+        }else{
+          $("#custumer_contact_name").addClass('hidden');
+          $("#custumer_contact_phone").addClass('hidden');
+        }
+      }
+    });
+}
+
 </script>
 
 @stop

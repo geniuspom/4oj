@@ -9,7 +9,7 @@ $id = Route::Input('id');
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
-      <h1 class="page-header">กิจกรรมการประชุม</h1>
+      <h1 class="page-header">งานที่กำลังเปิดรับ</h1>
     </div>
     <!-- /.col-lg-12 -->
   </div>
@@ -91,11 +91,19 @@ $id = Route::Input('id');
                     </div>
 
                     <div class="form-group">
-                      <label class="col-md-5 text-right">วันเวลาติดตั้งอุปกรณ์</label>
+                      <label class="col-md-5 text-right">วันติดตั้งอุปกรณ์</label>
+                      <div class="col-md-6 text-info" >
+                          {{ EventControl::get($id,'setup_date') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-5 text-right">เวลาติดตั้งอุปกรณ์</label>
                       <div class="col-md-6 text-info" >
                           {{ EventControl::get($id,'setup_time') }}
                       </div>
                     </div>
+
 
                     <div class="form-group">
                       <label class="col-md-5 text-right">เวลานัดหมายทีม OJ</label>
@@ -105,7 +113,14 @@ $id = Route::Input('id');
                     </div>
 
                     <div class="form-group">
-                      <label class="col-md-5 text-right">วันเวลานัดหมาย Supplier</label>
+                      <label class="col-md-5 text-right">วันนัดหมาย Supplier</label>
+                      <div class="col-md-6 text-info" >
+                          {{ EventControl::get($id,'supplier_date') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-5 text-right">เวลานัดหมาย Supplier</label>
                       <div class="col-md-6 text-info" >
                           {{ EventControl::get($id,'supplier_time') }}
                       </div>
@@ -114,14 +129,14 @@ $id = Route::Input('id');
                     <div class="form-group">
                       <label class="col-md-5 text-right">ชื่อผู้ประสานงานลูกค้า</label>
                       <div class="col-md-6 text-info" >
-                          {{ EventControl::get($id,'custumer_contact_name') }}
+                          {{ EventControl::get_customer_contact($id,'name') }}
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-md-5 text-right">โทรศัพท์ผู้ประสานงานลูกค้า</label>
                       <div class="col-md-6 text-info" >
-                          {{ EventControl::get($id,'custumer_contact_phone') }}
+                          {{ EventControl::get_customer_contact($id,'phone') }}
                       </div>
                     </div>
 
@@ -156,14 +171,14 @@ $id = Route::Input('id');
                     <div class="form-group">
                       <label class="col-md-5 text-right">ชื่อผู้ประสานงาน OJ</label>
                       <div class="col-md-6 text-info" >
-                          {{ EventControl::get($id,'staff_contact_name') }}
+                          {{ EventControl::get_OJ_contact($id,'name') }}
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-md-5 text-right">โทรศัพท์ผู้ประสานงาน OJ</label>
                       <div class="col-md-6 text-info" >
-                          {{ EventControl::get($id,'staff_contact_phone') }}
+                          {{ EventControl::get_OJ_contact($id,'phone') }}
                       </div>
                     </div>
 
