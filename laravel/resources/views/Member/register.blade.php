@@ -3,6 +3,8 @@
 use App\Http\Controllers\Getdataform as Getdataform;
 use App\Http\Controllers\InstituteController as InstituteController;
 ?>
+<!-- jQuery UI -->
+<script src="/4oj/public/jquery-ui/jquery-ui.js"></script>
 
 <div class="container">
 	<div class="row">

@@ -48,14 +48,12 @@
     <script src="/4oj/public/js/Moment.js"></script>
 
     <!-- datepicker JavaScript -->
-    <script src="/4oj/public/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="/4oj/public/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
     <script src="/4oj/public/bootstrap-datepicker/locales/bootstrap-datepicker.th.min.js"></script>
 
     <!-- datetimepicker JavaScript -->
     <script src="/4oj/public/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 
-    <!-- jQuery UI -->
-    <script src="/4oj/public/jquery-ui/jquery-ui.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

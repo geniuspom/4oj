@@ -5,6 +5,8 @@ use App\Http\Controllers\GetUser as GetUser;
 use App\Http\Controllers\InstituteController as InstituteController;
 use App\Http\Controllers\Getdataform as Getdataform;
 ?>
+<!-- jQuery UI -->
+<script src="/4oj/public/jquery-ui/jquery-ui.js"></script>
 
 <div id="page-wrapper">
   <div class="row">
