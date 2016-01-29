@@ -23,16 +23,16 @@ Class Customercontrol extends Controller{
     //get all customer
     public static function getall(){
 
-        $customer = customer::orderBy('name')->get();
+        $customer = customer::orderBy('symbol')->get();
 
         foreach ($customer as $record){
 
           echo "<tr><td class='text-center'><a href='customer_detail/".
                 $record->id .
                 "'>" .
-                $record->name .
-                "</a></td><td class='text-center'>".
                 $record->symbol .
+                "</a></td><td class='text-center'>".
+                $record->name .
                 "</td><td class='text-center'>".
                 $record->phone .
                 "</td><td><a target='blank' href='".

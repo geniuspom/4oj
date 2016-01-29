@@ -33,8 +33,8 @@ use App\Http\Controllers\Customercontrol as Customercontrol;
           <table class="table table-bordered table-hover table-striped">
             <thead>
               <tr>
-                <th class="text-center">ชื่อบริษัท</th>
                 <th class="text-center">ชื่อย่อบริษัท</th>
+                <th class="text-center">ชื่อบริษัท</th>
                 <th class="text-center">โทรศัพท์</th>
                 <th class="text-center">เว็บไซต์</th>
                 <th class="text-center">ดำเนินการ</th>
