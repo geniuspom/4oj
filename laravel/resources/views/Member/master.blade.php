@@ -38,6 +38,9 @@
     <!-- datetimepicker CSS -->
     <link href="/4oj/public/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 
+    <!-- jQuery UI -->
+    <link href="/4oj/public/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
+
     <!-- jQuery -->
     <script src="/4oj/public/bower_components/jquery/dist/jquery.min.js"></script>
 
@@ -50,6 +53,9 @@
 
     <!-- datetimepicker JavaScript -->
     <script src="/4oj/public/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="/4oj/public/jquery-ui/jquery-ui.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
