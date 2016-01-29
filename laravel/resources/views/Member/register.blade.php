@@ -98,6 +98,27 @@ use App\Http\Controllers\InstituteController as InstituteController;
 							</div>
 						</div>
 
+						<div class="form-group">
+								<label class="col-md-4 control-label">ที่อยู่ปัจจุบัน</label>
+								<div class="col-md-6">
+									<textarea class="form-control" rows="5" name="address" >{{ old('address') }}</textarea>
+								</div>
+						</div>
+
+						<div class="form-group" id="province">
+								<label class="col-md-4 control-label">จังหวัด</label>
+								<div class="col-md-6">
+									{{ Getdataform::province(old('province'),'new') }}
+								</div>
+						</div>
+
+						<div class="form-group hidden" id="district">
+								<label class="col-md-4 control-label">เขต</label>
+								<div class="col-md-6">
+									{{ Getdataform::district(old('district'),'new') }}
+								</div>
+						</div>
+
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">ระดับการศึกษา</label>
 							<div class="col-md-6">
@@ -148,6 +169,16 @@ $(function() {
         autoFocus:true
     });
 });
+	$(document).on('change', '#province', function() {
+	  $district = $( "#province option:selected" ).val();
+	    if($district == 69){
+	      $("#district").removeClass('hidden');
+	    }else{
+	      $("#district").addClass('hidden');
+	    }
+
+	});
+
 
 </script>
 @include('Member.footer')

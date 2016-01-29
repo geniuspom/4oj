@@ -3,6 +3,7 @@
 <?php
 use App\Http\Controllers\GetUser as GetUser;
 use App\Http\Controllers\InstituteController as InstituteController;
+use App\Http\Controllers\Getdataform as Getdataform;
 ?>
 
 <div id="page-wrapper">
@@ -98,6 +99,27 @@ use App\Http\Controllers\InstituteController as InstituteController;
                     </div>
 
                     <div class="form-group">
+                        <label class="col-md-4 control-label">ที่อยู่ปัจจุบัน</label>
+                        <div class="col-md-6">
+                          <textarea class="form-control" rows="5" name="address" >{{ GetUser::getedituser($id,'address') }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="province">
+                        <label class="col-md-4 control-label">จังหวัด</label>
+                        <div class="col-md-6">
+                          {{ Getdataform::province($id,'edit') }}
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="district">
+                        <label class="col-md-4 control-label">เขต</label>
+                        <div class="col-md-6">
+                          {{ Getdataform::district($id,'edit') }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                       <label class="col-md-4 control-label">ระดับการศึกษา</label>
                       <div class="col-md-6">
                           {{ GetUser::getedituser($id,'education') }}
@@ -143,6 +165,17 @@ $(function() {
         autoFocus:true
     });
 });
+
+$(document).on('change', '#province', function() {
+  $district = $( "#province option:selected" ).val();
+    if($district == 69){
+      $("#district").removeClass('hidden');
+    }else{
+      $("#district").addClass('hidden');
+    }
+
+});
+
 
 </script>
 @stop

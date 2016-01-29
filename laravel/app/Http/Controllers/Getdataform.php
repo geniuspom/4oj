@@ -6,6 +6,8 @@ use App\Models\customer as customer;
 use App\Models\venue as venue;
 use App\Models\event as event;
 use App\Models\Member as Member;
+use App\Models\province as province;
+use App\Models\district as district;
 
 Class Getdataform extends Controller{
     public static function getbank($id){
@@ -233,6 +235,46 @@ Class Getdataform extends Controller{
               echo ">".$recode->nickname." - ".$recode->name." ".$recode->surname."</option>";
           }
       echo "</select>";
+    }
+
+    public static function province($id,$type){
+
+        if($type == 'edit'){
+          $user = Member::where("id","=", $id)->first();
+          $id = $user->province;
+        }
+
+        $province = province::orderBy('name')->get();
+
+        echo "<select name='province' id='province' class='form-control'><option value='0'>none</option>";
+            foreach ($province as $recode){
+                echo "<option value='".$recode->id."'" ;
+                    if ($id == $recode->id){
+                        echo " selected='selected'";
+                    }
+                echo ">".$recode->name."</option>";
+            }
+        echo "</select>";
+    }
+
+    public static function district($id,$type){
+
+        if($type == 'edit'){
+          $user = Member::where("id","=", $id)->first();
+          $id = $user->district;
+        }
+
+        $district = district::orderBy('name')->get();
+
+        echo "<select name='district' id='district' class='form-control'><option value='0'>none</option>";
+            foreach ($district as $recode){
+                echo "<option value='".$recode->id."'" ;
+                    if ($id == $recode->id){
+                        echo " selected='selected'";
+                    }
+                echo ">".$recode->name."</option>";
+            }
+        echo "</select>";
     }
 
 

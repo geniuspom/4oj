@@ -140,6 +140,16 @@ Class GetUser extends Controller{
           $user->institute = Request::input('institute');
           $user->reference = Request::input('reference');
 
+          $user->address = Request::input('address');
+          $user->province = Request::input('province');
+
+          if(Request::input('province') != 69){
+            $user->district = 0;
+          }else{
+            $user->district = Request::input('district');
+          }
+
+
           if($user->save()) {
               $userinfo = Request::only('email','password');
 

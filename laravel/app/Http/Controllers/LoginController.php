@@ -31,6 +31,16 @@ Class LoginController extends Controller{
             $user->education = $request::input('education');
             $user->institute = $request::input('institute');
             $user->reference = $request::input('reference');
+
+            $user->address = $request::input('address');
+            $user->province = $request::input('province');
+
+            if($request::input('province') != 69){
+              $user->district = 0;
+            }else{
+              $user->district = $request::input('district');
+            }
+
             $user->userstatus = 1;
             $user->permission = 1;
             $user->validate = 1000;
