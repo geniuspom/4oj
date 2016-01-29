@@ -1,6 +1,7 @@
 @include('Member.header')
 <?php
 use App\Http\Controllers\Getdataform as Getdataform;
+use App\Http\Controllers\InstituteController as InstituteController;
 ?>
 
 <div class="container">
@@ -12,7 +13,7 @@ use App\Http\Controllers\Getdataform as Getdataform;
                                 </div>
 				<div class="panel-body">
 
-                                    @if (count($errors) > 0)
+          @if (count($errors) > 0)
 						<div class="alert alert-danger">
 							<strong>เกิดข้อผิดพลาด!</strong> กรุณากรอกข้อมูลตามเงื่อนไขที่กำหนด<br><br>
 							<ul>
@@ -21,7 +22,7 @@ use App\Http\Controllers\Getdataform as Getdataform;
 								@endforeach
 							</ul>
 						</div>
-                                    @endif
+          @endif
 
 					<form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -107,7 +108,7 @@ use App\Http\Controllers\Getdataform as Getdataform;
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">ชื่อสถาบันการศึกษา</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="institute" value="{{ old('institute') }}">
+								<input type="text" class="form-control" id="institute" name="institute" value="{{ old('institute') }}">
 							</div>
 						</div>
 
@@ -138,5 +139,15 @@ use App\Http\Controllers\Getdataform as Getdataform;
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
 
+$(function() {
+    var availableTags = <?php include('../4oj/laravel/app/Http/Controllers/InstituteController.php'); ?>;
+    $("#institute").autocomplete({
+        source: availableTags,
+        autoFocus:true
+    });
+});
+
+</script>
 @include('Member.footer')

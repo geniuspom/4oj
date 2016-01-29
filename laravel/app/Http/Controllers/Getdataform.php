@@ -17,6 +17,8 @@ Class Getdataform extends Controller{
                 echo "<option value='".$recode->id."'" ;
                     if ($id == $recode->id){
                         echo " selected='selected'";
+                    }else if(empty($id) && ($recode->id == 3)){
+                        echo " selected='selected'";
                     }
                 echo ">".$recode->name."</option>";
             }

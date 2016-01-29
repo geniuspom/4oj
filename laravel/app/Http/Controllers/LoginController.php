@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Member as Member;
 use App\Models\validateuser as validateuser;
+use App\Models\institute as institute;
 use Auth;
 use Illuminate\Support\Facades\Redirect;
 use Request;
@@ -53,6 +54,16 @@ Class LoginController extends Controller{
             } else {
                 $link = 'register';
             }
+
+            //ตรวจสอบสถาบันว่ามีไหมถ้าไม่มีให้เพิ่มไป
+            $countinstitute = institute::where('name', 'LIKE', $request::input('institute'))->count();
+
+            if($countinstitute < 1){
+                $institute = new institute();
+                $institute->name = $request::input('institute');
+                $institute->save();
+            }
+            //จบตรวจสอบสถาบันว่ามีไหมถ้าไม่มีให้เพิ่มไป
 
             return Redirect::to($link);
 

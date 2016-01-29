@@ -4,6 +4,7 @@ use App\Models\Member as Member;
 use App\Models\bank as bank;
 use App\Models\education as education;
 use App\Models\validateuser as validateuser;
+use App\Models\institute as institute;
 use Illuminate\Support\Facades\Redirect;
 use Route;
 use Request;
@@ -141,6 +142,17 @@ Class GetUser extends Controller{
 
           if($user->save()) {
               $userinfo = Request::only('email','password');
+
+              //ตรวจสอบสถาบันว่ามีไหมถ้าไม่มีให้เพิ่มไป
+              $countinstitute = institute::where('name', 'LIKE', Request::input('institute'))->count();
+
+              if($countinstitute < 1){
+                  $institute = new institute();
+                  $institute->name = Request::input('institute');
+                  $institute->save();
+              }
+              //จบตรวจสอบสถาบันว่ามีไหมถ้าไม่มีให้เพิ่มไป
+
               return Redirect::to('useredit/'. Request::input('id'))
                 ->with('status', 'Update has been completed');
           } else {

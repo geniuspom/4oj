@@ -2,6 +2,7 @@
 @section('content')
 <?php
 use App\Http\Controllers\GetUser as GetUser;
+use App\Http\Controllers\InstituteController as InstituteController;
 ?>
 
 <div id="page-wrapper">
@@ -106,7 +107,7 @@ use App\Http\Controllers\GetUser as GetUser;
                     <div class="form-group">
                       <label class="col-md-4 control-label">ชื่อสถาบันการศึกษา</label>
                       <div class="col-md-6">
-                        <input type="text" class="form-control" name="institute" value="{{ GetUser::getedituser($id,'institute') }}">
+                        <input type="text" class="form-control" id="institute" name="institute" value="{{ GetUser::getedituser($id,'institute') }}">
                       </div>
                     </div>
 
@@ -133,5 +134,15 @@ use App\Http\Controllers\GetUser as GetUser;
         </div>
       </div>
 </div>
+<script type="text/javascript">
 
+$(function() {
+    var availableTags = <?php include('../4oj/laravel/app/Http/Controllers/InstituteController.php'); ?>;
+    $("#institute").autocomplete({
+        source: availableTags,
+        autoFocus:true
+    });
+});
+
+</script>
 @stop
