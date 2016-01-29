@@ -103,22 +103,28 @@ Class RequestJob extends Controller{
     }
 
     public static function getrequestjobmulti($start,$end,$user_id){
-      $request = request_job::where('multiple_day', '=', '1')
-                              ->where('user_id', '=', $user_id)
-                              ->where(function ($query) use ($start,$end){
-                                 $query->whereBetween('start_date', array($start, $end))
+      $request = request_job::where(function ($query) use ($start,$end,$user_id){
+                                 $query->where('multiple_day', '=', '1')
+                                        ->where('user_id', '=', $user_id)
+                                        ->whereBetween('start_date', array($start, $end))
                                         ->whereBetween('end_date', array($start, $end));
                               })
-                              ->orwhere(function ($query) use ($start,$end){
-                                 $query->whereBetween('start_date', array($start, $end))
+                              ->orwhere(function ($query) use ($start,$end,$user_id){
+                                 $query->where('multiple_day', '=', '1')
+                                        ->where('user_id', '=', $user_id)
+                                        ->whereBetween('start_date', array($start, $end))
                                         ->where('end_date', ">" , $end);
                               })
-                              ->orwhere(function ($query) use ($start,$end){
-                                 $query->whereBetween('end_date', array($start, $end))
+                              ->orwhere(function ($query) use ($start,$end,$user_id){
+                                 $query->where('multiple_day', '=', '1')
+                                        ->where('user_id', '=', $user_id)
+                                        ->whereBetween('end_date', array($start, $end))
                                         ->where('start_date', "<" , $start);
                               })
-                              ->orwhere(function ($query) use ($start,$end){
-                                 $query->where('start_date', "<" , $start)
+                              ->orwhere(function ($query) use ($start,$end,$user_id){
+                                 $query->where('multiple_day', '=', '1')
+                                        ->where('user_id', '=', $user_id)
+                                        ->where('start_date', "<" , $start)
                                         ->where('end_date', ">" , $end);
                               })
                               ->orderBy('start_date')
