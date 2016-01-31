@@ -32,7 +32,7 @@ Class LoginController extends Controller{
             $user->phone = $request::input('phone');
             $user->id_card = $request::input('id_card');
 
-            $user->birthday = $request::input('birthday');
+            $user->birthday = $birthday;
 
             //$user->bank = $request::input('bank');
             //$user->account_no = $request::input('account');
