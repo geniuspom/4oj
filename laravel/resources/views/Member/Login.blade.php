@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-sm-6 col-sm-offset-3">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">กรุณาลงชื่อเข้าใช้งาน</h3>
@@ -27,23 +27,23 @@
                                 <div class="form-group">
                                     <input class="form-control" placeholder="รหัสผ่าน" name="password" type="password" value="">
                                 </div>
-                                <div class="checkbox">
+                                <div>
+                                  <div class="col-xs-6 text-left form-group">
+                                    <a href="{{ url('/forgot') }}" class=""><strong>ลืมรหัสผ่าน?</strong></a>
+                                  </div>
+                                  <div class="col-xs-6 text-right form-group">
+                                    <a href="{{ url('/register') }}" class=""><strong>ลงทะเบียน</strong></a>
+                                  </div>
+                                </div>
+                                <!--<div class="checkbox">
                                     <label>
                                         <input name="remember" type="checkbox" value="Remember Me">จดจำในระบบ
                                     </label>
-                                </div>
+                                </div>-->
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button type="submit" class="btn btn-lg btn-success btn-block" >
                                     ลงชื่อเข้าใช้งาน
-				</button>
-                                <dl class="dl-horizontal">
-                                    <dt>
-                                        <a href="{{ url('/forgot') }}" class=""><strong>ลืมรหัสผ่าน?</strong></a>
-                                    </dt>
-                                    <dd class="text-center">
-                                        <a href="{{ url('/register') }}" class=""><strong>ลงทะเบียน</strong></a>
-                                    </dd>
-                                </dl>
+				                        </button>
                             </fieldset>
                         </form>
                     </div>

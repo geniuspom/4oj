@@ -30,28 +30,42 @@ use App\Http\Controllers\UploadController as UploadController;
                     <div class="form-group">
                       <label class="col-md-5 text-right">ชื่อ</label>
                       <div class="col-md-6 text-info" >
-                          {{ GetUser::getedituser(Auth::user()->id,'name') }}
+                        {{ GetUser::getprofile(Auth::user()->id,'name') }}
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-md-5 text-right">นามสกุล</label>
                       <div class="col-md-6 text-info">
-                        {{ GetUser::getedituser(Auth::user()->id,'surname') }}
+                        {{ GetUser::getprofile(Auth::user()->id,'surname') }}
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-md-5 text-right">ชื่อเล่น</label>
                       <div class="col-md-6 text-info">
-                        {{ GetUser::getedituser(Auth::user()->id,'nickname') }}
+                        {{ GetUser::getprofile(Auth::user()->id,'nickname') }}
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-md-5 text-right">โทรศัพท์มือถือ</label>
                       <div class="col-md-6 text-info">
-                        {{ GetUser::getedituser(Auth::user()->id,'phone') }}
+                        {{ GetUser::getprofile(Auth::user()->id,'phone') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-5 text-right">Line ID</label>
+                      <div class="col-md-6 text-info">
+                        {{ GetUser::getprofile(Auth::user()->id,'lineid') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-5 text-right">วันเกิด</label>
+                      <div class="col-md-6 text-info">
+                        {{ GetUser::getprofile(Auth::user()->id,'birthday') }}
                       </div>
                     </div>
 
@@ -65,7 +79,7 @@ use App\Http\Controllers\UploadController as UploadController;
                     <div class="form-group">
                       <label class="col-md-5 text-right">หมายเลขบัญชีธนาคาร</label>
                       <div class="col-md-6 text-info">
-                        {{ GetUser::getedituser(Auth::user()->id,'account_no') }}
+                        {{ GetUser::getprofile(Auth::user()->id,'account_no') }}
                       </div>
                     </div>
 
@@ -79,14 +93,42 @@ use App\Http\Controllers\UploadController as UploadController;
                     <div class="form-group">
                       <label class="col-md-5 text-right">ชื่อสถาบันการศึกษา</label>
                       <div class="col-md-6 text-info">
-                        {{ GetUser::getedituser(Auth::user()->id,'institute') }}
+                        {{ GetUser::getprofile(Auth::user()->id,'institute') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-5 text-right">ที่อยู่ปัจจุบัน</label>
+                      <div class="col-md-6 text-info">
+                        {{ GetUser::getprofile(Auth::user()->id,'address') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-5 text-right">จังหวัด</label>
+                      <div class="col-md-6 text-info">
+                        {{ GetUser::getprofile(Auth::user()->id,'province') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-5 text-right">เขต</label>
+                      <div class="col-md-6 text-info">
+                        {{ GetUser::getprofile(Auth::user()->id,'district') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-5 text-right">ที่อยู่ตามบัตรประชาชน</label>
+                      <div class="col-md-6 text-info">
+                        {{ GetUser::getprofile(Auth::user()->id,'address_id') }}
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-md-5 text-right">บุคคลที่แนะนำมา</label>
                       <div class="col-md-6 text-info">
-                        {{ GetUser::getedituser(Auth::user()->id,'reference') }}
+                        {{ GetUser::getprofile(Auth::user()->id,'reference') }}
                       </div>
                     </div>
 

@@ -18,6 +18,11 @@ Class LoginController extends Controller{
         $validatecode = MD5(app('App\Http\Controllers\Sendmail')->generateRandomString());
 
         if($validate->passes()){
+
+            $input_birthday = explode("/", Request::input('birthday'));
+            $birthday = $input_birthday[2]."-".$input_birthday[1]."-".$input_birthday[0];
+
+
             $user = new Member();
             $user->email = $request::input('email');
             $user->password = \Hash::make($request::input('password'));
@@ -26,20 +31,23 @@ Class LoginController extends Controller{
             $user->nickname = $request::input('nickname');
             $user->phone = $request::input('phone');
             $user->id_card = $request::input('id_card');
-            $user->bank = $request::input('bank');
-            $user->account_no = $request::input('account');
-            $user->education = $request::input('education');
-            $user->institute = $request::input('institute');
-            $user->reference = $request::input('reference');
 
-            $user->address = $request::input('address');
-            $user->province = $request::input('province');
+            $user->birthday = $request::input('birthday');
 
-            if($request::input('province') != 69){
+            //$user->bank = $request::input('bank');
+            //$user->account_no = $request::input('account');
+            //$user->education = $request::input('education');
+            //$user->institute = $request::input('institute');
+            //$user->reference = $request::input('reference');
+
+            //$user->address = $request::input('address');
+            //$user->province = $request::input('province');
+
+            /*if($request::input('province') != 69){
               $user->district = 0;
             }else{
               $user->district = $request::input('district');
-            }
+            }*/
 
             $user->userstatus = 1;
             $user->permission = 1;
@@ -66,13 +74,13 @@ Class LoginController extends Controller{
             }
 
             //ตรวจสอบสถาบันว่ามีไหมถ้าไม่มีให้เพิ่มไป
-            $countinstitute = institute::where('name', 'LIKE', $request::input('institute'))->count();
+            /*$countinstitute = institute::where('name', 'LIKE', $request::input('institute'))->count();
 
             if($countinstitute < 1){
                 $institute = new institute();
                 $institute->name = $request::input('institute');
                 $institute->save();
-            }
+            }*/
             //จบตรวจสอบสถาบันว่ามีไหมถ้าไม่มีให้เพิ่มไป
 
             return Redirect::to($link);
@@ -110,6 +118,30 @@ Class LoginController extends Controller{
         }
     }
 
+    public static function checkadmin(){
+
+        $user = Member::where("id","=",Auth::user()->id)->first();
+
+        $permission = $user->permission;
+
+        return $permission;
+
+    }
+
+    public static function checkpermission($level){
+
+      $user = Member::where("id","=",Auth::user()->id)->first();
+
+      $permission = $user->permission;
+
+      if($permission >= $level){
+        return true;
+      }else{
+        return false;
+      }
+
+    }
+
     public function index(){
   		  return view('Member.dashboard');
   	}
@@ -142,6 +174,63 @@ Class LoginController extends Controller{
 
 
         }
+
+    }
+
+    public static function checkstatususer(){
+
+        $user = Member::where("id","=",Auth::user()->id)->first();
+
+        $u_status = $user->validate;
+        $mail_st = substr($u_status, 1,1);
+        $id_st = substr($u_status, 2,1);
+
+        $data = "";
+
+        if($mail_st == 0 || $id_st == 0){
+
+          $data .= "<div id='popup' class='container'>
+            <div class='popup_bg'></div>
+          	<div class='row'>
+          		<div class='col-md-8 col-md-offset-2' id='popup_msg'>
+                <div class='text-right'>
+                  <span id='close_popup' class='glyphicon glyphicon-remove'></span>
+                </div>";
+
+          if($mail_st == 0){
+
+              $data .= "<div class='text-center text-warning' style='padding:15px;'>
+                        <p>คุณยังไม่ได้ยืนยันอีเมล กรุณายืนยันอีเมลก่อนคุณจึงสามารถใช้งานระบบได้
+                        <br>
+                        หากไม่ได้รับอีเมลกรุณากดที่ปุ่มด้านล่างเพื่อทำการส่งอีเมลอีกครั้ง
+                        </p>
+                        <a type='submit' class='btn btn-warning' href='send_email_verify'>
+                           ส่งอีเมลเพื่อทำการยืนยันอีเมล์
+                        </a>
+                        </div>";
+
+          }
+
+          if($id_st == 0){
+
+              $data .= "<div class='text-center text-warning' style='padding:15px;'>
+                        <p>คุณยังไม่ได้ส่งเอกสารสำเนาบัตรประชาชน กรุณาส่งเอกสารสำเนาบัตรประชาชนก่อนจึงใช้งานระบบได้
+                        </p>
+                        <a type='submit' class='btn btn-warning' href='user_profile'>
+                           ส่งเอกสารสำเนาบัตรประชาชน
+                        </a>
+                        </div>";
+
+          }
+
+          $data .= "</div>
+                      </div>
+                    </div>";
+
+        }
+
+        echo $data;
+
 
     }
 

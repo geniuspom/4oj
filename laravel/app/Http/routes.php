@@ -1,20 +1,135 @@
 <?php
+use App\Http\Controllers\LoginController as LoginController;
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
 
+Route::filter('Admincheck',function(){
+	$permission = LoginController::checkadmin();
 
+	if($permission != 3){
+			return Redirect::to('/');
+	}
+});
+
+Route::filter('Staffcheck',function(){
+	$permission = LoginController::checkadmin();
+
+	if($permission == 1){
+			return Redirect::to('/');
+	}
+});
+
+
+//check login
 Route::group(['middleware' => 'auth'], function()
 {
     Route::get('/', 'LoginController@index');
-		Route::get('admin',function(){
-		    return View::make('Member.admin');
+
+		Route::get('useredit/{id}', function($id){
+		    return View::make('Member.useredit');
 		});
+
+		Route::get('user_profile', function(){
+				return View::make('Member.profile');
+		});
+
+		//Request job
+		Route::get('add_request/{date}', function($date){
+				return View::make('Request_Job.newjob');
+		});
+		//edit
+		Route::get('editjob', function(){
+				return View::make('Request_Job.editjob');
+		});
+		//End request job
+
+		//event
+		Route::get('event', function(){
+				return View::make('event.event');
+		});
+
+		//View event
+		Route::get('event_detail/{id}', function($id){
+				return View::make('event.detail');
+		});
+
+
+		//Check admin
+		Route::group(['before' => 'Admincheck'], function(){
+
+			Route::get('admin',function(){
+					return View::make('Member.admin');
+			});
+
+		});
+
+		//Check staff
+		Route::group(['before' => 'Staffcheck'], function(){
+
+			//Customer
+			Route::get('customer', function(){
+					return View::make('Customer.customer');
+			});
+			//add
+			Route::get('add_customer', function(){
+					return View::make('Customer.add');
+			});
+			//View
+			Route::get('customer_detail/{id}', function($id){
+					return View::make('Customer.detail');
+			});
+			//edit
+			Route::get('edit_customer/{id}', function($id){
+					return View::make('Customer.edit');
+			});
+
+			//add_contact
+			Route::get('add_contact/{id}', function($id){
+					return View::make('Customer.addcontact');
+			});
+			//edit contact
+			Route::get('edit_contact/{id}', function($id){
+					return View::make('Customer.editcontact');
+			});
+			//End customer
+
+			//Venue
+			Route::get('venue', function(){
+					return View::make('Venue.venue');
+			});
+			//add
+			Route::get('add_venue', function(){
+					return View::make('Venue.add');
+			});
+			//View
+			Route::get('venue_detail/{id}', function($id){
+					return View::make('Venue.detail');
+			});
+			//edit
+			Route::get('edit_venue/{id}', function($id){
+					return View::make('Venue.edit');
+			});
+			//End Venue
+
+			//add event
+			Route::get('add_event', function(){
+					return View::make('event.add');
+			});
+			//edit event
+			Route::get('edit_event/{id}', function($id){
+					return View::make('event.edit');
+			});
+			//End event
+
+
+		});
+
 });
 
-//Link to page
+
 Route::get('login','LoginController@checklogin');
 
 Route::get('register',function(){
@@ -25,14 +140,6 @@ Route::get('forgot',function(){
     return View::make('Member.forgotpass');
 });
 
-Route::get('useredit/{id}', function($id){
-    return View::make('Member.useredit');
-});
-
-Route::get('user_profile', function(){
-		return View::make('Member.profile');
-});
-
 Route::get('reset/{id}/token/{token}', function($id,$token){
 		return View::make('Member.reset');
 });
@@ -41,89 +148,6 @@ Route::get('reset/{id}/token/{token}', function($id,$token){
 Route::get('activate/{activatecode}', function($activatecode){
     return View::make('Member.activate');
 });
-
-
-
-//Customer
-Route::get('customer', function(){
-		return View::make('Customer.customer');
-});
-//add
-Route::get('add_customer', function(){
-		return View::make('Customer.add');
-});
-//View
-Route::get('customer_detail/{id}', function($id){
-		return View::make('Customer.detail');
-});
-//edit
-Route::get('edit_customer/{id}', function($id){
-		return View::make('Customer.edit');
-});
-
-//add_contact
-Route::get('add_contact/{id}', function($id){
-		return View::make('Customer.addcontact');
-});
-//edit contact
-Route::get('edit_contact/{id}', function($id){
-		return View::make('Customer.editcontact');
-});
-//End customer
-
-
-
-//Venue
-Route::get('venue', function(){
-		return View::make('Venue.venue');
-});
-//add
-Route::get('add_venue', function(){
-		return View::make('Venue.add');
-});
-//View
-Route::get('venue_detail/{id}', function($id){
-		return View::make('Venue.detail');
-});
-//edit
-Route::get('edit_venue/{id}', function($id){
-		return View::make('Venue.edit');
-});
-//End Venue
-
-
-
-//event
-Route::get('event', function(){
-		return View::make('event.event');
-});
-//add
-Route::get('add_event', function(){
-		return View::make('event.add');
-});
-//View
-Route::get('event_detail/{id}', function($id){
-		return View::make('event.detail');
-});
-//edit
-Route::get('edit_event/{id}', function($id){
-		return View::make('event.edit');
-});
-//End event
-
-
-
-
-//Request job
-Route::get('add_request/{date}', function($date){
-		return View::make('Request_Job.newjob');
-});
-//edit
-Route::get('editjob', function(){
-		return View::make('Request_Job.editjob');
-});
-//End request job
-
 
 
 //Function
@@ -147,6 +171,8 @@ Route::post('uploaduser','UploadController@profilepicture');
 //upload id card
 Route::post('uploadidcard','UploadController@uploadidcard');
 
+//Calendar change
+Route::post('nextcalendar','Calendar@getformjquery');
 
 
 //function customer
@@ -219,4 +245,3 @@ Route::get('calendar', function(){
 Route::get('calendar2', function(){
 		return View::make('Calendar.test3');
 });
-Route::post('nextcalendar','Calendar@getformjquery');

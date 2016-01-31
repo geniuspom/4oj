@@ -5,6 +5,8 @@ use App\Models\bank as bank;
 use App\Models\education as education;
 use App\Models\validateuser as validateuser;
 use App\Models\institute as institute;
+use App\Models\province as province;
+use App\Models\district as district;
 use Illuminate\Support\Facades\Redirect;
 use Route;
 use Request;
@@ -81,6 +83,9 @@ Class GetUser extends Controller{
           echo "</select>";
         }else if($value == 'bank'){
           $bank = bank::orderBy('name')->get();
+          if(empty($vdata) || $vdata == 0){
+            $vdata = 3;
+          }
 
           echo "<select name='bank' id='bank' class='form-control'>";
               foreach ($bank as $recode){
@@ -91,6 +96,10 @@ Class GetUser extends Controller{
                   echo ">".$recode->name."</option>";
               }
           echo "</select>";
+        }else if($value == 'birthday'){
+          $split_birthday = explode("-", $vdata);
+          $vdata = $split_birthday[2]."/".$split_birthday[1]."/".$split_birthday[0];
+          echo $vdata;
         }else{
           echo $vdata;
         }
@@ -120,6 +129,30 @@ Class GetUser extends Controller{
                 echo $recode->name;
               }
           }
+        }else if($value == 'province'){
+          $province = province::orderBy('id')->get();
+
+          foreach ($province as $recode){
+              if ($vdata == $recode->id){
+                echo $recode->name;
+              }
+          }
+
+        }else if($value == 'district'){
+          $district = district::orderBy('name')->get();
+
+          foreach ($district as $recode){
+              if ($vdata == $recode->id){
+                echo $recode->name;
+              }
+          }
+
+        }else if($value == 'birthday'){
+          $split_birthday = explode("-", $vdata);
+          $vdata = $split_birthday[2]."/".$split_birthday[1]."/".$split_birthday[0];
+          echo $vdata;
+        }else{
+          echo $vdata;
         }
 
     }
@@ -129,6 +162,16 @@ Class GetUser extends Controller{
       $validate = validateuser::validateupdateuser(Request::all());
 
       if($validate->passes()){
+
+          $address_id = Request::input('address_id');
+
+          if(Request::input('address_id_checkbox') == true){
+            $address_id = Request::input('address');
+          }
+
+          $input_birthday = explode("/", Request::input('birthday'));
+          $birthday = $input_birthday[2]."-".$input_birthday[1]."-".$input_birthday[0];
+
           $user = Member::where("id","=",Request::input('id'))->first();
           $user->name = Request::input('name');
           $user->surname = Request::input('surname');
@@ -142,6 +185,10 @@ Class GetUser extends Controller{
 
           $user->address = Request::input('address');
           $user->province = Request::input('province');
+
+          $user->birthday = $birthday;
+          $user->lineid = Request::input('lineid');
+          $user->address_id = $address_id;
 
           if(Request::input('province') != 69){
             $user->district = 0;

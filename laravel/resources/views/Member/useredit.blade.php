@@ -74,7 +74,26 @@ use App\Http\Controllers\Getdataform as Getdataform;
                     <div class="form-group">
                       <label class="col-md-4 control-label">โทรศัพท์มือถือ *</label>
                       <div class="col-md-6">
-                        <input type="text" class="form-control" name="phone" value="{{ GetUser::getedituser($id,'phone') }}">
+                        <input type="text" maxlength="10" class="form-control" name="phone" value="{{ GetUser::getedituser($id,'phone') }}">
+                        <h6 class="text-muted">*ใส่เฉพาะตัวเลข 10 หลัก</h6>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">Line ID</label>
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" name="lineid" value="{{ GetUser::getedituser($id,'lineid') }}">
+                        <h6 class="text-muted">*เป็นช่องทางที่สะดวกที่สุดในการติดต่อ</h6>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">วันเกิด *</label>
+                      <div class="col-md-6">
+                        <div class="input-group date" id="birthday">
+                            <input type="text" class="form-control" name="birthday" value="{{ GetUser::getedituser($id,'birthday') }}"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
                       </div>
                     </div>
 
@@ -87,16 +106,17 @@ use App\Http\Controllers\Getdataform as Getdataform;
 
                     <div class="form-group">
                       <label class="col-md-4 control-label">ชื่อธนาคาร</label>
-                      <div class="col-md-6">
+                      <div class="col-md-6" >
                           {{ GetUser::getedituser($id,'bank') }}
                           <h6 class="text-muted">*ธนาคารกสิกรไทยจะไม่เสียค่าโอน</h6>
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label class="col-md-4 control-label">หมายเลขบัญชีธนาคา</label>
-                      <div class="col-md-6">
-                        <input type="text" class="form-control" name="account" value="{{ GetUser::getedituser($id,'account_no') }}">
+                      <label class="col-md-4 control-label">หมายเลขบัญชีธนาคาร</label>
+                      <div class="col-md-6" id="account">
+                        <input type="text" maxlength="10" class="form-control" name="account" value="{{ GetUser::getedituser($id,'account_no') }}">
+                        <h6 class="text-muted">*ใส่เฉพาะตัวเลข</h6>
                       </div>
                     </div>
 
@@ -122,6 +142,16 @@ use App\Http\Controllers\Getdataform as Getdataform;
                     </div>
 
                     <div class="form-group">
+                        <label class="col-md-4 control-label">ที่อยู่ตามบัตรประชาชน</label>
+                        <div class="col-md-6">
+                          <div class="checkbox">
+                            <label><input type="checkbox" value="true" name="address_id_checkbox">ใช้ตามที่อยู่ปัจจุบัน</label>
+                          </div>
+                          <textarea class="form-control" rows="5" name="address_id" >{{ GetUser::getedituser($id,'address_id') }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                       <label class="col-md-4 control-label">ระดับการศึกษา</label>
                       <div class="col-md-6">
                           {{ GetUser::getedituser($id,'education') }}
@@ -143,8 +173,15 @@ use App\Http\Controllers\Getdataform as Getdataform;
                     </div>
 
                     <div class="form-group">
+                      <label class="col-md-4 control-label"></label>
+                      <div class="col-md-6">
+                        <h6 class="text-warning">*กรุณากรอกเชขบัญชีธนาคารก่อนยืนยันการแก้ไขข้อมูล</h6>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
-                        <button type="submit" class="btn btn-primary" >
+                        <button id="submit_bt" type="submit" class="btn btn-primary" >
                           ยืนยันการแก้ไขข้อมูล
                         </button>
                         <!--<a class="btn btn-primary" href="{{ URL::previous() }}"> Cancel </a>-->
@@ -176,6 +213,57 @@ $(document).on('change', '#province', function() {
       $("#district").addClass('hidden');
     }
 
+});
+
+$('#birthday').click(function(event){
+ $('#birthday input').data("DateTimePicker").show();
+});
+$('#birthday input').datetimepicker({
+  format: "DD/MM/YYYY",
+  locale: 'th'
+});
+
+$(document).on( "focusout", "input" ,function(){
+  var id = $( "#account input" ).val();
+
+  if(CheckBankid(id)){
+    $("#account h6" ).html("*ใส่เฉพาะตัวเลข");
+    $("#account h6" ).removeClass('text-danger')
+    $("#account h6" ).addClass('text-muted');
+    $('#submit_bt').prop('disabled', false);
+  }else{
+    $("#account h6" ).html('หมายเลขบัญชีธนาคารไม่ถูกต้องกรุณาพิมพ์หมายเลขบัญชีธนาคารที่ถูกต้อง');
+    $("#account h6" ).removeClass('text-muted')
+    $("#account h6" ).addClass('text-danger');
+    $('#submit_bt').prop('disabled', true);
+  }
+
+});
+
+function CheckBankid (id) {
+  var x = new String(id);
+  var splitext = x.split("");
+  var total = 0;
+  var mul = 10;
+  for(i=0;i<splitext.length-1;i++) {
+    total = total + splitext[i] * mul;
+    mul = mul -1;
+  }
+
+  var mod = total % 8;
+  var nsub = 8 - mod;
+  var mod2 = nsub % 10;
+
+  if(mod2!=splitext[9]){
+    return false;
+  }else{
+    return true;
+  }
+
+}
+
+$(document).ready(function() {
+   $('#submit_bt').prop('disabled', true);
 });
 
 

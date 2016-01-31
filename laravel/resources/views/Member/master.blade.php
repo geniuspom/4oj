@@ -1,5 +1,6 @@
 <?php
   use App\Http\Controllers\GetUser as GetUser;
+  use App\Http\Controllers\LoginController as LoginController;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,19 +72,19 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>-->
+                </button>
                 <a class="navbar-brand" href="../4oj/">4oj</a>
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">
-                <!--<li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <ul class="nav navbar-top-links navbar-right text-right">
+                <li class="dropdown">
+                    <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
@@ -272,7 +273,7 @@
                     <!-- /.dropdown-alerts -->
                 <!--</li>-->
                 <!-- /.dropdown -->
-                <span style="color:#777777;">{{ GetUser::getuser(Auth::user()->id) }}</span>
+                <span style="color:#777777;padding:15px;">{{ GetUser::getuser(Auth::user()->id) }}</span>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -280,8 +281,10 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="/4oj/user_profile"><i class="fa fa-user fa-fw"></i> ข้อมูลส่วนตัว</a>
                         </li>
+                        @if (LoginController::checkpermission(3))
                         <li><a href="/4oj/admin"><i class="fa fa-gear fa-fw"></i> ผู้ดูแลระบบ</a>
                         </li>
+                        @endif
                         <li class="divider"></li>
                         <li><a href="/4oj/logout"><i class="fa fa-sign-out fa-fw"></i> ออกจากระบบ</a>
                         </li>
@@ -312,12 +315,14 @@
                         <li>
                             <a href="/4oj/event"><i class="fa fa-calendar fa-fw"></i> งานที่กำลังเปิดรับ</a>
                         </li>
+                        @if (LoginController::checkpermission(2))
                         <li>
                             <a href="/4oj/customer"><i class="fa fa-suitcase fa-fw"></i> รายชื่อลูกค้า</a>
                         </li>
                         <li>
                             <a href="/4oj/venue"><i class="fa fa-building fa-fw"></i> สถาที่จัดงาน</a>
                         </li>
+                        @endif
                         <!--<li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

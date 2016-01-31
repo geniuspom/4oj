@@ -52,8 +52,9 @@ use App\Http\Controllers\InstituteController as InstituteController;
 
 						<div class="form-group">
 							<label class="col-md-4 control-label">ที่อยู่อีเมล *</label>
-							<div class="col-md-6">
+							<div class="col-md-6" id="email">
 								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+								<h6 class="text-danger"></h6>
 							</div>
 						</div>
 
@@ -71,20 +72,34 @@ use App\Http\Controllers\InstituteController as InstituteController;
 							</div>
 						</div>
 
-                                                <div class="form-group">
-							<label class="col-md-4 control-label">โทรศัพท์มือถือ *</label>
+						<div class="form-group">
+							<label class="col-md-4 control-label">วันเกิด *</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
+								<div class="input-group date" id="birthday">
+										<input type="text" class="form-control" name="birthday" value="{{ old('birthday') }}"/>
+										<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+								</div>
 							</div>
 						</div>
 
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">หมายเลขบัตรประชาชน *</label>
-							<div class="col-md-6">
-								<input type="text" class="form-control" name="id_card" value="{{ old('id_card') }}">
+							<div class="col-md-6" id="id_card">
+								<input type="text" class="form-control" maxlength="13" name="id_card" value="{{ old('id_card') }}">
+								<h6 class="text-muted">*ใส่เฉพาะตัวเลข 13 หลัก</h6>
 							</div>
 						</div>
 
+						<div class="form-group">
+							<label class="col-md-4 control-label">โทรศัพท์มือถือ *</label>
+							<div class="col-md-6">
+								<input type="text" maxlength="10" class="form-control" name="phone" value="{{ old('phone') }}">
+								<h6 class="text-muted">*ใส่เฉพาะตัวเลข 10 หลัก</h6>
+							</div>
+						</div>
+
+
+<!--
                                                 <div class="form-group">
 							<label class="col-md-4 control-label">ชื่อธนาคาร</label>
 							<div class="col-md-6">
@@ -97,6 +112,7 @@ use App\Http\Controllers\InstituteController as InstituteController;
 							<label class="col-md-4 control-label">หมายเลขบัญชีธนาคาร</label>
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="account" value="{{ old('account') }}">
+								<h6 class="text-muted">*ใส่เฉพาะตัวเลข</h6>
 							</div>
 						</div>
 
@@ -146,11 +162,11 @@ use App\Http\Controllers\InstituteController as InstituteController;
 							<div class="col-md-6 col-md-offset-4 text-danger">
                                                             * จำเป็นต้องกรอกข้อมูล
 							</div>
-						</div>
+						</div>-->
 
 						<div class="form-group">
 							<div class="col-md-6 col-md-offset-4">
-                <button type="submit" class="btn btn-primary" >
+                <button id="submit_bt" type="submit" class="btn btn-primary" >
 									ลงทะเบียน
 								</button>
 								<a class="btn btn-primary" href="/4oj/"> ยกเลิก </a>
@@ -180,6 +196,116 @@ $(function() {
 	    }
 
 	});
+
+	$('#birthday').click(function(event){
+	 $('#birthday input').data("DateTimePicker").show();
+	});
+	$('#birthday input').datetimepicker({
+		format: "DD/MM/YYYY",
+		locale: 'th'
+	});
+
+
+	function validateEmail(email) {
+		var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+		if (filter.test(email)) {
+				return true;
+		}
+		else {
+				return false;
+		}
+
+	}
+
+	$(document).on( "focusout", "#email input" ,function(){
+		var email = $( "#email input" ).val();
+
+		if(validateEmail(email)){
+			$("#email h6" ).html("");
+			checkallinput();
+		}else{
+			$("#email h6" ).html('อีเมลไม่ถูกต้องกรุณาพิมพ์อีเมลที่ถูกต้อง');
+			$('#submit_bt').prop('disabled', true);
+		}
+
+	});
+
+	$(document).on( "focusout", "#id_card input" ,function(){
+		var id = $( "#id_card input" ).val();
+
+		if(CheckPersonID(id)){
+			$("#id_card h6" ).html("*ใส่เฉพาะตัวเลข 13 หลัก");
+			$("#id_card h6" ).removeClass('text-danger')
+			$("#id_card h6" ).addClass('text-muted');
+			checkallinput();
+		}else{
+			$("#id_card h6" ).html('เลขบัตรประชาชนไม่ถูกต้องกรุณาพิมพ์เลขบัตรประชาชนที่ถูกต้อง');
+			$("#id_card h6" ).removeClass('text-muted')
+			$("#id_card h6" ).addClass('text-danger');
+			$('#submit_bt').prop('disabled', true);
+		}
+
+	});
+
+
+	$(document).ready(function() {
+     $('#submit_bt').prop('disabled', true);
+ 	});
+
+	function CheckPersonID (id) {
+		var x = new String(id);
+		var splitext = x.split("");
+		var total = 0;
+		var mul = 13;
+		for(i=0;i<splitext.length-1;i++) {
+			total = total + splitext[i] * mul;
+			mul = mul -1;
+		}
+
+		var mod = total % 11;
+		var nsub = 11 - mod;
+		var mod2 = nsub % 10;
+
+		if(mod2!=splitext[12]){
+			return false;
+		}else{
+			return true;
+		}
+
+	}
+
+	function CheckBankid (id) {
+		var x = new String(id);
+		var splitext = x.split("");
+		var total = 0;
+		var mul = 10;
+		for(i=0;i<splitext.length-1;i++) {
+			total = total + splitext[i] * mul;
+			mul = mul -1;
+		}
+
+		var mod = total % 8;
+		var nsub = 8 - mod;
+		var mod2 = nsub % 10;
+
+		if(mod2!=splitext[9]){
+			return false;
+		}else{
+			return true;
+		}
+
+	}
+
+
+	function checkallinput(){
+		var email = $( "#email input" ).val();
+		var id = $( "#id_card input" ).val();
+
+		if(CheckPersonID(id) && validateEmail(email)){
+			$('#submit_bt').prop('disabled', false);
+		}
+
+	}
 
 
 </script>
