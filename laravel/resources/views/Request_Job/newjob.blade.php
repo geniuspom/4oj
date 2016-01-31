@@ -98,7 +98,7 @@ if($date == "null"){
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
                         <button type="submit" class="btn btn-primary" >
-                          สร้างคำร้องขอ
+                          แจ้งวันและเวลาที่คุณสามารถทำงานได้
                         </button>
                         <a class="btn btn-primary" href="/4oj/"> ยกเลิก </a>
                       </div>

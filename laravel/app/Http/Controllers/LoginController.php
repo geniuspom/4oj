@@ -234,4 +234,20 @@ Class LoginController extends Controller{
 
     }
 
+    public static function checkverifyuser(){
+
+      $user = Member::where("id","=",Auth::user()->id)->first();
+
+      $u_status = $user->validate;
+      $mail_st = substr($u_status, 1,1);
+      $id_st = substr($u_status, 2,1);
+
+      if($mail_st == 1 && $id_st == 1){
+          return true;
+      }else{
+          return false;
+      }
+
+    }
+
 }

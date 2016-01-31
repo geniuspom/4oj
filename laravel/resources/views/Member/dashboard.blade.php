@@ -61,7 +61,9 @@
     <div class="row">
       <div class="col-sm-12 text-right" style="padding-bottom:10px;">
         <input type="hidden" id="day_select" name="day_select" value=""/>
-        <button class="btn btn-primary btn-sm" type="submit" name = "btn-new" id="new_request"><i class="fa fa-plus" ></i> สร้างคำร้องขอ </button>
+        @if (LoginController::checkverifyuser())
+          <button class="btn btn-primary btn-sm" type="submit" name = "btn-new" id="new_request"><i class="fa fa-plus" ></i> แจ้งวันและเวลาที่คุณสามารถทำงานได้ </button>
+        @endif
       </div>
     </div>
     <div class='panel panel-default' id='content_calendar'>
