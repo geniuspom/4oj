@@ -19,7 +19,6 @@ use App\Http\Controllers\GetUser as GetUser;
           <table class="table table-bordered table-hover table-striped">
             <thead>
               <tr>
-                <th class="text-center">ID</th>
                 <th class="text-center">ชื่อ - นามสกุล</th>
                 <th class="text-center">อีเมล</th>
                 <th class="text-center">โทรศัพท์</th>

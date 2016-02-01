@@ -35,9 +35,7 @@ Class GetUser extends Controller{
           $mail_st = substr($u_status, 1,1);
           $id_st = substr($u_status, 2,1);
           $id_valid = substr($u_status, 3,1);
-          echo "<tr><td class='text-center'>".
-                $record->id .
-                "</td><td>".
+          echo "<tr><td>".
                 $record->name . " " . $record->surname .
                 "</td><td>".
                 $record->email .
