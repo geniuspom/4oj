@@ -41,8 +41,12 @@ Route::group(['middleware' => 'auth'], function()
 				return View::make('Request_Job.newjob');
 		});
 		//edit
-		Route::get('editjob', function(){
+		Route::get('editjob/{id}', function($id){
 				return View::make('Request_Job.editjob');
+		});
+		//detail
+		Route::get('detail_request/{id}', function($id){
+				return View::make('Request_Job.detail');
 		});
 		//End request job
 
@@ -127,6 +131,10 @@ Route::group(['middleware' => 'auth'], function()
 			});
 			//End event
 
+			//report request job
+			Route::get('reportrequestjob', function(){
+					return View::make('Request_Job.report');
+			});
 
 		});
 
@@ -214,6 +222,12 @@ Route::post('geteventform','EventControl@getformjquery');
 
 //function request job
 Route::post('add_request_job','RequestJob@add');
+//delete
+Route::post('delete_jobrequest','RequestJob@delete');
+//edit
+Route::post('edit_request_job','RequestJob@edit');
+//report
+Route::post('get_report_filter','RequestJob@get_report_jquery');
 //end function request job
 
 

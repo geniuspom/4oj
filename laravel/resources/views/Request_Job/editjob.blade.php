@@ -3,11 +3,7 @@
 <?php
 $date = Route::Input('date');
 use App\Http\Controllers\RequestJob as RequestJob;
-use App\Http\Controllers\Calendar as Calendar;
-
-$allevent = RequestJob::getrequestjob("2016-01-17","2016-01-23");
-$allmultievent = RequestJob::getrequestjobmulti("2016-01-17","2016-01-23");
-$returnevent = Calendar::getevent("2016-01-21");
+$id = Route::Input('id');
 ?>
 
 <div id="page-wrapper">
@@ -36,26 +32,17 @@ $returnevent = Calendar::getevent("2016-01-21");
                     </ul>
                   </div>
                   @endif
-                   {{ $allevent[0]['Numberofday'] }}
-                   {{ $returnevent['number']}}
-                  <!--<form class="form-horizontal" role="form" method="POST" action="{{ url('/add_request_job') }}">
+                  <form class="form-horizontal" role="form" method="POST" action="{{ url('/edit_request_job') }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-
-                    <div class="form-group">
-                      <label class="col-md-4 control-label">ชื่อ *</label>
-                      <div class="col-md-6">
-                        <input type="text" class="form-control" name="request_name" value="{{ old('request_name') }}">
-                      </div>
-                    </div>
+                    <input type="hidden" name="id" value="{{ $id }}">
 
                     <div class="form-group">
                       <label class="col-md-4 control-label">วันเริ่ม *</label>
                       <div class="col-md-6" id="sandbox-container">
                         <div class="input-daterange input-group" id="datepicker">
-                            <input type="text" class="input-sm form-control" name="start_date" value="{{ old('start_date') }}"/>
+                            <input type="text" class="input-sm form-control" name="start_date" value="{{ RequestJob::gatdeatail($id,'start_date','') }}"/>
                             <span class="input-group-addon">ถึง</span>
-                            <input type="text" class="input-sm form-control" name="end_date" value="{{ old('end_date') }}"/>
+                            <input type="text" class="input-sm form-control" name="end_date" value="{{ RequestJob::gatdeatail($id,'end_date','') }}"/>
                         </div>
                       </div>
                     </div>
@@ -63,45 +50,27 @@ $returnevent = Calendar::getevent("2016-01-21");
                     <div class="form-group">
                       <label class="col-md-4 control-label">ช่วงเวลา *</label>
                       <div class="col-md-6">
-                          <select class="form-control" id="duration" name="duration">
-                              <option selected="selected" value="1">ทั้งวัน</option>
-                              <option value="2">ช่วงเช้า</option>
-                              <option value="3">ช่วงบ่าย</option>
-                          </select>
-                      </div>
-                    </div>-->
-
-                    <!--<div class="form-group">
-                      <label class="col-md-4 control-label">งานประชุมที่เลือก *</label>
-                      <div class="col-md-6">
-                          <select class="form-control" id="event_id" name="event_id">
-                              <option selected="selected" value="1">ทั้งวัน</option>
-                              <option value="2">ช่วงเช้า</option>
-                              <option value="3">ช่วงบ่าย</option>
-                          </select>
-                      </div>
-                    </div>-->
-
-
-                    <!--<div class="form-group">
-                      <label class="col-md-4 control-label">บันทึกเพิ่มเติม</label>
-                      <div class="col-md-6">
-                        <textarea class="form-control" rows="5" name="remark" >{{ old('remark') }}</textarea>
+                        {{ RequestJob::gatdeatail($id,'duration','edit') }}
                       </div>
                     </div>
 
-
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">บันทึกเพิ่มเติม</label>
+                      <div class="col-md-6">
+                        <textarea class="form-control" rows="5" name="remark" >{{ RequestJob::gatdeatail($id,'remark','') }}</textarea>
+                      </div>
+                    </div>
 
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
                         <button type="submit" class="btn btn-primary" >
-                          สร้างคำร้องขอ
+                          แก้ไขวันและเวลาที่คุณสามารถทำงานได้
                         </button>
-                        <a class="btn btn-primary" href="/4oj/"> ยกเลิก </a>
+                        <a class="btn btn-primary" href="{{url('/detail_request')}}{{"/".$id}}"> ยกเลิก </a>
                       </div>
                     </div>
 
-                  </form>-->
+                  </form>
               </div>
           </div>
         </div>
