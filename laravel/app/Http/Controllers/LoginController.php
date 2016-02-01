@@ -192,7 +192,7 @@ Class LoginController extends Controller{
           $data .= "<div id='popup' class='container'>
             <div class='popup_bg'></div>
           	<div class='row'>
-          		<div class='col-md-8 col-md-offset-2' id='popup_msg'>
+          		<div class='col-sm-8 col-sm-offset-2' id='popup_msg'>
                 <div class='text-right'>
                   <span id='close_popup' class='glyphicon glyphicon-remove'></span>
                 </div>";
