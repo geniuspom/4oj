@@ -317,6 +317,9 @@
                         </li>
                         @if (LoginController::checkpermission(2))
                         <li>
+                            <a href="/4oj/reportrequestjob"><i class="fa fa-list-alt fa-fw"></i> รายงานคำร้องขอทำงาน</a>
+                        </li>
+                        <li>
                             <a href="/4oj/customer"><i class="fa fa-suitcase fa-fw"></i> รายชื่อลูกค้า</a>
                         </li>
                         <li>

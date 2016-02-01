@@ -44,7 +44,9 @@ $( document ).ready(function(){
     $("#"+oldselect).removeClass( "st-bg-select" );
     $("#day_select").val($(this).attr('id'));
     $("#"+$("#day_select").val()).addClass( "st-bg-select" );*/
-    alert($(this).attr('id'));
+    var evrnt_id = $(this).attr('id');
+    var url = "detail_request/" + evrnt_id;
+    window.location.href = url;
   });
 
 
