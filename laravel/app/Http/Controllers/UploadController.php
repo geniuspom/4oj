@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 //use Illuminate\Http\Request;
 use App\Models\images as upload;
 use App\Models\idcard as idcard;
+use App\Models\Member as Member;
 
 use Request;
 use Image;
@@ -164,6 +165,22 @@ class UploadController extends Controller{
           $dbidcard->id_thumbnail = $thunbnail;
           $dbidcard->save();
 
+          //update id validate status
+          $user = Member::where('id', '=', $user_id)->first();
+
+          $validate = $user->validate;
+
+          $mail_st = substr($validate, 1,1);
+          $verify_id = substr($validate, 3,1);
+
+          $new_validate = "1".$mail_st."1".$verify_id;
+
+          $user->validate = $new_validate;
+
+          $user->save();
+          //End update id validate status
+
+
         }
         //Not found image
         else{
@@ -174,6 +191,21 @@ class UploadController extends Controller{
           $dbidcard->id_user = $user_id;
           $dbidcard->id_thumbnail = $thunbnail;
           $dbidcard->save();
+
+          //update id validate status
+          $user = Member::where('id', '=', $user_id)->first();
+
+          $validate = $user->validate;
+
+          $mail_st = substr($validate, 1,1);
+          $verify_id = substr($validate, 3,1);
+
+          $new_validate = "1".$mail_st."1".$verify_id;
+
+          $user->validate = $new_validate;
+
+          $user->save();
+          //End update id validate status
 
         }
 

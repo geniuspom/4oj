@@ -191,7 +191,7 @@ use App\Http\Controllers\UploadController as UploadController;
                       </div>
                   </form>
                   <!-- End Profile Image -->
-
+                  <hr/>
                   <!-- ID Card -->
                   <form action="{{ url('/uploadidcard') }}" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">

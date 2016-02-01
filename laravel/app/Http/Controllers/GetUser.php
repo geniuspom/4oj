@@ -145,7 +145,7 @@ Class GetUser extends Controller{
               }
           }
 
-        }else if($value == 'birthday'){
+        }else if($value == 'birthday' && !empty($vdata)){
           $split_birthday = explode("-", $vdata);
           $vdata = $split_birthday[2]."/".$split_birthday[1]."/".$split_birthday[0];
           echo $vdata;
