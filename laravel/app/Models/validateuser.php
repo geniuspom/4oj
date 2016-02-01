@@ -24,10 +24,16 @@ class validateuser extends Model {
     public static function validateforgot($input){
 
         $rules = array(
-            'email' => 'Required|Between:3,64|Email'
+            'email' => 'Required|between:5,64|email',
         );
 
-        return Validator::make($input, $rules);
+        $message = array(
+    			'email.required' => 'กรุณาป้อนอีเมล',
+    			'email.between' => 'กรุณาป้อนอีเมลอย่างน้อย 5 ตัวอักษร',
+    			'email.email' => 'รูปแบบของอีเมลไม่ถูกต้อง',
+    		);
+
+        return Validator::make($input, $rules, $message);
 
     }
 

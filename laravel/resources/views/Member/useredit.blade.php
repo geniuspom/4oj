@@ -223,7 +223,7 @@ $('#birthday input').datetimepicker({
   locale: 'th'
 });
 
-$(document).on( "focusout", "input" ,function(){
+/*$(document).on( "focusout", "input" ,function(){
   var id = $( "#account input" ).val();
 
   if(CheckBankid(id)){
@@ -238,7 +238,7 @@ $(document).on( "focusout", "input" ,function(){
     $('#submit_bt').prop('disabled', true);
   }
 
-});
+});*/
 
 function CheckBankid (id) {
   var x = new String(id);
@@ -263,7 +263,7 @@ function CheckBankid (id) {
 }
 
 $(document).ready(function() {
-   $('#submit_bt').prop('disabled', true);
+   //$('#submit_bt').prop('disabled', true);
 });
 
 

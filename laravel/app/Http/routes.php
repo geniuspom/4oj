@@ -56,6 +56,9 @@ Route::group(['middleware' => 'auth'], function()
 				return View::make('event.detail');
 		});
 
+		//View event
+		Route::get('send_email_verify', 'LoginController@send_email_verify');
+
 
 		//Check admin
 		Route::group(['before' => 'Admincheck'], function(){

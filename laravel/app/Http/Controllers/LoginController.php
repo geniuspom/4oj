@@ -99,7 +99,7 @@ Class LoginController extends Controller{
             return Redirect::to('/');
         }else{
             return redirect()->back()
-                    ->with('message',"Error!! Username or Password Incorrect. \nPlease try again.")
+                    ->with('message',"เกิดข้อผิดพลาด!! ชื่ออีเมล หรือ รหัสผ่าน ไม่ถูกต้อง. \nกรุณาลองใหม่อีกครั้ง.")
                     ->withInput(Request::except('password'));
         }
     }
@@ -162,7 +162,7 @@ Class LoginController extends Controller{
 
           if($user->save()){
             return redirect::to('login')
-                ->with('status',"Your account has been activated.");
+                ->with('status',"การยืนยันอีเมลสำเร็จแล้ว");
           }
 
         //not found activate code
@@ -170,7 +170,7 @@ Class LoginController extends Controller{
 
 
           return redirect::to('login')
-                ->with('message',"Activate code is wrong! Please contact administrator.");
+                ->with('message',"โค๊ดที่ใช้ในการยืนยันไม่ถูกต้อง! กรุณากดส่งโค๊ดเพื่อยืนยันอีเมลใหม่ หรือ ติดต่อผู้ดูแลระบบ.");
 
 
         }
@@ -247,6 +247,32 @@ Class LoginController extends Controller{
       }else{
           return false;
       }
+
+    }
+
+    public static function send_email_verify(){
+
+      //Generate validate code
+      $validatecode = MD5(app('App\Http\Controllers\Sendmail')->generateRandomString());
+
+      $user = Member::where("id","=",Auth::user()->id)->first();
+
+      $name = $user->name;
+      $surname = $user->surname;
+      $email = 	$user->email;
+
+      //save new verify code
+      $user->email_valid_code = $validatecode;
+      $user->save();
+
+      //ส่ง email
+
+      app('App\Http\Controllers\Sendmail')->sendEmailReminder($name . " " . $surname,$email,$validatecode);
+
+      //จบส่ง email
+
+      return redirect::to('user_profile')
+          ->with('status',"ทำการส่งอีเมลเพื่อยืนยันเรียบร้อยแล้ว");
 
     }
 
