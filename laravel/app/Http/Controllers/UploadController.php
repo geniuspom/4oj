@@ -155,10 +155,16 @@ class UploadController extends Controller{
 
           if($oldext != 'pdf'){
             $image_thumbnail = $_SERVER['DOCUMENT_ROOT'] . '/4oj/' . $dbidcard->id_thumbnail;
-            unlink($image_thumbnail);
+
+            if($filename != $dbidcard->id_name){
+              unlink($image_thumbnail);
+            }
+
           }
 
-          unlink($image_path);
+          if($filename != $dbidcard->id_name){
+            unlink($image_path);
+          }
 
           //update link
           $dbidcard->id_name = $filename;
