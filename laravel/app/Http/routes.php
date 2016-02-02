@@ -228,6 +228,8 @@ Route::post('delete_jobrequest','RequestJob@delete');
 Route::post('edit_request_job','RequestJob@edit');
 //report
 Route::post('get_report_filter','RequestJob@get_report_jquery');
+//request event
+Route::post('request_event','RequestJob@request_event');
 //end function request job
 
 

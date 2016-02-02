@@ -26,11 +26,13 @@ $id = Route::Input('id');
     						</div>
     					@endif
               <div class="form-horizontal">
-                    @if (RequestJob::gatdeatail($id,'event_id','') != 0)
+                    @if (!empty(RequestJob::gatdeatail($id,'event_id','')))
                     <div class="form-group">
                       <label class="col-md-5 text-right">ชื่องานที่สมัคร</label>
                       <div class="col-md-6 text-info" >
+                        <a href="{{ RequestJob::gatdeatail($id,'event_id','getid') }}">
                         {{ RequestJob::gatdeatail($id,'event_id','') }}
+                        </a>
                       </div>
                     </div>
                     @endif
@@ -65,7 +67,7 @@ $id = Route::Input('id');
 
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
-                        @if (RequestJob::gatdeatail($id,'event_id','') == 0)
+                        @if (empty(RequestJob::gatdeatail($id,'event_id','')))
                         <a class="btn btn-primary" href="/4oj/editjob/{{ $id }}"> แก้ไขข้อมูล </a>
                         @endif
                         <a class="btn btn-primary" href="/4oj/"> ยกเลิก </a>

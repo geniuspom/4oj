@@ -3,6 +3,7 @@
 <?php
 use App\Http\Controllers\EventControl as EventControl;
 use App\Http\Controllers\Getdataform as Getdataform;
+use App\Http\Controllers\LoginController as LoginController;
 $id = Route::Input('id');
 ?>
 
@@ -198,7 +199,20 @@ $id = Route::Input('id');
 
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
+                        @if (LoginController::checkpermission(2))
                         <a class="btn btn-primary" href="/4oj/edit_event/{{ $id }}"> แก้ไขข้อมูล </a>
+                        @endif
+
+                        <form style="display:inline;" role="form" method="POST" action=" {{ url('request_event') }} ">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <input type="hidden" name="event_id" value="{{ $id }}">
+
+                          <button type="submit" class="btn btn-primary request_this_event" >
+                            ยื่นขอทำงานนี้
+                          </button>
+
+                        </form>
+
                         <a class="btn btn-primary" href="/4oj/event"> ยกเลิก </a>
                       </div>
                     </div>
@@ -208,5 +222,22 @@ $id = Route::Input('id');
         </div>
       </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $( ".request_this_event" ).click(function() {
+          var txt;
+          var r = confirm("คุณต้องการยื่นขอทำงานนี้นี้หรือไม่");
+          if (r == true) {
+              return true;
+          } else {
+              return false;
+          }
+        });
+
+    });
+
+</script>
 
 @stop

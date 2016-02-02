@@ -7,6 +7,7 @@ use App\Models\Member as Member;
 use App\Models\validaterequestjob as validaterequestjob;
 use Illuminate\Support\Facades\Redirect;
 use Request;
+use Auth;
 
 Class RequestJob extends Controller{
 
@@ -364,8 +365,17 @@ Class RequestJob extends Controller{
 
     }else if($value == 'event_id' && $returndata != 0){
 
-      $event = event::where("id","=", $returndata)->first();
-      $returndata = $event->event_name;
+      if($type == "getid"){
+
+        $event_id_value = $returndata;
+        $returndata = "/4oj/event_detail/".$event_id_value;
+
+      }else{
+
+        $event = event::where("id","=", $returndata)->first();
+        $returndata = $event->event_name;
+
+      }
 
     }
 
@@ -707,6 +717,40 @@ Class RequestJob extends Controller{
     //===============================================================================================
 
     echo $returndata;
+
+  }
+
+  public static function request_event(){
+
+    $event = event::where("id","=", Request::input('event_id'))->first();
+
+    $request_name = $event->event_name;
+    $start_date = $event->event_date;
+    $end_date = $event->event_date;
+    $duration = $event->meeting_period;
+
+    //=====================================================================================
+
+    $request = new request_job();
+    $request->request_name = $request_name;
+    $request->user_id = Auth::user()->id;
+    $request->start_date = $start_date;
+    $request->end_date = $end_date;
+    $request->duration = $duration;
+    $request->event_id = Request::input('event_id');
+    $request->multiple_day = 0;
+
+    $url = "event_detail/".Request::input('event_id');
+
+    if($request->save()) {
+      return redirect::to($url)
+              ->with('status',"ยื่นขอทำงานสำเร็จ");
+    } else {
+      return redirect::to($url)
+              ->withInput(Request::except('password'))
+              ->withErrors("เกิดข้อผิดพลาด - ไม่สามารถยื่นขอทำงานนี้ได้ กรุณาติดต่อผู้ดูแลระบบ");
+    }
+
 
   }
 
