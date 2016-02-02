@@ -180,6 +180,7 @@ use App\Http\Controllers\UploadController as UploadController;
                           <label class="col-md-5 text-right"></label>
                           <div class="col-md-6 text-info" >
                             <input type="file" name="uploader" id="uploader" />
+                            <h6 class="text-danger">*สามารถอัพโหลดได้เฉพาะไฟล์ JPG เท่านั้น</h6>
                           </div>
                         </div>
 
@@ -213,6 +214,7 @@ use App\Http\Controllers\UploadController as UploadController;
                           <label class="col-md-5 text-right"></label>
                           <div class="col-md-6 text-info" >
                             <input type="file" name="uploader" id="uploader" />
+                            <h6 class="text-danger">*สามารถอัพโหลดได้เฉพาะไฟล์ JPG หรือ PDF เท่านั้น</h6>
                           </div>
                         </div>
 

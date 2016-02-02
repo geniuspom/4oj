@@ -46,8 +46,8 @@
 				                        </button>
                             </fieldset>
                         </form>
-                        <div class="text-center" style="padding:15px 15px 0px 15px;">
-                          <a href="/4oj/upload_file/manual/register manual 4OJ.pdf" target="_blank"><i class="fa fa-info-circle fa-fw"></i>คู่มือการสมัครสมาชิกและการใช้งาน</a>
+                        <div class="text-center" style="padding:15px 15px 0px 15px;font-size:16px;">
+                          <a class="text-danger" href="/4oj/upload_file/manual/register manual 4OJ.pdf" target="_blank"><i class="fa fa-info-circle fa-fw"></i>คู่มือการสมัครสมาชิก</a>
                         </div>
                     </div>
                 </div>

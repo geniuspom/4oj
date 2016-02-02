@@ -66,6 +66,11 @@
         @endif
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-12 text-right" style="padding-bottom:10px;">
+        <a class="text-danger" href="/4oj/upload_file/manual/job request manual 4OJ.pdf" target="_blank"><i class="fa fa-info-circle fa-fw"></i>คู่มือการแจ้งวันและเวลาที่คุณสามารถทำงานได้</a>
+      </div>
+    </div>
     <div class='panel panel-default' id='content_calendar'>
 
     <!-- start calendar -->

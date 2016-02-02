@@ -65,8 +65,11 @@ class UploadController extends Controller{
           $image = upload::where('image_user', '=', $user_id)->first();
           $image_path = $_SERVER['DOCUMENT_ROOT'] . '/4oj/upload_file/images/default/' . $image->image_name;
           $image_thumbnail = $_SERVER['DOCUMENT_ROOT'] . '/4oj/' . $image->image_thumbnail;
-          unlink($image_path);
-          unlink($image_thumbnail);
+
+          if($filename != $image->image_name){
+            unlink($image_path);
+            unlink($image_thumbnail);
+          }
 
           //update link
           $image->image_name = $filename;
