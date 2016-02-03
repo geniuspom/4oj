@@ -385,7 +385,22 @@ if($i == 4){
 
                           $today_week_number = date('w',strtotime($current_day));
 
-                            if(strtotime($eventmulti[$eventmultincount]['start_date']) == strtotime($current_day)){
+                          if(!empty($eventmulti[$eventmultincount]['request_name'])){
+                            $title = $eventmulti[$eventmultincount]['request_name'];
+                          }else{
+                            $title = "&nbsp;";
+                          }
+
+                          //เช็คช่วงเวลา request
+                          if($eventmulti[$eventmultincount]['duration'] == 2){
+                            $event_color_class = "event_color_morning";
+                          }else if($eventmulti[$eventmultincount]['duration'] == 3){
+                            $event_color_class = "event_color_afternoon";
+                          }else{
+                            $event_color_class = "event_color_allday";
+                          }
+
+                          if(strtotime($eventmulti[$eventmultincount]['start_date']) == strtotime($current_day)){
 
                                   if((7-$today_week_number) >= $number_of_multiday){
                                     $colspan = $number_of_multiday;
@@ -395,8 +410,8 @@ if($i == 4){
 
                                   $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c' colspan='". $colspan ."'>
                                                                         <div id='". $eventmulti[$eventmultincount]['id'] ."' class='st-c-pos'>
-                                                                            <div class='rb-n' style='border:1px solid #fdcc8f; color:#777777;background-color:#fdead2;'>
-                                                                            <div class='rb-ni'>&nbsp;</div>
+                                                                            <div class='rb-n ".$event_color_class."' >
+                                                                            <div class='rb-ni'>". $title ."</div>
                                                                             </div>
                                                                         </div>
                                                                         </td>";
@@ -417,8 +432,8 @@ if($i == 4){
 
                                 $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c' colspan='". $colspan ."'>
                                                                       <div id='". $eventmulti[$eventmultincount]['id'] ."' class='st-c-pos'>
-                                                                          <div class='rb-n' style='border:1px solid #fdcc8f; color:#777777;background-color:#fdead2;'>
-                                                                          <div class='rb-ni'>&nbsp;</div>
+                                                                          <div class='rb-n ".$event_color_class."' >
+                                                                          <div class='rb-ni'>". $title ."</div>
                                                                           </div>
                                                                       </div>
                                                                       </td>";
@@ -441,14 +456,29 @@ if($i == 4){
                         //เช็ค event เดี่ยว
                         if($numberevent_of_day > 0 && $numberevent_of_day > $eventcount && $numbermultievent_of_day == $eventmultincount){
 
+                              if(!empty($event[$eventcount]['request_name'])){
+                                $title = $event[$eventcount]['request_name'];
+                              }else{
+                                $title = "&nbsp;";
+                              }
+
+                              //เช็คช่วงเวลา request
+                              if($event[$eventcount]['duration'] == 2){
+                                $event_color_class = "event_color_morning";
+                              }else if($event[$eventcount]['duration'] == 3){
+                                $event_color_class = "event_color_afternoon";
+                              }else{
+                                $event_color_class = "event_color_allday";
+                              }
+
                               if($numberevent_of_day == $eventcount+1){
 
                                 $rowspan = $week_event_row[$row_of_month-1] - $i;
 
                                 $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c' rowspan='". $rowspan ."'>
                                                                       <div id='". $event[$eventcount]['id'] ."' class='st-c-pos'>
-                                                                          <div class='rb-n' style='border:1px solid #fdcc8f; color:#777777;background-color:#fdead2;'>
-                                                                          <div class='rb-ni'>&nbsp;</div>
+                                                                          <div class='rb-n ".$event_color_class."' >
+                                                                          <div class='rb-ni'>". $title ."</div>
                                                                           </div>
                                                                       </div>
                                                                       </td>";
@@ -459,8 +489,8 @@ if($i == 4){
 
                                 $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c'>
                                                                       <div id='". $event[$eventcount]['id'] ."' class='st-c-pos'>
-                                                                          <div class='rb-n' style='border:1px solid #fdcc8f; color:#777777;background-color:#fdead2;'>
-                                                                          <div class='rb-ni'>&nbsp;</div>
+                                                                          <div class='rb-n ".$event_color_class."' >
+                                                                          <div class='rb-ni'>". $title ."</div>
                                                                           </div>
                                                                       </div>
                                                                       </td>";

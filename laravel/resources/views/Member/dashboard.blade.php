@@ -72,6 +72,13 @@
         <a class="text-danger" href="{{$root_url}}/upload_file/manual/job request manual 4OJ.pdf" target="_blank"><i class="fa fa-info-circle fa-fw"></i>คู่มือการแจ้งวันและเวลาที่คุณสามารถทำงานได้</a>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-12 text-right" style="padding-bottom:10px;">
+        <span><i style="color:#200ffe;" class="fa fa-square fa-fw"></i>ช่วงเช้า</span>
+        <span><i style="color:#fdcc8f;" class="fa fa-square fa-fw"></i>ช่วงบ่าย</span>
+        <span><i style="color:#d1e273;" class="fa fa-square fa-fw"></i>ทั้งวัน</span>
+      </div>
+    </div>
     <div class='panel panel-default' id='content_calendar'>
 
     <!-- start calendar -->

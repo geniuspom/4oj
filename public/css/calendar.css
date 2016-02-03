@@ -172,3 +172,18 @@
 table{
   border-collapse:separate;
 }
+.event_color_morning{
+  border:1px solid #200ffe;
+  background-color:#5649ff;
+  color:#ffffff;
+}
+.event_color_afternoon{
+  border:1px solid #fdcc8f;
+  background-color:#fdead2;
+  color:#777777;
+}
+.event_color_allday{
+  border:1px solid #d1e273;
+  background-color:#eafc85;
+  color:#444444;
+}
