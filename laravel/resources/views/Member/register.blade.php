@@ -3,8 +3,9 @@
 use App\Http\Controllers\Getdataform as Getdataform;
 use App\Http\Controllers\InstituteController as InstituteController;
 ?>
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <!-- jQuery UI -->
-<script src="/4oj/public/jquery-ui/jquery-ui.js"></script>
+<script src="{{$root_url}}/public/jquery-ui/jquery-ui.js"></script>
 
 <div class="container">
 	<div class="row">
@@ -169,7 +170,7 @@ use App\Http\Controllers\InstituteController as InstituteController;
                 <button id="submit_bt" type="submit" class="btn btn-primary" >
 									ลงทะเบียน
 								</button>
-								<a class="btn btn-primary" href="/4oj/"> ยกเลิก </a>
+								<a class="btn btn-primary" href="{{$root_url}}"> ยกเลิก </a>
 							</div>
 						</div>
 					</form>
@@ -181,7 +182,7 @@ use App\Http\Controllers\InstituteController as InstituteController;
 <script type="text/javascript">
 
 $(function() {
-    var availableTags = <?php include('../4oj/laravel/app/Http/Controllers/InstituteController.php'); ?>;
+    var availableTags = <?php include('..'.$root_url.'/laravel/app/Http/Controllers/InstituteController.php'); ?>;
     $("#institute").autocomplete({
         source: availableTags,
         autoFocus:true

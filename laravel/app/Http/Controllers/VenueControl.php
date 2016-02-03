@@ -22,6 +22,8 @@ Class VenueControl extends Controller{
     //get all customer
     public static function getall(){
 
+        $root_url = dirname($_SERVER['PHP_SELF']);
+
         $venue = venue::orderBy('name')->get();
 
         foreach ($venue as $record){
@@ -38,7 +40,7 @@ Class VenueControl extends Controller{
                 $record->area .
                 "</td><td class='text-center'><a href='edit_venue/".
                 $record->id .
-                "'><img src='/4oj/public/image/file_edit.png' width='20px' /></a></td><tr>";
+                "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a></td><tr>";
         }
 
     }

@@ -24,7 +24,7 @@ class sendmail extends Controller{
 
     public static function sendEmailReminder($name,$email,$validatecode){
 
-      $link = 'http://localhost/4oj/activate/'. $validatecode;
+      $link = 'http://www.ojconsultinggroup.com/4oj/activate/'. $validatecode;
 
       Mail::send('Member.mailvalidate', array('name'=>$name,'link'=>$link), function ($message) use ($email) {
 
@@ -67,7 +67,7 @@ class sendmail extends Controller{
                   $id = $record->id;
                 }
 
-                $link = 'http://localhost/4oj/reset/'. $id . '/token/' . $sforgot_code;
+                $link = 'http://www.ojconsultinggroup.com/4oj/reset/'. $id . '/token/' . $sforgot_code;
 
                 Mail::send('Member.mailforgot', array('code'=>$sforgot_code,'name'=>$name,'link'=>$link), function ($message) {
 
@@ -76,10 +76,10 @@ class sendmail extends Controller{
                 });
 
                 return Redirect::to('forgot')
-                  ->with('status', 'Email forgot has been send.');
+                  ->with('status', 'อีเมลสำหรับตั้งรหัสผ่านใหม่ได้ถูกส่งไปแล้ว');
 
             }else{
-                $msg = "Not found email!";
+                $msg = "เกิดข้อผิดพลาด! ไม่พบชื่ออีเมลนี้ในระบบ";
 
                 return Redirect::to('forgot')
                     ->withInput(Request::except('password'))

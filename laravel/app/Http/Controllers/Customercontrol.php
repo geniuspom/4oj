@@ -23,6 +23,8 @@ Class Customercontrol extends Controller{
     //get all customer
     public static function getall(){
 
+        $root_url = dirname($_SERVER['PHP_SELF']);
+        
         $customer = customer::orderBy('symbol')->get();
 
         foreach ($customer as $record){
@@ -41,7 +43,7 @@ Class Customercontrol extends Controller{
                 $record->website .
                 "</a></td><td class='text-center'><a href='edit_customer/".
                 $record->id .
-                "'><img src='/4oj/public/image/file_edit.png' width='20px' /></a></td><tr>";
+                "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a></td><tr>";
         }
 
     }

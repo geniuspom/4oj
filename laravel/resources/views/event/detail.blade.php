@@ -6,7 +6,7 @@ use App\Http\Controllers\Getdataform as Getdataform;
 use App\Http\Controllers\LoginController as LoginController;
 $id = Route::Input('id');
 ?>
-
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -200,7 +200,7 @@ $id = Route::Input('id');
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
                         @if (LoginController::checkpermission(2))
-                        <a class="btn btn-primary" href="/4oj/edit_event/{{ $id }}"> แก้ไขข้อมูล </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/edit_event/{{ $id }}"> แก้ไขข้อมูล </a>
                         @endif
 
                         <form style="display:inline;" role="form" method="POST" action=" {{ url('request_event') }} ">
@@ -213,7 +213,7 @@ $id = Route::Input('id');
 
                         </form>
 
-                        <a class="btn btn-primary" href="/4oj/event"> ยกเลิก </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/event"> ยกเลิก </a>
                       </div>
                     </div>
                   </div>

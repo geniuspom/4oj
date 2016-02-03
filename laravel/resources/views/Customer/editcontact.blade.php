@@ -6,7 +6,7 @@ use App\Http\Controllers\Customer\Contact as Contact;
 $id = Route::Input('id');
 $customerid = Contact::get_contact_in($id,'customer_id');
 ?>
-
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -84,7 +84,7 @@ $customerid = Contact::get_contact_in($id,'customer_id');
                         <button type="submit" class="btn btn-primary" >
                           แก้ไขข้อมูลผู้ประสานงาน
                         </button>
-                        <a class="btn btn-primary" href="/4oj/customer_detail/{{ $customerid }}"> ยกเลิก </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/customer_detail/{{ $customerid }}"> ยกเลิก </a>
                       </div>
                     </div>
 

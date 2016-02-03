@@ -4,7 +4,7 @@
 use App\Http\Controllers\RequestJob as RequestJob;
 $id = Route::Input('id');
 ?>
-
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -68,9 +68,9 @@ $id = Route::Input('id');
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
                         @if (empty(RequestJob::gatdeatail($id,'event_id','')))
-                        <a class="btn btn-primary" href="/4oj/editjob/{{ $id }}"> แก้ไขข้อมูล </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/editjob/{{ $id }}"> แก้ไขข้อมูล </a>
                         @endif
-                        <a class="btn btn-primary" href="/4oj/"> ยกเลิก </a>
+                        <a class="btn btn-primary" href="{{$root_url}}"> ยกเลิก </a>
                         <form style="display:inline;" role="form" method="POST" action=" {{ url('/delete_jobrequest') }} ">
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
                           <input type="hidden" name="requestjob_id" value="{{ $id }}">

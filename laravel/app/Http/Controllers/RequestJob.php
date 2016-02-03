@@ -321,6 +321,8 @@ Class RequestJob extends Controller{
 ================================================================================================*/
   public static function gatdeatail($id,$value,$type){
 
+    $root_url = dirname($_SERVER['PHP_SELF']);
+
     $request_job = request_job::where("id","=", $id)->first();
 
     $returndata = $request_job->$value;
@@ -368,7 +370,7 @@ Class RequestJob extends Controller{
       if($type == "getid"){
 
         $event_id_value = $returndata;
-        $returndata = "/4oj/event_detail/".$event_id_value;
+        $returndata = $root_url."/event_detail/".$event_id_value;
 
       }else{
 
@@ -485,6 +487,7 @@ Class RequestJob extends Controller{
 
   public static function report_request_job($filter_group,$filter_value,$sort){
 
+    $root_url = dirname($_SERVER['PHP_SELF']);
 
   //===========================================================================================
     if($filter_group == 'all'){
@@ -545,7 +548,7 @@ Class RequestJob extends Controller{
                             <td class='text-center'>". $start_date ."</td>
                             <td class='text-center'>". $end_date ."</td>
                             <td class='text-center'>". $duration ."</td>
-                            <td class='text-center'><a href='/4oj/event_detail/". $event_id ."'>". $event_name ."</a></td>
+                            <td class='text-center'><a href='".$root_url."/event_detail/". $event_id ."'>". $event_name ."</a></td>
                             <td>". $row->remark ."</td>
                           </tr>";
         }
@@ -622,7 +625,7 @@ Class RequestJob extends Controller{
                             <td class='text-center'>". $start_date ."</td>
                             <td class='text-center'>". $end_date ."</td>
                             <td class='text-center'>". $duration ."</td>
-                            <td class='text-center'><a href='/4oj/event_detail/". $event_id ."'>". $event_name ."</a></td>
+                            <td class='text-center'><a href='".$root_url."/event_detail/". $event_id ."'>". $event_name ."</a></td>
                             <td>". $row->remark ."</td>
                           </tr>";
         }
@@ -702,7 +705,7 @@ Class RequestJob extends Controller{
                             <td class='text-center'>". $start_date ."</td>
                             <td class='text-center'>". $end_date ."</td>
                             <td class='text-center'>". $duration ."</td>
-                            <td class='text-center'><a href='/4oj/event_detail/". $event_id ."'>". $event_name ."</a></td>
+                            <td class='text-center'><a href='".$root_url."/event_detail/". $event_id ."'>". $event_name ."</a></td>
                             <td>". $row->remark ."</td>
                           </tr>";
         }

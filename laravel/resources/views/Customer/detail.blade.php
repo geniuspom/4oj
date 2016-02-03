@@ -5,7 +5,7 @@ use App\Http\Controllers\Customer\Contact as Contact;
 use App\Http\Controllers\Customercontrol as Customercontrol;
 $id = Route::Input('id');
 ?>
-
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -78,9 +78,9 @@ $id = Route::Input('id');
 
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
-                        <a class="btn btn-primary" href="/4oj/edit_customer/{{ $id }}"> แก้ไขข้อมูล </a>
-                        <a class="btn btn-primary" href="/4oj/add_contact/{{ $id }}"> เพิ่มผู้ประสานงาน </a>
-                        <a class="btn btn-primary" href="/4oj/customer"> ยกเลิก </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/edit_customer/{{ $id }}"> แก้ไขข้อมูล </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/add_contact/{{ $id }}"> เพิ่มผู้ประสานงาน </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/customer"> ยกเลิก </a>
                       </div>
                     </div>
                   </div>

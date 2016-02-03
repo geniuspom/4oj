@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <head>
 
     <meta charset="utf-8">
@@ -12,25 +12,25 @@
     <title>4OJ Software</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/4oj/public/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="/4oj/public/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
     <!-- Timeline CSS -->
-    <link href="/4oj/public/dist/css/timeline.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/dist/css/timeline.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="/4oj/public/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="/4oj/public/bower_components/morrisjs/morris.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/bower_components/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="/4oj/public/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{{$root_url}}/public/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- jQuery -->
-    <script src="/4oj/public/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="{{$root_url}}/public/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,13 +46,13 @@
         @yield('content')
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="/4oj/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="{{$root_url}}/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="/4oj/public/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="{{$root_url}}/public/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="/4oj/public/dist/js/sb-admin-2.js"></script>
+    <script src="{{$root_url}}/public/dist/js/sb-admin-2.js"></script>
 </body>
 
 </html>

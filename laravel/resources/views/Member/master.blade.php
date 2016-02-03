@@ -2,6 +2,7 @@
   use App\Http\Controllers\GetUser as GetUser;
   use App\Http\Controllers\LoginController as LoginController;
 ?>
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,44 +17,44 @@
     <title>4oj</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/4oj/public/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="/4oj/public/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
     <!-- Timeline CSS -->
-    <link href="/4oj/public/dist/css/timeline.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/dist/css/timeline.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="/4oj/public/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="/4oj/public/bower_components/morrisjs/morris.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/bower_components/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="/4oj/public/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{{$root_url}}/public/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- datepicker CSS -->
-    <link href="/4oj/public/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
 
     <!-- datetimepicker CSS -->
-    <link href="/4oj/public/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 
     <!-- jQuery UI -->
-    <link href="/4oj/public/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="{{$root_url}}/public/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
 
     <!-- jQuery -->
-    <script src="/4oj/public/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="{{$root_url}}/public/bower_components/jquery/dist/jquery.min.js"></script>
 
     <!-- Moment -->
-    <script src="/4oj/public/js/Moment.js"></script>
+    <script src="{{$root_url}}/public/js/Moment.js"></script>
 
     <!-- datepicker JavaScript -->
-    <script src="/4oj/public/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-    <script src="/4oj/public/bootstrap-datepicker/locales/bootstrap-datepicker.th.min.js"></script>
+    <script src="{{$root_url}}/public/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{$root_url}}/public/bootstrap-datepicker/locales/bootstrap-datepicker.th.min.js"></script>
 
     <!-- datetimepicker JavaScript -->
-    <script src="/4oj/public/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{$root_url}}/public/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -78,7 +79,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../4oj/">4oj</a>
+                <a class="navbar-brand" href="{{$root_url}}">4oj</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -279,14 +280,14 @@
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="/4oj/user_profile"><i class="fa fa-user fa-fw"></i> ข้อมูลส่วนตัว</a>
+                        <li><a href="{{$root_url}}/user_profile"><i class="fa fa-user fa-fw"></i> ข้อมูลส่วนตัว</a>
                         </li>
                         @if (LoginController::checkpermission(3))
-                        <li><a href="/4oj/admin"><i class="fa fa-gear fa-fw"></i> ผู้ดูแลระบบ</a>
+                        <li><a href="{{$root_url}}/admin"><i class="fa fa-gear fa-fw"></i> ผู้ดูแลระบบ</a>
                         </li>
                         @endif
                         <li class="divider"></li>
-                        <li><a href="/4oj/logout"><i class="fa fa-sign-out fa-fw"></i> ออกจากระบบ</a>
+                        <li><a href="{{$root_url}}/logout"><i class="fa fa-sign-out fa-fw"></i> ออกจากระบบ</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -310,20 +311,20 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="/4oj"><i class="fa fa-dashboard fa-fw"></i> หน้าหลัก</a>
+                            <a href="{{$root_url}}"><i class="fa fa-dashboard fa-fw"></i> หน้าหลัก</a>
                         </li>
                         <li>
-                            <a href="/4oj/event"><i class="fa fa-calendar fa-fw"></i> งานที่กำลังเปิดรับ</a>
+                            <a href="{{$root_url}}/event"><i class="fa fa-calendar fa-fw"></i> งานที่กำลังเปิดรับ</a>
                         </li>
                         @if (LoginController::checkpermission(2))
                         <li>
-                            <a href="/4oj/reportrequestjob"><i class="fa fa-list-alt fa-fw"></i> รายงานคำร้องขอทำงาน</a>
+                            <a href="{{$root_url}}/reportrequestjob"><i class="fa fa-list-alt fa-fw"></i> รายงานคำร้องขอทำงาน</a>
                         </li>
                         <li>
-                            <a href="/4oj/customer"><i class="fa fa-suitcase fa-fw"></i> รายชื่อลูกค้า</a>
+                            <a href="{{$root_url}}/customer"><i class="fa fa-suitcase fa-fw"></i> รายชื่อลูกค้า</a>
                         </li>
                         <li>
-                            <a href="/4oj/venue"><i class="fa fa-building fa-fw"></i> สถาที่จัดงาน</a>
+                            <a href="{{$root_url}}/venue"><i class="fa fa-building fa-fw"></i> สถาที่จัดงาน</a>
                         </li>
                         @endif
                         <!--<li>
@@ -421,10 +422,10 @@
     <!-- /#wrapper -->
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="/4oj/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="{{$root_url}}/public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="/4oj/public/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="{{$root_url}}/public/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
     <!--<script src="../4oj/public/bower_components/raphael/raphael-min.js"></script>
@@ -432,7 +433,7 @@
     <script src="../4oj/public/js/morris-data.js"></script>-->
 
     <!-- Custom Theme JavaScript -->
-    <script src="/4oj/public/dist/js/sb-admin-2.js"></script>
+    <script src="{{$root_url}}/public/dist/js/sb-admin-2.js"></script>
 
 </body>
 

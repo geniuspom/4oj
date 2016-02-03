@@ -4,7 +4,7 @@
 use App\Http\Controllers\Customercontrol as Customercontrol;
 $id = Route::Input('id');
 ?>
-
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -82,7 +82,7 @@ $id = Route::Input('id');
                         <button type="submit" class="btn btn-primary" >
                           เพิ่มผู้ประสานงาน
                         </button>
-                        <a class="btn btn-primary" href="/4oj/customer_detail/{{ $id }}"> ยกเลิก </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/customer_detail/{{ $id }}"> ยกเลิก </a>
                       </div>
                     </div>
 

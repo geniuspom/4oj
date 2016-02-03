@@ -3,9 +3,10 @@
 <?php
 use App\Http\Controllers\RequestJob as RequestJob;
 ?>
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <meta name="_token" content="{!! csrf_token() !!}"/>
 <!-- jQuery UI -->
-<script src="/4oj/public/jquery-ui/jquery-ui.js"></script>
+<script src="{{$root_url}}/public/jquery-ui/jquery-ui.js"></script>
 
 <div id="page-wrapper">
   <div class="row">
@@ -70,7 +71,7 @@ $('input').keypress(function(e) {
 });
 
 $(function() {
-    var availableTags = <?php include('../4oj/laravel/app/Http/Controllers/UserautoCompleted.php'); ?>;
+    var availableTags = <?php include('../'. $root_url .'/laravel/app/Http/Controllers/UserautoCompleted.php'); ?>;
     $("#filter_value").autocomplete({
         source: availableTags,
         autoFocus:true

@@ -5,8 +5,9 @@ use App\Http\Controllers\GetUser as GetUser;
 use App\Http\Controllers\InstituteController as InstituteController;
 use App\Http\Controllers\Getdataform as Getdataform;
 ?>
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <!-- jQuery UI -->
-<script src="/4oj/public/jquery-ui/jquery-ui.js"></script>
+<script src="{{$root_url}}/public/jquery-ui/jquery-ui.js"></script>
 
 <div id="page-wrapper">
   <div class="row">
@@ -185,7 +186,7 @@ use App\Http\Controllers\Getdataform as Getdataform;
                           ยืนยันการแก้ไขข้อมูล
                         </button>
                         <!--<a class="btn btn-primary" href="{{ URL::previous() }}"> Cancel </a>-->
-                        <a class="btn btn-primary" href="/4oj/admin"> ยกเลิก </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/admin"> ยกเลิก </a>
                       </div>
                     </div>
 
@@ -198,7 +199,7 @@ use App\Http\Controllers\Getdataform as Getdataform;
 <script type="text/javascript">
 
 $(function() {
-    var availableTags = <?php include('../4oj/laravel/app/Http/Controllers/InstituteController.php'); ?>;
+    var availableTags = <?php include('..'.$root_url.'/laravel/app/Http/Controllers/InstituteController.php'); ?>;
     $("#institute").autocomplete({
         source: availableTags,
         autoFocus:true

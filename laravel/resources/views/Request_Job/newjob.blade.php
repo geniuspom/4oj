@@ -14,7 +14,7 @@ if($date == "null"){
 }
 
 ?>
-
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -100,7 +100,7 @@ if($date == "null"){
                         <button type="submit" class="btn btn-primary" >
                           แจ้งวันและเวลาที่คุณสามารถทำงานได้
                         </button>
-                        <a class="btn btn-primary" href="/4oj/"> ยกเลิก </a>
+                        <a class="btn btn-primary" href="{{$root_url}}"> ยกเลิก </a>
                       </div>
                     </div>
 

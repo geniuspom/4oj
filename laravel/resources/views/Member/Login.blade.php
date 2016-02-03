@@ -1,4 +1,5 @@
 @include('Member.header')
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 
     <div class="container">
         <div class="row">
@@ -47,7 +48,7 @@
                             </fieldset>
                         </form>
                         <div class="text-center" style="padding:15px 15px 0px 15px;font-size:16px;">
-                          <a class="text-danger" href="/4oj/upload_file/manual/register manual 4OJ.pdf" target="_blank"><i class="fa fa-info-circle fa-fw"></i>คู่มือการสมัครสมาชิก</a>
+                          <a class="text-danger" href="{{$root_url}}/upload_file/manual/register manual 4OJ.pdf" target="_blank"><i class="fa fa-info-circle fa-fw"></i>คู่มือการสมัครสมาชิก</a>
                         </div>
                     </div>
                 </div>

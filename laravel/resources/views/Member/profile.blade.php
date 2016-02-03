@@ -5,7 +5,7 @@ use App\Http\Controllers\GetUser as GetUser;
 use App\Http\Controllers\UploadController as UploadController;
 
 ?>
-
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -134,9 +134,9 @@ use App\Http\Controllers\UploadController as UploadController;
 
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
-                        <a class="btn btn-primary" href="/4oj/useredit/{{ Auth::user()->id }}"> แก้ไขข้อมูล </a>
-                        <a class="btn btn-primary" href="/4oj/reset/{{ Auth::user()->id }}/token/null"> เปลี่ยนรหัสผ่าน </a>
-                        <a class="btn btn-primary" href="/4oj/"> ยกเลิก </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/useredit/{{ Auth::user()->id }}"> แก้ไขข้อมูล </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/reset/{{ Auth::user()->id }}/token/null"> เปลี่ยนรหัสผ่าน </a>
+                        <a class="btn btn-primary" href="{{$root_url}}"> ยกเลิก </a>
                       </div>
                     </div>
                   </div>

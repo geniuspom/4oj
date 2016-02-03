@@ -8,6 +8,7 @@ $id = Route::Input('id');
 $cusid = EventControl::get($id,'customer');
 $contactid = EventControl::get($id,'custumer_contact_id');
 ?>
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -364,7 +365,7 @@ function get_customer_contact($customer_id){
   });
 
   $.ajax({
-      url: '/4oj/geteventform',
+      url: $root_url.'/geteventform',
       type: "post",
       data: {'customer_id': $customer_id,'function':'getcustomercontact'},
       success: function(data){

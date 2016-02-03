@@ -10,7 +10,7 @@
 
 	use App\Http\Controllers\GetUser as GetUser;
 ?>
-
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 @extends($template)
 @section('content')
 
@@ -77,7 +77,7 @@
 								<button type="submit" class="btn btn-primary">
 									ยืนยันตั้งรหัสผ่านใหม
 								</button>
-								<a class="btn btn-primary" href="/4oj/user_profile"> ยกเลิก </a>
+								<a class="btn btn-primary" href="{{$root_url}}/user_profile"> ยกเลิก </a>
 							</div>
 						</div>
 					</form>
@@ -139,7 +139,7 @@
 								<button type="submit" class="btn btn-primary">
 									ยืนยันตั้งรหัสผ่านใหม่
 								</button>
-								<a class="btn btn-primary" href="/4oj/"> ยกเลิก </a>
+								<a class="btn btn-primary" href="{{$root_url}}"> ยกเลิก </a>
 							</div>
 						</div>
 					</form>

@@ -32,6 +32,8 @@ class UploadController extends Controller{
     //Upload profile picture
     public function profilepicture(){
 
+      $root_url = dirname($_SERVER['PHP_SELF']);
+
       if(Request::exists('btn-upload')){
         $user_id = Request::input('user_id');
         $file = Request::file('uploader');
@@ -63,8 +65,8 @@ class UploadController extends Controller{
 
         if($count == 1){
           $image = upload::where('image_user', '=', $user_id)->first();
-          $image_path = $_SERVER['DOCUMENT_ROOT'] . '/4oj/upload_file/images/default/' . $image->image_name;
-          $image_thumbnail = $_SERVER['DOCUMENT_ROOT'] . '/4oj/' . $image->image_thumbnail;
+          $image_path = $root_url . '/upload_file/images/default/' . $image->image_name;
+          $image_thumbnail = $root_url . $image->image_thumbnail;
 
           if($filename != $image->image_name){
             unlink($image_path);
@@ -111,6 +113,8 @@ class UploadController extends Controller{
     //Upload id card
     public function uploadidcard(){
 
+      $root_url = dirname($_SERVER['PHP_SELF']);
+
       if(Request::exists('btn-upload')){
         $user_id = Request::input('user_id');
         $file = Request::file('uploader');
@@ -154,10 +158,10 @@ class UploadController extends Controller{
 
           $oldext = pathinfo($dbidcard->id_name, PATHINFO_EXTENSION);
 
-          $image_path = $_SERVER['DOCUMENT_ROOT'] . '/4oj/upload_file/idcard/default/' . $dbidcard->id_name;
+          $image_path = $root_url . '/upload_file/idcard/default/' . $dbidcard->id_name;
 
           if($oldext != 'pdf'){
-            $image_thumbnail = $_SERVER['DOCUMENT_ROOT'] . '/4oj/' . $dbidcard->id_thumbnail;
+            $image_thumbnail = $root_url . $dbidcard->id_thumbnail;
 
             if($filename != $dbidcard->id_name){
               unlink($image_thumbnail);

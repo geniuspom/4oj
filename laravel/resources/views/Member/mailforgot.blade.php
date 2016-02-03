@@ -6,11 +6,11 @@
                 <td class="ecxletter_heading_logo" style="padding-top:8px;text-align:right;" align="left"><img src="http://www.ojconsultinggroup.com/images/OJ_6.gif" ></td>
               </tr>
                <tr>
-				   <td class="ecxcontent ecxspacerSalutation" style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:15px;text-align:left;">Dear {{ $name }},
+				   <td class="ecxcontent ecxspacerSalutation" style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:15px;text-align:left;">เรียน คุณ {{ $name }},
 				  </td>
 			   </tr>
 			   <tr>
-				   <td class="ecxcontent ecxspacer1" style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:34px;text-align:left;"><p>Click here to reset your password:</p>
+				   <td class="ecxcontent ecxspacer1" style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:34px;text-align:left;"><p>กรุณาคลิ๊กที่ลิงค์นี้เพื่อทำการรีเซตรหัสผ่าน :</p>
 				     <p><a href="{{ $link }}" style="color:rgb(0, 138, 205);text-decoration:none;" target="_blank">{{ $link }}</a></p>
 				   </td>
 			   </tr>

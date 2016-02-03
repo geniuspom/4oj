@@ -22,6 +22,9 @@ Class Contact extends Controller{
     }
 
     public static function contact_template($data){
+
+      $root_url = dirname($_SERVER['PHP_SELF']);
+
       $contact_template = "<div class='row'>
           <div class='col-lg-12'>
               <div class='panel panel-default'>
@@ -69,9 +72,9 @@ Class Contact extends Controller{
 
                           <div class='form-group'>
                             <div class='col-md-6 col-md-offset-4'>
-                              <a class='btn btn-primary' href='/4oj/edit_contact/" . $data->id . "'> แก้ไขข้อมูล </a>
+                              <a class='btn btn-primary' href='{{}}/edit_contact/" . $data->id . "'> แก้ไขข้อมูล </a>
 
-                              <form style='display:inline;' role='form' method='POST' action='/4oj/delete_contact'>
+                              <form style='display:inline;' role='form' method='POST' action='".$root_url."/delete_contact'>
                                 <input type='hidden' name='_token' value='" . csrf_token() . "'>
                                 <input type='hidden' name='contact_id' value='". $data->id ."'>
 

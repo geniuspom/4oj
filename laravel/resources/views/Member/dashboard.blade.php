@@ -2,6 +2,7 @@
 @section('content')
 <?php use App\Http\Controllers\Calendar as Calendar; ?>
 <?php use App\Http\Controllers\LoginController as LoginController; ?>
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <style type="text/css">
 #popup_msg{
   -webkit-border-radius: 10px;
@@ -42,7 +43,7 @@
 }
 </style>
 <meta name="_token" content="{!! csrf_token() !!}"/>
-<link href="/4oj/public/css/calendar.css" rel="stylesheet">
+<link href="{{$root_url}}/public/css/calendar.css" rel="stylesheet">
 
 {{ LoginController::checkstatususer() }}
 
@@ -68,7 +69,7 @@
     </div>
     <div class="row">
       <div class="col-sm-12 text-right" style="padding-bottom:10px;">
-        <a class="text-danger" href="/4oj/upload_file/manual/job request manual 4OJ.pdf" target="_blank"><i class="fa fa-info-circle fa-fw"></i>คู่มือการแจ้งวันและเวลาที่คุณสามารถทำงานได้</a>
+        <a class="text-danger" href="{{$root_url}}/upload_file/manual/job request manual 4OJ.pdf" target="_blank"><i class="fa fa-info-circle fa-fw"></i>คู่มือการแจ้งวันและเวลาที่คุณสามารถทำงานได้</a>
       </div>
     </div>
     <div class='panel panel-default' id='content_calendar'>
@@ -86,7 +87,7 @@
 
 </div>
 
-<script src="/4oj/public/js/calendar.js"></script>
+<script src="{{$root_url}}/public/js/calendar.js"></script>
 <script type="text/javascript">
 
 $(document).on('click','#close_popup',function(){

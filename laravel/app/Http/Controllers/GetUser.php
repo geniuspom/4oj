@@ -28,6 +28,9 @@ Class GetUser extends Controller{
     }
 
     public static function admingetuser($filter){
+
+        $root_url = dirname($_SERVER['PHP_SELF']);
+
         $data = Member::orderBy('id')->get();
 
         foreach ($data as $record){
@@ -44,19 +47,19 @@ Class GetUser extends Controller{
                 "</td><td class='text-center'>";
                 //check validate email
                 if($mail_st == 1){
-                  echo "<img src='/4oj/public/image/email-valid.png' width='20px' />";
+                  echo "<img src='".$root_url."/public/image/email-valid.png' width='20px' />";
                 }else{
-                  echo "<img src='/4oj/public/image/email-not.png' width='20px' />";
+                  echo "<img src='".$root_url."/public/image/email-not.png' width='20px' />";
                 }
                 //check id card status
                 if($id_st == 1 && $id_valid == 1){
-                  echo "<img src='/4oj/public/image/id-valid.png' width='20px' />";
+                  echo "<img src='".$root_url."/public/image/id-valid.png' width='20px' />";
                 }else if($id_st == 1 && $id_valid == 0){
-                  echo "<img src='/4oj/public/image/id-not.png' width='20px' />";
+                  echo "<img src='".$root_url."/public/image/id-not.png' width='20px' />";
                 }
           echo  "</td><td class='text-center'><a href='useredit/".
                 $record->id .
-                "'><img src='/4oj/public/image/file_edit.png' width='20px' /></a></td><tr>";
+                "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a></td><tr>";
         }
 
     }

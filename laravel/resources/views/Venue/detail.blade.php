@@ -4,7 +4,7 @@
 use App\Http\Controllers\VenueControl as VenueControl;
 $id = Route::Input('id');
 ?>
-
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -56,8 +56,8 @@ $id = Route::Input('id');
 
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
-                        <a class="btn btn-primary" href="/4oj/edit_venue/{{ $id }}"> แก้ไขข้อมูล </a>
-                        <a class="btn btn-primary" href="/4oj/venue"> ยกเลิก </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/edit_venue/{{ $id }}"> แก้ไขข้อมูล </a>
+                        <a class="btn btn-primary" href="{{$root_url}}/venue"> ยกเลิก </a>
                       </div>
                     </div>
                   </div>
