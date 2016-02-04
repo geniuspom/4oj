@@ -68,8 +68,17 @@ Route::group(['middleware' => 'auth'], function()
 		Route::group(['before' => 'Admincheck'], function(){
 
 			Route::get('admin',function(){
-					return View::make('Member.admin');
+					return View::make('Admin.admin');
 			});
+			//view user profile admin
+			Route::get('profile_admin/{id}',function($id){
+					return View::make('Admin.profile_user');
+			});
+			//edit user profile admin
+			Route::get('useredit_admin/{id}',function($id){
+					return View::make('Admin.edit_user');
+			});
+
 
 		});
 
@@ -216,6 +225,8 @@ Route::post('add_event','EventControl@add');
 Route::post('edit_event','EventControl@edit');
 //jquery get data form
 Route::post('geteventform','EventControl@getformjquery');
+//get event report from jquery
+Route::post('get_event_filter','EventControl@get_filter_jquery');
 //end function event
 
 

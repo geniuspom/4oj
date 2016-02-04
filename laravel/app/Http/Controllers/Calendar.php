@@ -371,7 +371,7 @@ Class Calendar extends Controller{
 if($i == 4){
 
   $table2_row_event[$row_of_month-1][$i] =
-  "<td class='st-c st-more-c'><span class='ca-mlp23595 st-more st-moreul' id='". $current_day ."'>+ more</span></td>";
+  "<tr><td class='st-c st-more-c'><span class='ca-mlp23595 st-more st-moreul' id='". $current_day ."'>+ more</span></td>";
 
   break;
 }

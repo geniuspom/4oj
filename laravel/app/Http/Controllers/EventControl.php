@@ -65,14 +65,65 @@ Class EventControl extends Controller{
 
     }
 
-    //get all customer
-    public static function getall(){
+    //get filter event form jquery
+    public static function get_filter_jquery(){
 
-        $now = date("Y-m-d");
+      $filter_group = Request::input('filter_group');
+      $filter_value = Request::input('filter_value');
+      $sort = Request::input('sortby');
 
-        $event = event::where('event_date','>=',$now)
-                        ->orderBy('event_date')
-                        ->get();
+      if(empty($filter_value)){
+        $filter_group = "all";
+      }
+
+      EventControl::getall($filter_group,$filter_value,$sort);
+
+    }
+
+    //get all event
+    public static function getall($filter_group,$filter_value,$sort){
+
+        if($filter_group == 1){
+          $input_date = explode("/", $filter_value);
+          $date = $input_date[2]."-".$input_date[1]."-".$input_date[0];
+
+          $event = event::where('event_date','=',$date)
+                          ->orderBy('event_date')
+                          ->get();
+        }else if($filter_group == 2 && $filter_value != "all"){
+
+          $event = event::where('event_status','=',$filter_value)
+                          ->orderBy('event_date')
+                          ->get();
+
+        }else if($filter_group == 2 && $filter_value == "all"){
+
+          $event = event::orderBy('event_status')
+                          ->get();
+
+        }else{
+
+          $now = date("Y-m-d");
+
+          $event = event::where('event_date','>=',$now)
+                          ->orderBy('event_date')
+                          ->get();
+
+        }
+
+        $returnhtml =   "<table class='table table-bordered table-hover table-striped'>
+                        <thead>
+                        <tr>
+                        <th class='text-center'>ยื่นขอทำงานนี้</th>
+                        <th class='text-center'>วันที่</th>
+                        <th class='text-center'>ช่วงเวลางาน</th>
+                        <th class='text-center'>ชื่องาน</th>
+                        <th class='text-center'>ชื่อลูกค้า</th>
+                        <th class='text-center'>สถานที่จัดประชุม</th>
+                        <th class='text-center'>สถานะของงาน</th>
+                        </tr>
+                        </thead>
+                        <tbody>";
 
         foreach ($event as $record){
           $customerid = $record->customer_id;
@@ -80,13 +131,45 @@ Class EventControl extends Controller{
           $customername = $customer->symbol." - ".$customer->name;
           $event_status = Getdataform::event_status($record->event_status,'getvalue');
 
-          echo "<tr><td class='text-center'><a href='event_detail/".
+          $split_event_date = explode("-", $record->event_date);
+          $event_date = $split_event_date[2]."/".$split_event_date[1]."/".$split_event_date[0];
+
+
+          if($record->meeting_period == 1){
+            $meeting_period = "ช่วงเช้า";
+          }else if($record->meeting_period == 2){
+            $meeting_period = "ช่วงบ่าย";
+          }else{
+            $meeting_period = "ทั้งวัน";
+          }
+
+          if(LoginController::checkverifyuser()){
+            $request_botton = "<form style='display:inline;' role='form' method='POST' action='request_event') '>
+                                <input type='hidden' name='_token' value='".csrf_token()."'>
+                                <input type='hidden' name='event_id' value='".$record->id."'>
+                                <button type='submit' class='btn btn-outline btn-info btn-circle request_this_event' >
+                                  <i class='fa fa-sign-in fa-lg request_this_event' style='cursor:pointer;'></i>
+                                </button>
+                              </form>";
+          }else{
+            $request_botton = "";
+          }
+
+          $returnhtml .=  "<tr><td class='text-center'>".
+                $request_botton.
+                "</td></td><td class='text-center'>".
+                $event_date .
+                "</td></td><td class='text-center'>".
+                $meeting_period .
+                "</td><td class='text-center'><a href='event_detail/".
                 $record->id .
                 "'>" .
                 $record->event_name .
-                "</a></td><td class='text-center'>".
-                $record->event_date .
-                "</td><td class='text-center'><a href='customer_detail/".
+                "</a><td class='text-center'><a href='customer_detail/".
+                $customerid .
+                "'>" .
+                $customername .
+                "</a><td class='text-center'><a href='customer_detail/".
                 $customerid .
                 "'>" .
                 $customername .
@@ -94,6 +177,11 @@ Class EventControl extends Controller{
                 $event_status .
                 "</td><tr>";
         }
+
+        $returnhtml .= "</tbody>
+                        </table>";
+
+        echo $returnhtml;
 
     }
 

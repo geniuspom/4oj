@@ -743,7 +743,7 @@ Class RequestJob extends Controller{
     $request->event_id = Request::input('event_id');
     $request->multiple_day = 0;
 
-    $url = "event_detail/".Request::input('event_id');
+    $url = "event"/*.Request::input('event_id')*/;
 
     if($request->save()) {
       return redirect::to($url)
