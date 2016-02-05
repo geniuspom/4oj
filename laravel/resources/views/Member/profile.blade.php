@@ -169,9 +169,7 @@ use App\Http\Controllers\UploadController as UploadController;
 
                             <div style="width:206px;">
                               <!-- Show image -->
-                              <a href="{{ asset('upload_file/images/default/'.UploadController::getImage(Auth::user()->id,'image')) }}" target="_blank">
-                                <i style="background-image: url('{{ UploadController::getImage(Auth::user()->id,'thumbnail') }}'); display: block; background-position: center center; width: 206px; padding-top: 206px;"></i>
-                              </a>
+                              {{ UploadController::getImage(Auth::user()->id,'image') }}
                             </div>
 
                           </div>
@@ -202,11 +200,7 @@ use App\Http\Controllers\UploadController as UploadController;
                           <label class="col-md-5 text-right">บัตรประชาชน</label>
                           <div class="col-md-6 text-info" >
 
-                            <div style="width:206px;">
-                              <a href="{{ asset('upload_file/idcard/default/'.UploadController::getidcard(Auth::user()->id,'image')) }}" target="_blank">
-                                <i style="background-image: url('{{ UploadController::getidcard(Auth::user()->id,'thumbnail') }}'); display: block; background-position: center center; width: 206px; padding-top: 206px;"></i>
-                              </a>
-                            </div>
+                            {{ UploadController::getidcard(Auth::user()->id,'image') }}
 
                           </div>
                         </div>

@@ -157,9 +157,23 @@ Class LoginController extends Controller{
 
           $user = Member::where('email_valid_code', '=', $activatecode)->first();
 
-          $user->validate = 1100;
-          $user->email_valid_code = NULL;
+//old code
+          /*$user->validate = 1100;
+          $user->email_valid_code = NULL;*/
+//end old code
 
+//add edit update activate status
+$validate = $user->validate;
+
+$id_st = substr($validate, 2,1);
+$verify_id = substr($validate, 3,1);
+
+$new_validate = "1"."1".$id_st.$verify_id;
+
+$user->validate = $new_validate;
+$user->email_valid_code = NULL;
+
+//end edit update activate status
           if($user->save()){
             return redirect::to('login')
                 ->with('status',"การยืนยันอีเมลสำเร็จแล้ว");

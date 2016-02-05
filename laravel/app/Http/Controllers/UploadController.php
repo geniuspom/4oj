@@ -65,8 +65,8 @@ class UploadController extends Controller{
 
         if($count == 1){
           $image = upload::where('image_user', '=', $user_id)->first();
-          $image_path = $root_url . '/upload_file/images/default/' . $image->image_name;
-          $image_thumbnail = $root_url . $image->image_thumbnail;
+          $image_path = '../' . $root_url . '/upload_file/images/default/' . $image->image_name;
+          $image_thumbnail = '..'.$root_url .'/'. $image->image_thumbnail;
 
           if($filename != $image->image_name){
             unlink($image_path);
@@ -95,7 +95,8 @@ class UploadController extends Controller{
     }
 
     //Get profile picture
-    public static function getImage($id,$type){
+    //old code
+    /*public static function getImage($id,$type){
         $count = upload::where('image_user', '=', $id)->count();
 
         if($count == 1){
@@ -108,7 +109,35 @@ class UploadController extends Controller{
           }
         }
 
+    }*/
+
+    public static function getImage($id,$type){
+
+        $root_url = dirname($_SERVER['PHP_SELF']);
+
+        $count = upload::where('image_user', '=', $id)->count();
+
+        if($count == 1){
+          $images = upload::where('image_user', '=', $id)->first();
+
+          $thumbnail_url = "background-image: url(". $images->image_thumbnail ."); display: block; background-position: center center; width: 206px; padding-top: 206px;";
+
+          echo "<a href='".$root_url."/upload_file/images/default/".$images->image_name."' target='_blank'>
+                  <i style='".$thumbnail_url."'></i>
+                </a>";
+
+        }else{
+
+          $thumbnail_url = "background-image: url(".$root_url."/upload_file/images/thumbnail/avatar_noPhoto.jpg); display: block; background-position: center center; width: 206px; padding-top: 206px;";
+
+          echo "<a>
+                  <i style='".$thumbnail_url."'></i>
+                </a>";
+
+        }
+
     }
+
 
     //Upload id card
     public function uploadidcard(){
@@ -158,10 +187,10 @@ class UploadController extends Controller{
 
           $oldext = pathinfo($dbidcard->id_name, PATHINFO_EXTENSION);
 
-          $image_path = $root_url . '/upload_file/idcard/default/' . $dbidcard->id_name;
+          $image_path = '../'.$root_url . '/upload_file/idcard/default/' . $dbidcard->id_name;
 
           if($oldext != 'pdf'){
-            $image_thumbnail = $root_url . $dbidcard->id_thumbnail;
+            $image_thumbnail = '..'. $root_url .'/' .$dbidcard->id_thumbnail;
 
             if($filename != $dbidcard->id_name){
               unlink($image_thumbnail);
@@ -229,16 +258,44 @@ class UploadController extends Controller{
 
     //Get id card
     public static function getidcard($id,$type){
+
+        $root_url = dirname($_SERVER['PHP_SELF']);
+
         $count = idcard::where('id_user', '=', $id)->count();
 
         if($count == 1){
           $resultidcard = idcard::where('id_user', '=', $id)->first();
 
-          if($type == 'image'){
+//old code
+          /*if($type == 'image'){
             return $resultidcard->id_name;
           }else if($type == 'thumbnail'){
             return $resultidcard->id_thumbnail;
+          }*/
+
+          $ext = pathinfo($resultidcard->id_name, PATHINFO_EXTENSION);
+
+          if($ext == 'pdf'){
+            $thumbnail_size = 100;
+          }else{
+            $thumbnail_size = 206;
           }
+
+
+          $thumbnail_url = "background-image: url(". $resultidcard->id_thumbnail ."); display: block; background-position: center center; width: ". $thumbnail_size ."px; padding-top: ".$thumbnail_size."px;";
+
+          echo "<a href='".$root_url."/upload_file/idcard/default/".$resultidcard->id_name."' target='_blank'>
+                  <i style='".$thumbnail_url."'></i>
+                </a>";
+
+        }else{
+
+            $thumbnail_url = "background-image: url(".$root_url."/upload_file/idcard/thumbnail/nofile.png); display: block; background-position: center center; width: 106px; padding-top: 106px;";
+
+            echo "<a>
+                  <i style='".$thumbnail_url."'></i>
+                  </a>";
+
         }
 
     }
