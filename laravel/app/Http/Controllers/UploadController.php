@@ -120,7 +120,7 @@ class UploadController extends Controller{
         if($count == 1){
           $images = upload::where('image_user', '=', $id)->first();
 
-          $thumbnail_url = "background-image: url(". $images->image_thumbnail ."); display: block; background-position: center center; width: 206px; padding-top: 206px;";
+          $thumbnail_url = "background-image: url(". $root_url ."/". $images->image_thumbnail ."); display: block; background-position: center center; width: 206px; padding-top: 206px;";
 
           echo "<a href='".$root_url."/upload_file/images/default/".$images->image_name."' target='_blank'>
                   <i style='".$thumbnail_url."'></i>
@@ -282,7 +282,7 @@ class UploadController extends Controller{
           }
 
 
-          $thumbnail_url = "background-image: url(". $resultidcard->id_thumbnail ."); display: block; background-position: center center; width: ". $thumbnail_size ."px; padding-top: ".$thumbnail_size."px;";
+          $thumbnail_url = "background-image: url(".$root_url."/". $resultidcard->id_thumbnail ."); display: block; background-position: center center; width: ". $thumbnail_size ."px; padding-top: ".$thumbnail_size."px;";
 
           echo "<a href='".$root_url."/upload_file/idcard/default/".$resultidcard->id_name."' target='_blank'>
                   <i style='".$thumbnail_url."'></i>
