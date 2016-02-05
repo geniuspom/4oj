@@ -191,6 +191,13 @@ Route::post('uploaduser','UploadController@profilepicture');
 //upload id card
 Route::post('uploadidcard','UploadController@uploadidcard');
 
+//Admin Function
+Route::post('admin_get_user_filter','AdminController@get_filter_jquery');
+//Admin update user
+Route::post('adminupdateuser','AdminController@update_user');
+
+
+
 //Calendar change
 Route::post('nextcalendar','Calendar@getformjquery');
 

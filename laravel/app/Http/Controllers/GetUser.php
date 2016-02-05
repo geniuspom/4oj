@@ -7,6 +7,7 @@ use App\Models\validateuser as validateuser;
 use App\Models\institute as institute;
 use App\Models\province as province;
 use App\Models\district as district;
+use App\Models\idcard as idcard;
 use Illuminate\Support\Facades\Redirect;
 use Route;
 use Request;
@@ -27,23 +28,63 @@ Class GetUser extends Controller{
         echo $user["name"] . " " .$user["surname"];
     }
 
+/*
     public static function admingetuser($filter){
 
         $root_url = dirname($_SERVER['PHP_SELF']);
 
         $data = Member::orderBy('id')->get();
 
+        echo "<table class='table table-bordered table-hover table-striped'>
+                <thead>
+                  <tr>
+                    <th class='text-center'>ชื่อ - นามสกุล</th>
+                    <th class='text-center'>อีเมล</th>
+                    <th class='text-center'>โทรศัพท์</th>
+                    <th class='text-center'>สถานะผู้ใช้</th>
+                    <th class='text-center'>ดำเนินการ</th>
+                  </tr>
+                </thead>
+                <tbody>";
+
+
         foreach ($data as $record){
+
+          //get idcard path
+          $count = idcard::where('id_user', '=', $record->id)->count();
+
+          if($count == 1){
+            $resultidcard = idcard::where('id_user', '=', $record->id)->first();
+
+            $idpath = $root_url."/upload_file/idcard/default/".$resultidcard->id_name;
+          }else{
+            $idpath = "";
+          }
+          //End get idcard path
+
+          //get distric
+          if($record->district == 0 || $record->district == NULL){
+            $district = "ต่างจังหวัด";
+          }else{
+
+            $resultdistric = district::where('id', '=', $record->district)->first();
+            $district = $resultdistric->name;
+          }
+          //ENd get distric
+
+
           $u_status = $record->validate;
           $mail_st = substr($u_status, 1,1);
           $id_st = substr($u_status, 2,1);
           $id_valid = substr($u_status, 3,1);
-          echo "<tr><td>".
+          echo "<tr><td><a href='profile_admin/". $record->id ."'>".
                 $record->name . " " . $record->surname .
-                "</td><td>".
+                "</a></td><td>".
                 $record->email .
                 "</td><td class='text-center'>".
                 $record->phone .
+                "</td><td class='text-center'>".
+                $district .
                 "</td><td class='text-center'>";
                 //check validate email
                 if($mail_st == 1){
@@ -53,16 +94,21 @@ Class GetUser extends Controller{
                 }
                 //check id card status
                 if($id_st == 1 && $id_valid == 1){
-                  echo "<img src='".$root_url."/public/image/id-valid.png' width='20px' />";
+                  echo "<a href='".$idpath."' target='_blank'><img src='".$root_url."/public/image/id-valid.png' width='20px' /></a>";
                 }else if($id_st == 1 && $id_valid == 0){
-                  echo "<img src='".$root_url."/public/image/id-not.png' width='20px' />";
+                  echo "<a href='".$idpath."' target='_blank'><img src='".$root_url."/public/image/id-not.png' width='20px' /></a>";
                 }
-          echo  "</td><td class='text-center'><a href='useredit/".
+          echo  "</td><td class='text-center'><a href='useredit_admin/".
                 $record->id .
                 "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a></td><tr>";
         }
 
+        echo "</tbody>
+                </table>";
+
+
     }
+*/
 
     public static function getedituser($id,$value){
         $profiles = Member::where('id', '=', $id)->get();
