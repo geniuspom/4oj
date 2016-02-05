@@ -32,6 +32,7 @@ Class AdminController extends Controller{
             $data = Member::orderBy('id')->get();
         }else if($filter_value == 0){
             $data = Member::where('district','=',NULL)
+                          ->orwhere('district','=','0')
                           ->orderBy('district')->get();
         }else{
             $data = Member::where('district','=',$filter_value)
