@@ -28,6 +28,10 @@ Route::group(['middleware' => 'auth'], function()
 {
     Route::get('/', 'LoginController@index');
 
+		Route::get('poatregister', function(){
+				return View::make('Member.post_register');
+		});
+
 		Route::get('useredit/{id}', function($id){
 		    return View::make('Member.useredit');
 		});

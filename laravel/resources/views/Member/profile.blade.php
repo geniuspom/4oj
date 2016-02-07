@@ -3,6 +3,7 @@
 <?php
 use App\Http\Controllers\GetUser as GetUser;
 use App\Http\Controllers\UploadController as UploadController;
+use App\Http\Controllers\LoginController as LoginController;
 
 ?>
 <?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
@@ -204,6 +205,7 @@ use App\Http\Controllers\UploadController as UploadController;
 
                           </div>
                         </div>
+                        @if(LoginController::checkemailverify())
                         <div class="form-group">
                           <label class="col-md-5 text-right"></label>
                           <div class="col-md-6 text-info" >
@@ -211,10 +213,20 @@ use App\Http\Controllers\UploadController as UploadController;
                             <h6 class="text-danger">*สามารถอัพโหลดได้เฉพาะไฟล์ JPG หรือ PDF เท่านั้น</h6>
                           </div>
                         </div>
+                        @else
+                        <div class="form-group">
+                          <label class="col-md-5 text-right"></label>
+                          <div class="col-md-6 text-info" >
+                            <label class="text-danger"><h6>*จะต้องทำการยืนยันอีเมลก่อนจึงจะอัพโหลดสำเนาบัตรประชาชนได้</h6></label>
+                          </div>
+                        </div>
+                        @endif
 
                         <div class="form-group">
                           <div class="col-md-6 col-md-offset-4">
+                            @if(LoginController::checkemailverify())
                             <button class="btn btn-success" type="submit" name = "btn-upload" title="Upload image"><i class="fa fa-upload" ></i> Upload</button>
+                            @endif
                           </div>
                         </div>
                       </div>

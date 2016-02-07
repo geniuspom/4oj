@@ -60,7 +60,7 @@ Class LoginController extends Controller{
                 $userinfo = $request::only('email','password');
 
                 if(Auth::attempt($userinfo)){
-                    $link = '/';
+                    $link = 'poatregister';
                 }
 
                 //ส่ง email
@@ -289,5 +289,21 @@ $user->email_valid_code = NULL;
           ->with('status',"ทำการส่งอีเมลเพื่อยืนยันเรียบร้อยแล้ว");
 
     }
+
+    public static function checkemailverify(){
+
+      $user = Member::where("id","=",Auth::user()->id)->first();
+
+      $u_status = $user->validate;
+      $mail_st = substr($u_status, 1,1);
+
+      if($mail_st == 1){
+          return true;
+      }else{
+          return false;
+      }
+
+    }
+
 
 }
