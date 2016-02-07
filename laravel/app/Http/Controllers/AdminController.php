@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Member as Member;
+use App\Models\Userdetail as Userdetail;
 use App\Models\bank as bank;
 use App\Models\education as education;
 use App\Models\validateuser as validateuser;
@@ -8,6 +9,7 @@ use App\Models\institute as institute;
 use App\Models\province as province;
 use App\Models\district as district;
 use App\Models\idcard as idcard;
+use App\Models\images as upload;
 use Illuminate\Support\Facades\Redirect;
 use Route;
 use Request;
@@ -44,9 +46,12 @@ Class AdminController extends Controller{
                 <thead>
                   <tr>
                     <th class='text-center'>ชื่อ - นามสกุล</th>
+                    <th class='text-center'>ชื่อเล่น</th>
                     <th class='text-center'>อีเมล</th>
                     <th class='text-center'>โทรศัพท์</th>
                     <th class='text-center'>เขต</th>
+                    <th class='text-center'>เกรด</th>
+                    <th class='text-center'>remark</th>
                     <th class='text-center'>สถานะผู้ใช้</th>
                     <th class='text-center'>ดำเนินการ</th>
                   </tr>
@@ -57,9 +62,9 @@ Class AdminController extends Controller{
         foreach ($data as $record){
 
           //get idcard path
-          $count = idcard::where('id_user', '=', $record->id)->count();
+          $countid = idcard::where('id_user', '=', $record->id)->count();
 
-          if($count == 1){
+          if($countid == 1){
             $resultidcard = idcard::where('id_user', '=', $record->id)->first();
 
             $idpath = $root_url."/upload_file/idcard/default/".$resultidcard->id_name;
@@ -67,6 +72,19 @@ Class AdminController extends Controller{
             $idpath = "";
           }
           //End get idcard path
+
+          //get image path
+          $countimage = upload::where('image_user', '=', $record->id)->count();
+
+          if($countimage == 1){
+            $resultimage = upload::where('image_user', '=', $record->id)->first();
+
+            $image = $root_url."/upload_file/images/default/".$resultimage->image_name;
+          }else{
+            $image = "";
+          }
+          //End get image path
+
 
           //get distric
           if($record->district == 0 || $record->district == NULL){
@@ -78,6 +96,19 @@ Class AdminController extends Controller{
           }
           //ENd get distric
 
+          //get user detail
+          $countuserdetail = Userdetail::where('user_id', '=', $record->id)->count();
+
+          if($countuserdetail == 1){
+            $Userdetail = Userdetail::where('user_id', '=', $record->id)->first();
+
+            $grade = $Userdetail->grade;
+            $remark = $Userdetail->remark;
+          }else{
+            $grade = "none";
+            $remark = "";
+          }
+          //end get user detail
 
           $u_status = $record->validate;
           $mail_st = substr($u_status, 1,1);
@@ -86,12 +117,22 @@ Class AdminController extends Controller{
           echo "<tr><td><a href='profile_admin/". $record->id ."'>".
                 $record->name . " " . $record->surname .
                 "</a></td><td>".
+                $record->nickname .
+                "</td><td>".
                 $record->email .
                 "</td><td class='text-center'>".
                 $record->phone .
                 "</td><td class='text-center'>".
                 $district .
+                "</td><td>".
+                $grade .
+                "</td><td>".
+                $remark .
                 "</td><td class='text-center'>";
+                //check image profile
+                if($countimage == 1){
+                  echo "<a href='".$image."' target='_blank' ><label class='fa fa-photo' style='cursor:pointer;'></label></a>";
+                }
                 //check validate email
                 if($mail_st == 1){
                   echo "<img src='".$root_url."/public/image/email-valid.png' width='20px' />";
