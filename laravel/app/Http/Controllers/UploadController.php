@@ -39,10 +39,15 @@ class UploadController extends Controller{
         $file = Request::file('uploader');
         $path = 'upload_file/images/default';
         $filename = $file->getClientOriginalName();
-        $file->move('upload_file/images/default',$file->getClientOriginalName());
+
+        //check file extension
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $newfilename = "imageprofile_id".$user_id.".".$ext;
+
+        $file->move($path,$newfilename);
 
         //create thumbnail
-        $img = Image::make('upload_file/images/default/'.$filename);
+        $img = Image::make('upload_file/images/default/'.$newfilename);
 
         if($img->height() == $img->width()){
           $imgresult = $img->resize(206, 206);
@@ -56,8 +61,8 @@ class UploadController extends Controller{
           });
         }
 
-        $imgresult->save('upload_file/images/thumbnail/'.$filename);
-        $thunbnail = 'upload_file/images/thumbnail/'.$filename;
+        $imgresult->save('upload_file/images/thumbnail/'.$newfilename);
+        $thunbnail = 'upload_file/images/thumbnail/'.$newfilename;
         //end create thumbnail
 
         //find image by userid
@@ -68,13 +73,13 @@ class UploadController extends Controller{
           $image_path = '../' . $root_url . '/upload_file/images/default/' . $image->image_name;
           $image_thumbnail = '..'.$root_url .'/'. $image->image_thumbnail;
 
-          if($filename != $image->image_name){
+          if($newfilename != $image->image_name){
             unlink($image_path);
             unlink($image_thumbnail);
           }
 
           //update link
-          $image->image_name = $filename;
+          $image->image_name = $newfilename;
           $image->image_thumbnail = $thunbnail;
           $image->save();
 
@@ -83,7 +88,7 @@ class UploadController extends Controller{
         else{
           //save to batabase
           $image = new upload;
-          $image->image_name = $filename;
+          $image->image_name = $newfilename;
           $image->image_user = $user_id;
           $image->image_thumbnail = $thunbnail;
           $image->save();
@@ -149,10 +154,12 @@ class UploadController extends Controller{
         $file = Request::file('uploader');
         $path = 'upload_file/idcard/default';
         $filename = $file->getClientOriginalName();
-        $file->move('upload_file/idcard/default',$file->getClientOriginalName());
 
         //check file extension
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        $newfilename = "idcard_id".$user_id.".".$ext;
+
+        $file->move($path,$newfilename);
 
         if($ext == 'pdf'){
           //if pdf set pdf icon to thumbnail
@@ -160,7 +167,7 @@ class UploadController extends Controller{
 
         }else if($ext == 'jpg' || $ext == 'png' || $ext == 'gif'){
           //if image create thumbnail
-          $img = Image::make('upload_file/idcard/default/'.$filename);
+          $img = Image::make('upload_file/idcard/default/'.$newfilename);
 
           if($img->height() == $img->width()){
             $imgresult = $img->resize(206, 206);
@@ -175,8 +182,8 @@ class UploadController extends Controller{
           }
 
           //set and save resize image to thumbnail
-          $imgresult->save('upload_file/idcard/thumbnail/'.$filename);
-          $thunbnail = 'upload_file/idcard/thumbnail/'.$filename;
+          $imgresult->save('upload_file/idcard/thumbnail/'.$newfilename);
+          $thunbnail = 'upload_file/idcard/thumbnail/'.$newfilename;
 
         }
 
@@ -192,18 +199,18 @@ class UploadController extends Controller{
           if($oldext != 'pdf'){
             $image_thumbnail = '..'. $root_url .'/' .$dbidcard->id_thumbnail;
 
-            if($filename != $dbidcard->id_name){
+            if($newfilename != $dbidcard->id_name){
               unlink($image_thumbnail);
             }
 
           }
 
-          if($filename != $dbidcard->id_name){
+          if($newfilename != $dbidcard->id_name){
             unlink($image_path);
           }
 
           //update link
-          $dbidcard->id_name = $filename;
+          $dbidcard->id_name = $newfilename;
           $dbidcard->id_thumbnail = $thunbnail;
           $dbidcard->save();
 
@@ -229,7 +236,7 @@ class UploadController extends Controller{
 
           //save to batabase
           $dbidcard = new idcard;
-          $dbidcard->id_name = $filename;
+          $dbidcard->id_name = $newfilename;
           $dbidcard->id_user = $user_id;
           $dbidcard->id_thumbnail = $thunbnail;
           $dbidcard->save();
