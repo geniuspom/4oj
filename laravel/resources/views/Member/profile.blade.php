@@ -57,6 +57,20 @@ use App\Http\Controllers\LoginController as LoginController;
                     </div>
 
                     <div class="form-group">
+                      <label class="col-md-5 text-right">อีเมล</label>
+                      <div class="col-md-6 text-info">
+                        {{ GetUser::getprofile(Auth::user()->id,'email') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-5 text-right">เลขบัตรประชาชน</label>
+                      <div class="col-md-6 text-info">
+                        {{ GetUser::getprofile(Auth::user()->id,'id_card') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <label class="col-md-5 text-right">Line ID</label>
                       <div class="col-md-6 text-info">
                         {{ GetUser::getprofile(Auth::user()->id,'lineid') }}

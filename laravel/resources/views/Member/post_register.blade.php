@@ -18,18 +18,30 @@
 								</div>
 
 									<h4 class="text-warning">เพื่อให้การสมัครงานสมบูรณ์ กรุณาไปที่อีเมลที่ใช้ทำการสมัคร<br/><br/>
-										และทำการกดลิงค์ที่ได้รับจากอีเมลเพื่อ<span class="text-danger"> ยืนยืนอีเมล </span>ที่ใช้งาน
+										และทำการกดลิงค์ที่ได้รับจากอีเมลเพื่อ<span class="text-danger"> ยืนยืนอีเมล </span>ที่ใช้งาน<br/><br/>
+										หรือคัดลอก รหัสที่ได้รับมากรอก เพื่อยืนยันในช่องด้านล่างนี้
 									</h4>
 							</div>
 						</div>
+						<form class="form-horizontal" role="form" method="POST" action="{{ url('/activateaccount') }}">
+
 
 						<div class="form-group">
-							<div class="col-md-4 col-md-offset-4">
-								<a href="{{$root_url}}" type="submit" class="btn btn-primary" style="width:100%">
-									ตกลง
-								</a>
+							<div class="col-md-8 col-md-offset-2 text-center">
+								<input type="hidden" name="_token" value="{{ csrf_token() }}">
+								<input class="form-control text-center" type="text" maxlength="32" name="activatecode" value="">
 							</div>
 						</div>
+						<div class="form-group">
+							<div class="col-md-4 col-md-offset-4">
+								<button type="submit" class="btn btn-primary" style="width:100%">
+									ยืนยันบัญชีผู้ใช้
+								</button>
+							</div>
+
+						</div>
+
+					</form>
 
 				</div>
 			</div>

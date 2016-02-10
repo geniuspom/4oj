@@ -22,7 +22,8 @@
 			   </tr>
 			   <tr>
 				   <td style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:34px;text-align:left;">
-             <p>กรุณาคลิ๊กลิงค์ด้านล่างนี้เพื่อทำการยืนยันอีเมลของคุณ</p>
+             <p>รหัสในการยืนยันบัญชีของคุณคือ <b>{{ $validatecode }}</b></p>
+             <p>หรือคลิ๊กลิงค์ด้านล่างนี้เพื่อทำการยืนยันอีเมลของคุณ</p>
 				     <p>ลิงค์สำหรับการยืนยันอีเมล : <a href="{{ $link }}" style="color:rgb(0, 138, 205);text-decoration:none;" target="_blank">{{ $link }}</a></p>
 				   </td>
 			   </tr>

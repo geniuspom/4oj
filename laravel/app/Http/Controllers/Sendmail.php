@@ -26,7 +26,7 @@ class sendmail extends Controller{
 
       $link = 'http://www.ojconsultinggroup.com/4oj/activate/'. $validatecode;
 
-      Mail::send('Member.mailvalidate', array('name'=>$name,'link'=>$link), function ($message) use ($email) {
+      Mail::send('Member.mailvalidate', array('name'=>$name,'link'=>$link,'validatecode'=>$validatecode), function ($message) use ($email) {
 
           $message->to($email)->subject('Validate your account!');
 

@@ -143,7 +143,12 @@ Class LoginController extends Controller{
     }
 
     public function index(){
-  		  return view('Member.dashboard');
+
+        if(LoginController::checkemailverify()){
+          return view('Member.dashboard');
+        }else{
+          return view('Member.post_register');
+        }
   	}
 
     public function activate(){
