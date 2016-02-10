@@ -2,6 +2,7 @@
 @section('content')
 <?php
 use App\Http\Controllers\GetUser as GetUser;
+use App\Http\Controllers\Userdetail as Userdetail;
 use App\Http\Controllers\UploadController as UploadController;
 use App\Http\Controllers\AdminController as AdminController;
 $id = Route::Input('id');
@@ -40,6 +41,7 @@ $id = Route::Input('id');
                   <form class="form-horizontal" role="form" method="POST" action="{{ url('/adminupdateuser') }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="user_id" value="{{ $id }}">
+
                     <div class="form-group">
                       <label class="col-md-4 control-label">ระดับผู้ใช้งาน</label>
                       <div class="col-md-6">
@@ -54,6 +56,39 @@ $id = Route::Input('id');
                           <input {{ AdminController::update_user_form($id,'validate') }} type="checkbox" name="validate_id_status" value="true" style="width:25px;height:25px;" >
                         </label>
                       </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">สถานะการอบรม</label>
+                      <div class="col-md-6 ">
+                        <label style="padding-top:7px;">
+                          <input {{ AdminController::update_user_form($id,'training_status') }} type="checkbox" name="training_status" value="true" style="width:25px;height:25px;" >
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">วันที่อบรม</label>
+                      <div class="col-md-6">
+                        <div class="input-group date" id="training_date">
+                            <input type="text" class="form-control" name="training_date" value="{{ AdminController::update_user_form($id,'training_date') }}"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">เกรด</label>
+                      <div class="col-md-6">
+                          {{ AdminController::update_user_form($id,'grade') }}
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">บันทึกเพิ่มเติม</label>
+                        <div class="col-md-6">
+                          <textarea class="form-control" rows="5" name="remark" >{{ AdminController::update_user_form($id,'remark') }}</textarea>
+                        </div>
                     </div>
 
                     <!--<div class="form-group">
@@ -295,5 +330,17 @@ $id = Route::Input('id');
       </div>
 
 </div>
+<script type="text/javascript">
+
+$('#training_date').click(function(event){
+ $('#training_date input').data("DateTimePicker").show();
+});
+$('#training_date input').datetimepicker({
+  format: "DD/MM/YYYY",
+  locale: 'th'
+});
+
+</script>
+
 
 @stop

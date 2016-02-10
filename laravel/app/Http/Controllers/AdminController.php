@@ -97,13 +97,18 @@ Class AdminController extends Controller{
           //ENd get distric
 
           //get user detail
-          $countuserdetail = Userdetail::where('user_id', '=', $record->id)->count();
+          $countuserdetail = Userdetail::where('id', '=', $record->id)->count();
 
           if($countuserdetail == 1){
-            $Userdetail = Userdetail::where('user_id', '=', $record->id)->first();
+            $Userdetail = Userdetail::where('id', '=', $record->id)->first();
 
             $grade = $Userdetail->grade;
             $remark = $Userdetail->remark;
+
+            if($grade == 0){$grade = "none";}else if($grade == 1){$grade = "D";}
+            else if($grade == 2){$grade = "C";}else if($grade == 3){$grade = "B";}
+            else{$grade = "A";}
+
           }else{
             $grade = "none";
             $remark = "";
@@ -124,7 +129,7 @@ Class AdminController extends Controller{
                 $record->phone .
                 "</td><td class='text-center'>".
                 $district .
-                "</td><td>".
+                "</td><td class='text-center'>".
                 $grade .
                 "</td><td>".
                 $remark .
@@ -176,10 +181,31 @@ Class AdminController extends Controller{
       $permission = Request::input('permission');
       $validate_id_status = Request::input('validate_id_status');
 
-      if($validate_id_status == true){
-        $validate_id = "1";
+      //user_detail
+      $training_status = Request::input('training_status');
+      $grade = Request::input('grade');
+      $remark = Request::input('remark');
+
+      if(!empty(Request::input('training_date'))){
+        $input_training_date = explode("/", Request::input('training_date'));
+        $training_date = $input_training_date[2]."-".$input_training_date[1]."-".$input_training_date[0];
       }else{
-        $validate_id = "0";
+        $training_date = NULL;
+      }
+
+      if($validate_id_status == true){$validate_id = "1";
+      }else{$validate_id = "0";}
+
+      if($training_status == true){$training_status = "1";
+      }else{$training_status = "0";}
+
+      //check row of user_detail
+      $count_userdetail = Userdetail::where("id","=",$user_id)->count();
+      if($count_userdetail > 0){
+        $userdetail = Userdetail::where("id","=",$user_id)->first();
+      }else{
+        $userdetail = new Userdetail();
+        $userdetail->id = $user_id;
       }
 
       $user = Member::where("id","=",$user_id)->first();
@@ -194,7 +220,13 @@ Class AdminController extends Controller{
       $user->permission = $permission;
       $user->validate = $new_validate;
 
-      if($user->save()) {
+      //userdetail
+      $userdetail->grade = $grade;
+      $userdetail->remark = $remark;
+      $userdetail->training_status = $training_status;
+      $userdetail->training_date = $training_date;
+
+      if($user->save() && $userdetail->save()) {
           return Redirect::to('profile_admin/'. $user_id)
             ->with('status', 'แก้ไขข้อมูลสำเร็จ');
       } else {
@@ -207,42 +239,106 @@ Class AdminController extends Controller{
 
     public static function update_user_form($user_id,$value_name){
 
-        $user = Member::where("id","=",$user_id)->first();
+        if($value_name == "permission" || $value_name == "validate"){
 
-        $return_value = $user->$value_name;
+              $user = Member::where("id","=",$user_id)->first();
 
-        if($value_name == "permission"){
+              $return_value = $user->$value_name;
 
-          $data_permissions = [
-                              "1"=>"User - ผู้ใช้ทั่วไป",
-                              "2"=>"Staff - พนักงาน",
-                              "3"=>"Admin - ผู้ดูแลระบบ"
-                              ];
+              if($value_name == "permission"){
 
-          $return_data = "<select name='permission' id='permission' class='form-control'>";
-            foreach($data_permissions as $permission => $permission_value){
-                $return_data .= "<option value='".$permission."'";
-                    if($return_value == $permission){
-                      $return_data .= " selected='selected'";
-                    }
-                $return_data .= ">".$permission_value."</option>";
-            }
-          $return_data .= "</select>";
+                $data_permissions = [
+                                    "1"=>"User - ผู้ใช้ทั่วไป",
+                                    "2"=>"Staff - พนักงาน",
+                                    "3"=>"Admin - ผู้ดูแลระบบ"
+                                    ];
 
-        }else if($value_name == "validate"){
+                $return_data = "<select name='permission' id='permission' class='form-control'>";
+                  foreach($data_permissions as $permission => $permission_value){
+                      $return_data .= "<option value='".$permission."'";
+                          if($return_value == $permission){
+                            $return_data .= " selected='selected'";
+                          }
+                      $return_data .= ">".$permission_value."</option>";
+                  }
+                $return_data .= "</select>";
 
-          $oldvalidate = $return_value;
-          $validate_id_status = substr($oldvalidate, 3,1);
+              }
+              //===================================================================================
+              else if($value_name == "validate"){
 
-          if($validate_id_status == 1){
-            $return_data = "checked";
-          }else{
-            $return_data = "";
-          }
+                $oldvalidate = $return_value;
+                $validate_id_status = substr($oldvalidate, 3,1);
 
-        }else{
-          $return_data = $return_value;
+                if($validate_id_status == 1){
+                  $return_data = "checked";
+                }else{
+                  $return_data = "";
+                }
+
+              }
+
+        }else if($value_name == "grade" || $value_name == "training_status" || $value_name == "training_date" || $value_name == "remark"){
+
+              $count_userdetail = Userdetail::where("id","=",$user_id)->count();
+
+              //===================================================================================
+              if($value_name == "grade"){
+
+                  $data_grade = [
+                                  "0"=>"none",
+                                  "4"=>"A",
+                                  "3"=>"B",
+                                  "2"=>"C",
+                                  "1"=>"D"
+                                ];
+
+                  $return_data = "<select name='grade' id='grade' class='form-control'>";
+                      foreach($data_grade as $grade => $grade_value){
+                          $return_data .= "<option value='".$grade."'";
+
+                          if($count_userdetail > 0){
+
+                            $userdetail = Userdetail::where("id","=",$user_id)->first();
+
+                            if($userdetail->grade == $grade){
+                                $return_data .= " selected='selected'";
+                            }
+                          }
+
+                          $return_data .= ">".$grade_value."</option>";
+                      }
+                  $return_data .= "</select>";
+
+              }else if($count_userdetail > 0){
+
+                  $userdetail = Userdetail::where("id","=",$user_id)->first();
+                  $userdetail_value = $userdetail->$value_name;
+
+                  if($value_name == "training_status"){
+
+                      if($userdetail_value == 1){
+                        $return_data = "checked";
+                      }else{
+                        $return_data = "";
+                      }
+
+                  }else if($value_name == "training_date" && !empty($userdetail_value)){
+
+                      $split_training_date = explode("-", $userdetail_value);
+                      $return_data = $split_training_date[2]."/".$split_training_date[1]."/".$split_training_date[0];
+
+                  }else{
+                      $return_data = $userdetail_value;
+                  }
+
+              }else{
+                  $return_data = "";
+              }
+
         }
+
+        //===================================================================================
 
         echo $return_data;
     }
