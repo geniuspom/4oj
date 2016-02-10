@@ -19,8 +19,13 @@
 
 									<h4 class="text-warning">เพื่อให้การสมัครงานสมบูรณ์ กรุณาไปที่อีเมลที่ใช้ทำการสมัคร<br/><br/>
 										และทำการกดลิงค์ที่ได้รับจากอีเมลเพื่อ<span class="text-danger"> ยืนยืนอีเมล </span>ที่ใช้งาน<br/><br/>
-										หรือคัดลอก รหัสที่ได้รับมากรอก เพื่อยืนยันในช่องด้านล่างนี้
+										หรือคัดลอก รหัสที่ได้รับมากรอก เพื่อยืนยันในช่องด้านล่างนี้<br/><br/>
 									</h4>
+									<h5>
+										<span class="text-info">*หากท่านไม่ได้รับอีเมลกรุณากดที่</span>
+										<span class="text-danger"> ส่งอีเมลเพื่อทำการยืนยันอีเมล์ </span><br/><br/>
+										<span class="text-info">เพื่อทำการส่งอีเมลอีกครั้ง</span>
+									</h5>
 							</div>
 						</div>
 						<form class="form-horizontal" role="form" method="POST" action="{{ url('/activateaccount') }}">
@@ -33,10 +38,13 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="col-md-4 col-md-offset-4">
-								<button type="submit" class="btn btn-primary" style="width:100%">
+							<div class="col-md-8 col-md-offset-2 text-center">
+								<button type="submit" class="btn btn-primary">
 									ยืนยันบัญชีผู้ใช้
 								</button>
+								<a type='submit' class='btn btn-warning' href='send_email_verify'>
+									 ส่งอีเมลเพื่อทำการยืนยันอีเมล์
+								</a>
 							</div>
 
 						</div>
