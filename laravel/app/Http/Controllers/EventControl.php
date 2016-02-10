@@ -131,6 +131,13 @@ Class EventControl extends Controller{
           $customername = $customer->symbol." - ".$customer->name;
           $event_status = Getdataform::event_status($record->event_status,'getvalue');
 
+          //get venue
+          $venueid = $record->venue_id;
+          $venue = venue::where('id','=',$venueid)->first();
+          $venuename = $venue->name;
+
+          //end get venue id
+
           $split_event_date = explode("-", $record->event_date);
           $event_date = $split_event_date[2]."/".$split_event_date[1]."/".$split_event_date[0];
 
@@ -169,10 +176,10 @@ Class EventControl extends Controller{
                 $customerid .
                 "'>" .
                 $customername .
-                "</a><td class='text-center'><a href='customer_detail/".
-                $customerid .
+                "</a><td class='text-center'><a href='venue_detail/".
+                $venueid .
                 "'>" .
-                $customername .
+                $venuename .
                 "</a></td><td class='text-center'>".
                 $event_status .
                 "</td><tr>";

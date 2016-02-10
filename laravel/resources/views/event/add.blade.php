@@ -156,7 +156,7 @@ use App\Http\Controllers\Getdataform as Getdataform;
 
 
                     <div class="form-group">
-                      <label class="col-md-4 control-label">ชื่อผู้ประสานงานลูกค้า</label>
+                      <label class="col-md-4 control-label">ชื่อผู้ประสานงานลูกค้า*</label>
                       <div class="col-md-6" id="customer_contact">
 
                       </div>
@@ -234,7 +234,7 @@ use App\Http\Controllers\Getdataform as Getdataform;
 
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">
-                        <button type="submit" class="btn btn-primary" >
+                        <button type="submit" class="btn btn-primary" id="submit_bt">
                           เพิ่มงานที่กำลังเปิดรับ
                         </button>
                         <!--<a class="btn btn-primary" href="{{ URL::previous() }}"> Cancel </a>-->
@@ -321,6 +321,55 @@ $(document).ready(function(){
     get_customer_contact($customer_id);
   });
 
+  //disable submit botton
+  $('#submit_bt').prop('disabled', true);
+
+});
+
+//check data before submit
+function check_data(){
+  var customer_id = $( "#customer_id option:selected" ).val();
+  var customer_contact_id = $( "#customer_contact_select option:selected" ).val();
+  var customer_contact_name = $('#custumer_contact_name input').val();
+  var customer_contact_phone = $('#custumer_contact_phone input').val();
+
+  //ยังไม่ได้เลือกลูกค้าให้ล็อคไว้
+  if(customer_id == 0){
+    $('#submit_bt').prop('disabled', true);
+  }
+  //เลือกลูกค้าแล้ว
+  else{
+
+    //เลือกผู้ประสานงานลูกค้าแล้ว
+    if(customer_contact_id != 0){
+      $('#submit_bt').prop('disabled', false);
+    }
+    //เลือกผู้ประสานงานลูกค้าที่ยังไม่มี
+    else{
+      //กรอกชื่อและเบอร์โทรแล้ว
+      if(customer_contact_name != "" && customer_contact_phone != ""){
+        $('#submit_bt').prop('disabled', false);
+      }else{
+        $('#submit_bt').prop('disabled', true);
+      }
+    }
+
+  }
+
+}
+
+//check customer
+
+$(document).on('change', '#customer_contact_select', function() {
+  check_data();
+});
+
+$(document).on('change', '#custumer_contact_name input', function() {
+  check_data();
+});
+
+$(document).on('change', '#custumer_contact_phone input', function() {
+  check_data();
 });
 
 $(document).on('change', '#customer_contact_select', function() {
@@ -361,6 +410,10 @@ function get_customer_contact($customer_id){
           $("#custumer_contact_name").addClass('hidden');
           $("#custumer_contact_phone").addClass('hidden');
         }
+        $('#custumer_contact_name input').val("");
+        $('#custumer_contact_phone input').val("");
+        check_data();
+
       }
     });
 }
