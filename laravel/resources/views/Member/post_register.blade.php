@@ -13,6 +13,12 @@
 						<div class="form-group">
 							<div class="col-md-12 text-center">
 
+								@if (session('status'))
+									<div class="alert alert-success">
+										{{ session('status') }}
+									</div>
+								@endif
+
 								<div class="alert alert-success">
 									<p>การลงทะเบียนสำเร็จ</P>
 								</div>
@@ -22,7 +28,8 @@
 										หรือคัดลอก รหัสที่ได้รับมากรอก เพื่อยืนยันในช่องด้านล่างนี้<br/><br/>
 									</h4>
 									<h5>
-										<span class="text-info">*หากท่านไม่ได้รับอีเมลกรุณากดที่</span>
+										<span class="text-danger">*หากท่านไม่ได้รับอีเมล กรุณาตรวจสอบที่อีเมลขยะ (Junk mail หรือ Spam mail) ของท่าน </span><br/><br/>
+										<span class="text-info">หากท่านไม่พบในอีเมลขยะกรุณากดที่</span>
 										<span class="text-danger"> ส่งอีเมลเพื่อทำการยืนยันอีเมล์ </span><br/><br/>
 										<span class="text-info">เพื่อทำการส่งอีเมลอีกครั้ง</span>
 									</h5>

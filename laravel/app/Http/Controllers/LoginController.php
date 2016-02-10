@@ -290,7 +290,7 @@ $user->email_valid_code = NULL;
 
       //จบส่ง email
 
-      return redirect::to('user_profile')
+      return redirect::to('poatregister')
           ->with('status',"ทำการส่งอีเมลเพื่อยืนยันเรียบร้อยแล้ว");
 
     }
