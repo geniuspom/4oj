@@ -82,6 +82,10 @@ Route::group(['middleware' => 'auth'], function()
 			Route::get('useredit_admin/{id}',function($id){
 					return View::make('Admin.edit_user');
 			});
+			//Assignment
+			Route::get('assigment/{id}',function($id){
+					return View::make('Assign.assign');
+			});
 
 
 		});
@@ -253,6 +257,10 @@ Route::post('get_report_filter','RequestJob@get_report_jquery');
 //request event
 Route::post('request_event','RequestJob@request_event');
 //end function request job
+
+//function assignment
+Route::post('update_assignment','Assignment\AssignManage@main');
+Route::post('request_assign_jquery','Assignment\Assign@jquery_data');
 
 
 //upload

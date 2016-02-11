@@ -212,6 +212,7 @@ $id = Route::Input('id');
                           </button>
 
                         </form>
+                        <a class="btn btn-primary" href="{{$root_url}}/assigment/{{$id}}"> จัดคนทำงาน </a>
 
                         <a class="btn btn-primary" href="{{$root_url}}/event"> ยกเลิก </a>
                       </div>
