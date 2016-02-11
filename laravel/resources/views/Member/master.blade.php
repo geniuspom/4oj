@@ -324,7 +324,7 @@
                             <a href="{{$root_url}}/customer"><i class="fa fa-suitcase fa-fw"></i> รายชื่อลูกค้า</a>
                         </li>
                         <li>
-                            <a href="{{$root_url}}/venue"><i class="fa fa-building fa-fw"></i> สถาที่จัดงาน</a>
+                            <a href="{{$root_url}}/venue"><i class="fa fa-building fa-fw"></i> สถานที่จัดงาน</a>
                         </li>
                         @endif
                         <!--<li>
