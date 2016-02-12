@@ -115,6 +115,7 @@ Class EventControl extends Controller{
                         <thead>
                         <tr>
                         <th class='text-center'>ยื่นขอทำงานนี้</th>
+                        <th class='text-center'>จัดการคน</th>
                         <th class='text-center'>วันที่</th>
                         <th class='text-center'>ช่วงเวลางาน</th>
                         <th class='text-center'>ชื่องาน</th>
@@ -162,8 +163,18 @@ Class EventControl extends Controller{
             $request_botton = "";
           }
 
+          if(LoginController::checkpermission(2)){
+            $assign_botton = "<a href='assigment/". $record->id ."' class='btn btn-outline btn-info btn-circle' target='_blank'>
+            <i class='fa fa-user fa-lg' style='cursor:pointer;'></i>
+            </a>";
+          }else{
+            $assign_botton = "";
+          }
+
           $returnhtml .=  "<tr><td class='text-center'>".
                 $request_botton.
+                "</td><td class='text-center'>".
+                $assign_botton.
                 "</td></td><td class='text-center'>".
                 $event_date .
                 "</td></td><td class='text-center'>".
