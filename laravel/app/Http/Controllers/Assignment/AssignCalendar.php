@@ -1,9 +1,12 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Assignment;
+use App\Http\Controllers\Controller;
+use App\Models\Database\Assignment as Assignment;
+use App\Models\event as event;
 use Request;
 use Auth;
 
-Class Calendar extends Controller{
+Class AssignCalendar extends Controller{
 
     public static function getformjquery(){
 
@@ -13,9 +16,9 @@ Class Calendar extends Controller{
 
       if(!empty($day) && !empty($month) && !empty($year)){
         $fulldate = $day . "-" . $month . "-" . $year;
-        Calendar::getcalendar($fulldate);
+        AssignCalendar::getcalendar($fulldate);
       }else{
-        Calendar::getcalendar("");
+        AssignCalendar::getcalendar("");
       }
 
     }
@@ -26,9 +29,6 @@ Class Calendar extends Controller{
         //กำหนดตัวแปรที่ใช้คำนวณวัน
         $now = strtotime("now");
 
-        //if(isset($_GET['now']) && !empty($_GET['now'])){
-           //$now = $_GET['now'];
-        //}
       }else{
         $now = strtotime("$fulldate");
       }
@@ -41,8 +41,12 @@ Class Calendar extends Controller{
       $first_day_of_week = date('w',$first_of_month);
       $last_day_of_month = date('t',$now);
       $lastday_previousmonth = date("j", strtotime("$Year-$month-1" . "last day of previous month"));
-      $weekrow_of_month = Calendar::getweekofmonth($now);
+      $weekrow_of_month = AssignCalendar::getweekofmonth($now);
       $today = date("Y-n-j");
+
+      //แปลงเป็นภาษาไทย
+      $thai_month = AssignCalendar::get_month_thai($month);
+      $BE_year = AssignCalendar::get_BE_year($Year);
 
       //กำหนดวันแรกของหน้าปฏฺทิน
       $startday = 1 - $first_day_of_week;
@@ -61,12 +65,12 @@ Class Calendar extends Controller{
 
               <div class='row' style='padding-bottom:8px;'>
                 <div class='col-xs-7'>
-                    <span style='font-size: 18px;'><b>" . date('F',$now) . "</b> " . $Year . "</span>
+                    <span style='font-size: 18px;'><b>" . $thai_month . "</b> " . $BE_year . "</span>
                 </div>
                   <div class='col-xs-5 text-right'>
-                        <button class='btn btn-outline btn-info btn-xs' type='submit' name = 'btn-previous' onclick='getprecalendar(". date('d',$now) . "," . date('m',$now) . "," . $Year .")' > < </button>
-                        <button class='btn btn-outline btn-info btn-xs' type='submit' name = 'btn-previous' onclick='gettodaycalendar()' > today </button>
-                        <button class='btn btn-outline btn-info btn-xs' type='submit' name = 'btn-next' onclick='getnextcalendar(". date('d',$now) . "," . date('m',$now) . "," . $Year .")'> > </button>
+                        <button class='btn btn-outline btn-info btn-xs' type='submit' name = 'btn-previous' onclick='assign_previous(". date('d',$now) . "," . date('m',$now) . "," . $Year .")' > < </button>
+                        <button class='btn btn-outline btn-info btn-xs' type='submit' name = 'btn-previous' onclick='assign_today()' > today </button>
+                        <button class='btn btn-outline btn-info btn-xs' type='submit' name = 'btn-next' onclick='assign_next(". date('d',$now) . "," . date('m',$now) . "," . $Year .")'> > </button>
                   </div>
               </div>
 
@@ -116,11 +120,11 @@ Class Calendar extends Controller{
 			            $current_day = "$Year-$month-$run_day";
                   $text_current_day = "$Year,$month,$run_day";
 
-
 			            //กำหนดค่าเริ่มต้น array ถ้า array ว่างอยู่
 			            if(empty($table1_row[$row_of_month-1]) && empty($table2_row[$row_of_month-1]) ){
 			              $table1_row[$row_of_month-1] = "";
 			              $table2_row[$row_of_month-1] = "<tr>";
+                    $table2_row_event[$row_of_month-1] = "<tr>";
 			            }
 
 			            if($row_of_month == 1){
@@ -169,7 +173,9 @@ Class Calendar extends Controller{
 
 			                $weekrow[$row_of_month-1] = "<div class='month-row weekrow". $row_of_month . "_" . $weekrow_of_month . "' >";//หลายค่า
 
-			                break;
+                      $table2_row_event[$row_of_month-1] .= AssignCalendar::get_assign_event($current_day,Auth::user()->id);
+
+                      break;
 
 			            }else{
 
@@ -183,13 +189,15 @@ Class Calendar extends Controller{
 			                                                <span>" . $month_in_calendar . $run_day . "</span>
 			                                                </td>";
 
+                    $table2_row_event[$row_of_month-1] .= AssignCalendar::get_assign_event($current_day,Auth::user()->id);
+
 			            }
 
 			            //ถ้าปัจจุบันเป็นวันสุดท้ายของสัปดาห์
 			            if($day_of_week == 7){
 
 			                $weekrow[$row_of_month-1] = "<div class='month-row weekrow". $row_of_month . "_" . $weekrow_of_month . "' >";//หลายค่า
-
+                      $table2_row_event[$row_of_month-1] .= "</tr>";
                       $day_of_week = 1;
 			                $row_of_month++;
 
@@ -203,377 +211,8 @@ Class Calendar extends Controller{
 			          }
 //จบคำสั่ง for เพื่อสร้างปฏิทิน ===================================================================================
 
-
-//เริ่มคำสั่ง for เพื่อนับจำนวนแถว event ==================================================================================
-                $day_of_week = 1;
-                $row_of_month = 1;
-                $week_event_row_run = 0;
-
-                for($run_day = $startday; ;$run_day++){
-
-                  //กำหนดวันที่ปัจจุบัน
-			            $current_day = "$Year-$month-$run_day";
-                  $text_current_day = "$Year,$month,$run_day";
-
-                  //เช็คเงื่อนไข และกำหนดวันเริ่ม วันจบ ที่ดึง event
-                  if($run_day < 1){
-                    $this_day = $lastday_previousmonth + $run_day;
-
-                    if($month == 1){
-                      $this_month = 12;
-                      $this_year = $Year-1;
-                    }else{
-                      $this_month = $month-1;
-                      $this_year = $Year;
-                    }
-
-                    $start = "$this_year-$this_month-$this_day";
-                    $end = "$this_year-$this_month-$this_day";
-
-                  }else if($run_day > $last_day_of_month){
-                    $this_day = $run_day - $last_day_of_month;
-
-                    if($month == 12){
-                      $this_month = 1;
-                      $this_year = $Year+1;
-                    }else{
-                      $this_month = $month-1;
-                      $this_year = $Year;
-                    }
-
-                    $start = "$this_year-$this_month-$this_day";
-                    $end = "$this_year-$this_month-$this_day";
-
-                  }else{
-                      $start = "$Year-$month-$run_day";
-                      $end = "$Year-$month-$run_day";
-                  }
-                  //จบเช็คเงื่อนไข และกำหนดวันเริ่ม วันจบ ที่ดึง event
-
-      //ดึง event จาก DB ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                  $eventmulti = RequestJob::getrequestjobmulti($start,$end,$user_id);
-                  $event = RequestJob::getrequestonejob($start,$user_id);
-
-                  $numberevent_of_day = count($event);
-                  $numbermultievent_of_day = count($eventmulti);
-
-                  $all_event_of_day = $numberevent_of_day + $numbermultievent_of_day;
-
-
-                  //เช็คแถว event ทั้งหมดในสัปดาห์
-                  if($week_event_row_run < $all_event_of_day){
-                      $week_event_row_run = $all_event_of_day;
-                  }
-      //จบดึง event จาก DB ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-                  //ตรวจสอบวันสุดท้ายของเดือน
-                  if(($run_day > $last_day_of_month && $day_of_week == 7) || ($run_day == $last_day_of_month && $day_of_week == 7)){
-
-                      //เก็บค่า event row ในแต่ละสัปดาห์
-                      $week_event_row[$row_of_month-1] = $week_event_row_run;
-
-                      break;
-
-                  }else{
-
-                  }
-
-                  //ถ้าปัจจุบันเป็นวันสุดท้ายของสัปดาห์
-                  if($day_of_week == 7){
-
-                      //เก็บค่า event row ในแต่ละสัปดาห์
-                      $week_event_row[$row_of_month-1] = $week_event_row_run;
-
-                      $week_event_row_run = 0;
-                      $day_of_week = 1;
-                      $row_of_month++;
-
-                  //ถ้าปัจจุบันไม่ใช่วันสุดท้ายของสัปดาห์
-                  }else{
-
-                      $day_of_week++;
-
-                  }
-
-                }
-//จบคำสั่ง for เพื่อนับจำนวนแถว event =================================================================================
-
-
-//เริ่มคำสั่ง for สร้าง event ==================================================================================
-                $day_of_week = 1;
-                $row_of_month = 1;
-
-                for($run_day = $startday; ;$run_day++){
-
-                  //กำหนดวันที่ปัจจุบัน
-			            $current_day = "$Year-$month-$run_day";
-                  $text_current_day = "$Year,$month,$run_day";
-
-                  //เช็คเงื่อนไข และกำหนดวันเริ่ม วันจบ ที่ดึง event
-                  if($run_day < 1){
-                    $this_day = $lastday_previousmonth + $run_day;
-
-                    if($month == 1){
-                      $this_month = 12;
-                      $this_year = $Year-1;
-                    }else{
-                      $this_month = $month-1;
-                      $this_year = $Year;
-                    }
-
-                    $start = "$this_year-$this_month-$this_day";
-                    $end = "$this_year-$this_month-$this_day";
-
-                  }else if($run_day > $last_day_of_month){
-                    $this_day = $run_day - $last_day_of_month;
-
-                    if($month == 12){
-                      $this_month = 1;
-                      $this_year = $Year+1;
-                    }else{
-                      $this_month = $month-1;
-                      $this_year = $Year;
-                    }
-
-                    $start = "$this_year-$this_month-$this_day";
-                    $end = "$this_year-$this_month-$this_day";
-
-                  }else{
-                      $start = "$Year-$month-$run_day";
-                      $end = "$Year-$month-$run_day";
-                  }
-                  //จบเช็คเงื่อนไข และกำหนดวันเริ่ม วันจบ ที่ดึง event
-
-
-      //ดึง event จาก DB ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                  $eventmulti = RequestJob::getrequestjobmulti($start,$end,$user_id);
-                  $event = RequestJob::getrequestonejob($start,$user_id);
-
-                  $numberevent_of_day = count($event);
-                  $numbermultievent_of_day = count($eventmulti);
-
-                  $all_event_of_day = $numberevent_of_day + $numbermultievent_of_day;
-
-      //จบดึง event จาก DB ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-                    if($all_event_of_day > 0){
-
-                      $eventmultincount = 0;
-                      $eventcount = 0;
-
-                      for($i = 0 ;$i < $week_event_row[$row_of_month-1];$i++){
-
-                        if(empty($table2_row_event[$row_of_month-1][$i])){
-                          $table2_row_event[$row_of_month-1][$i] = "<tr>";
-                        }
-
-//เพิ่มจำกัดกำนวนที่แสดง
-if($i == 4){
-
-  $table2_row_event[$row_of_month-1][$i] =
-  "<tr><td class='st-c st-more-c'><span class='ca-mlp23595 st-more st-moreul' id='". $current_day ."'>+ more</span></td>";
-
-  break;
-}
-//เพิ่มจำกัดกำนวนที่แสดง
-
-
-                        //เช็ค event หลายวัน
-                        if($numbermultievent_of_day > 0 && $numbermultievent_of_day > $eventmultincount){
-
-                          $number_of_multiday = ($eventmulti[$eventmultincount]['Numberofday']+1);
-
-                          $today_week_number = date('w',strtotime($current_day));
-
-                          if(!empty($eventmulti[$eventmultincount]['request_name'])){
-                            $title = $eventmulti[$eventmultincount]['request_name'];
-                          }else{
-                            $title = "&nbsp;";
-                          }
-
-                          //เช็คช่วงเวลา request
-                          if($eventmulti[$eventmultincount]['duration'] == 2){
-                            $event_color_class = "event_color_morning";
-                          }else if($eventmulti[$eventmultincount]['duration'] == 3){
-                            $event_color_class = "event_color_afternoon";
-                          }else{
-                            $event_color_class = "event_color_allday";
-                          }
-
-                          if(strtotime($eventmulti[$eventmultincount]['start_date']) == strtotime($current_day)){
-
-                                  if((7-$today_week_number) >= $number_of_multiday){
-                                    $colspan = $number_of_multiday;
-                                  }else{
-                                    $colspan = 7-$today_week_number;
-                                  }
-
-                                  $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c' colspan='". $colspan ."'>
-                                                                        <div id='". $eventmulti[$eventmultincount]['id'] ."' class='st-c-pos'>
-                                                                            <div class='rb-n ".$event_color_class."' >
-                                                                            <div class='rb-ni'>". $title ."</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        </td>";
-
-                          }else if($today_week_number == 0){
-
-                            $timeDiff = abs(strtotime($current_day)-strtotime($eventmulti[$eventmultincount]['start_date']));
-                            $numberDays = $timeDiff/86400;  // 86400 seconds in one day
-                            $eventpassdate = intval($numberDays);
-
-                            $resultdate = $number_of_multiday - $eventpassdate;
-
-                                if((7-$today_week_number) >= $resultdate){
-                                  $colspan = $resultdate;
-                                }else{
-                                  $colspan = 7-$today_week_number;
-                                }
-
-                                $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c' colspan='". $colspan ."'>
-                                                                      <div id='". $eventmulti[$eventmultincount]['id'] ."' class='st-c-pos'>
-                                                                          <div class='rb-n ".$event_color_class."' >
-                                                                          <div class='rb-ni'>". $title ."</div>
-                                                                          </div>
-                                                                      </div>
-                                                                      </td>";
-
-                          }
-//เพิ่มทีหลัง
-                          /*else{
-
-                            $rowspan = $week_event_row[$row_of_month-1] - $i;
-
-                            $table2_row_event[$row_of_month-1][$i] .= "<td id='". $current_day ."' rowspan='". $rowspan ."' class='st-c st-s'>&nbsp;</td>";
-
-                          }*/
-//เพิ่มทีหลัง
-
-                          $eventmultincount++;
-
-                        }else
-
-                        //เช็ค event เดี่ยว
-                        if($numberevent_of_day > 0 && $numberevent_of_day > $eventcount && $numbermultievent_of_day == $eventmultincount){
-
-                              if(!empty($event[$eventcount]['request_name'])){
-                                $title = $event[$eventcount]['request_name'];
-                              }else{
-                                $title = "&nbsp;";
-                              }
-
-                              //เช็คช่วงเวลา request
-                              if($event[$eventcount]['duration'] == 2){
-                                $event_color_class = "event_color_morning";
-                              }else if($event[$eventcount]['duration'] == 3){
-                                $event_color_class = "event_color_afternoon";
-                              }else{
-                                $event_color_class = "event_color_allday";
-                              }
-
-                              if($numberevent_of_day == $eventcount+1){
-
-                                $rowspan = $week_event_row[$row_of_month-1] - $i;
-
-                                $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c' rowspan='". $rowspan ."'>
-                                                                      <div id='". $event[$eventcount]['id'] ."' class='st-c-pos'>
-                                                                          <div class='rb-n ".$event_color_class."' >
-                                                                          <div class='rb-ni'>". $title ."</div>
-                                                                          </div>
-                                                                      </div>
-                                                                      </td>";
-
-                                break;
-
-                              }else{
-
-                                $table2_row_event[$row_of_month-1][$i] .= "<td class='st-c'>
-                                                                      <div id='". $event[$eventcount]['id'] ."' class='st-c-pos'>
-                                                                          <div class='rb-n ".$event_color_class."' >
-                                                                          <div class='rb-ni'>". $title ."</div>
-                                                                          </div>
-                                                                      </div>
-                                                                      </td>";
-                              }
-
-                              $eventcount++;
-
-                        }else if($numberevent_of_day == $eventcount && $numbermultievent_of_day == $eventmultincount){
-
-                          $rowspan = $week_event_row[$row_of_month-1] - $i;
-
-                          $table2_row_event[$row_of_month-1][$i] .= "<td id='". $current_day ."' rowspan='". $rowspan ."' class='st-c st-s'>&nbsp;</td>";
-
-                          break;
-
-                        }
-
-
-                      }
-
-                    }else{
-
-                      if(empty($table2_row_event[$row_of_month-1][0])){
-                        $table2_row_event[$row_of_month-1][0] = "<tr>";
-                      }
-
-                      $table2_row_event[$row_of_month-1][0] .= "<td id='". $current_day ."' rowspan='". $week_event_row[$row_of_month-1] ."' class='st-c st-s'>&nbsp;</td>";
-
-
-                    }
-
-                  //ถ้าปัจจุบันเป็นวันสุดท้ายของสัปดาห์
-                  if($day_of_week == 7){
-
-                    if($all_event_of_day > 0){
-
-                      for($i = 0 ;$i < $week_event_row[$row_of_month-1];$i++){
-                          $table2_row_event[$row_of_month-1][$i] .= "</tr>";
-                      }
-
-                    }else{
-                      $table2_row_event[$row_of_month-1][0] .= "</tr>";
-                    }
-
-                      $day_of_week = 1;
-                      $row_of_month++;
-
-                      //เช็ควันสุดท้าย
-                      if(($run_day > $last_day_of_month) || ($run_day == $last_day_of_month)){
-                          break;
-                      }
-
-
-                  //ถ้าปัจจุบันไม่ใช่วันสุดท้ายของสัปดาห์
-                  }else{
-
-                      $day_of_week++;
-
-                  }
-
-                }
-//จบคำสั่ง for เพื่อสร้าง event =================================================================================
-
 			          //run เพื่อแสดงผล
 			          for($round = 0; $round < $weekrow_of_month; $round++){
-
-                    $all_event_of_week = "";
-
-                    if($week_event_row[$round] != 0){
-                      $countthisweek[$round] = count($table2_row_event[$round]);
-                    }else{
-                      $countthisweek[$round] = 0;
-                    }
-
-                    for($i = 0;$i < $countthisweek[$round]; $i++){
-
-                      /*if(empty($all_event_of_week)){
-                        $all_event_of_week = "";
-                      }*/
-
-                      $all_event_of_week .= $table2_row_event[$round][$i];
-
-                    }
 
 			              echo $weekrow[$round] .
 			              $table1_head .
@@ -582,7 +221,7 @@ if($i == 4){
 			              $table2_head .
 			              $table2_row[$round] .
 			              $table2_row_foot .
-                    $all_event_of_week .
+                    $table2_row_event[$round] .
                     $table2_row_foot .
 			              $table2_foot .
 			              $weekrowfoot;
@@ -594,21 +233,6 @@ if($i == 4){
 
 			  </div>
 			";
-
-      //add test
-      /*echo "<div>";
-      for($i = 0 ;$i < count($countthisweek); $i++){
-        echo $countthisweek[$i] . "<br>";
-      }
-      echo "</div><br>";
-      //end test
-
-      echo "<div>";
-      for($i = 0 ;$i < count($week_event_row); $i++){
-        echo $week_event_row[$i] . "<br>";
-      }
-      echo "</div>";*/
-      //end test
 
     }
 
@@ -658,14 +282,108 @@ if($i == 4){
 
     }
 
-    public static function getevent($currentday){
+    public static function get_month_thai($month){
 
-      //get event current day
-      $event = RequestJob::getrequestonejob($currentday,Auth::user()->id);
+      $thai_month = "";
 
-      $numberevent_of_day = count($event);
+      switch ($month) {
+        case 1:
+            $thai_month = "มกราคม";
+            break;
+        case 2:
+            $thai_month = "กุมภาพันธ์";
+            break;
+        case 3:
+            $thai_month = "มีนาคม";
+            break;
+        case 4:
+            $thai_month = "เมษายน";
+            break;
+        case 5:
+            $thai_month = "พฤษภาคม";
+            break;
+        case 6:
+            $thai_month = "มิถุนายน";
+            break;
+        case 7:
+            $thai_month = "กรกฎาคม";
+            break;
+        case 8:
+            $thai_month = "สิงหาคม";
+            break;
+        case 9:
+            $thai_month = "กันยายน";
+            break;
+        case 10:
+            $thai_month = "ตุลาคม";
+            break;
+        case 11:
+            $thai_month = "พฤศจิกายน";
+            break;
+        case 12:
+            $thai_month = "ธันวาคม";
+            break;
 
-      return ['number' => $numberevent_of_day, 'event' => $event];
+      }
+
+
+      return $thai_month;
+
+    }
+
+    public static function get_BE_year($year){
+        $BE_year = $year+543;
+
+        return $BE_year;
+    }
+
+    public static function get_assign_event($date,$user_id){
+
+        $event_data = "<td valign='top'>";
+
+        $event = event::where('event_date', '=', $date)->get();
+
+        foreach($event as $data){
+
+          //เช็คช่วงเวลา request
+          if($data->meeting_period == 2){
+            $event_color_class = "event_color_morning";
+          }else if($data->meeting_period == 3){
+            $event_color_class = "event_color_afternoon";
+          }else{
+            $event_color_class = "event_color_allday";
+          }
+
+          $count = Assignment::where('event_id', '=', $data->id)
+                      ->where('user_id','=',$user_id)
+                      ->count();
+
+
+          if($count > 0){
+
+            $assignment = Assignment::where('event_id', '=', $data->id)
+                        ->where('user_id','=',$user_id)
+                        ->get();
+
+            foreach($assignment as $data_assign){
+              //$event_data .= "<div id='". $date ."' class='st-c st-s'>".$data_assign->id."</div>";
+
+              $event_data .= "<div id='". $data->id ."' class='st-c-pos goto_assign'>
+                                  <div class='rb-n ".$event_color_class."' >
+                                      <div class='rb-ni'>". $data->event_name ."</div>
+                                  </div>
+                                </div>";
+
+            }
+
+          }
+
+        }
+
+        $event_data .= "</td>";
+
+
+        return $event_data;
 
     }
 

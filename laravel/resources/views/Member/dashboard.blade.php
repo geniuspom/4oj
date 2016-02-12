@@ -1,8 +1,10 @@
 @extends('Member.master')
 @section('content')
-<?php use App\Http\Controllers\Calendar as Calendar; ?>
-<?php use App\Http\Controllers\LoginController as LoginController; ?>
-<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
+<?php
+use App\Http\Controllers\Calendar as Calendar;
+use App\Http\Controllers\LoginController as LoginController;
+use App\Http\Controllers\Assignment\AssignCalendar as AssignCalendar;
+$root_url = dirname($_SERVER['PHP_SELF']); ?>
 <style type="text/css">
 #popup_msg{
   -webkit-border-radius: 10px;
@@ -41,6 +43,17 @@
 #close_popup{
   cursor: pointer;
 }
+.outline_calendar{
+  margin:10px;
+}
+.border-notop{
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.pading_r_15{
+  padding-right: 15px;
+}
 </style>
 <meta name="_token" content="{!! csrf_token() !!}"/>
 <link href="{{$root_url}}/public/css/calendar.css" rel="stylesheet">
@@ -59,42 +72,78 @@
         {{ session('status') }}
       </div>
     @endif
-    <div class="row">
-      <div class="col-sm-12 text-right" style="padding-bottom:10px;">
-        <input type="hidden" id="day_select" name="day_select" value=""/>
-        @if (LoginController::checkverifyuser())
-          <button class="btn btn-primary btn-sm" type="submit" name = "btn-new" id="new_request"><i class="fa fa-plus" ></i> แจ้งวันและเวลาที่คุณสามารถทำงานได้ </button>
-        @endif
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 text-right" style="padding-bottom:10px;">
-        <a class="text-danger" href="{{$root_url}}/upload_file/manual/job request manual 4OJ.pdf" target="_blank"><i class="fa fa-info-circle fa-fw"></i>คู่มือการแจ้งวันและเวลาที่คุณสามารถทำงานได้</a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 text-right" style="padding-bottom:10px;">
-        <span><i style="color:#200ffe;" class="fa fa-square fa-fw"></i>ช่วงเช้า</span>
-        <span><i style="color:#fdcc8f;" class="fa fa-square fa-fw"></i>ช่วงบ่าย</span>
-        <span><i style="color:#d1e273;" class="fa fa-square fa-fw"></i>ทั้งวัน</span>
-      </div>
-    </div>
-    <div class='panel panel-default' id='content_calendar'>
 
-    <!-- start calendar -->
-    <!-- format dd-mm-yyyy -->
-    <!--{{ Calendar::getcalendar("01-01-2016") }}-->
-    {{ Calendar::getcalendar("") }}
-    <!-- end calendar -->
+    <div class="">
+    <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#assign" aria-expanded="true">งานที่ได้รับมอบหมาย</a>
+            </li>
+            <li class=""><a data-toggle="tab" href="#request" aria-expanded="false">แจ้งวันที่ทำงานได้</a>
+            </li>
+        </ul>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
-      </div>
-    </div>
+
+    <!-- Tab panes -->
+        <div class="tab-content">
+<!-- detail ===============================================================================================-->
+            <div id="assign" class="tab-pane fade active in border-notop" style="padding-top:15px;">
+                <div class="row pading_r_15">
+                  <div class="col-sm-12 text-right" style="padding-bottom:10px;">
+                    <span><i style="color:#200ffe;" class="fa fa-square fa-fw"></i>ช่วงเช้า</span>
+                    <span><i style="color:#fdcc8f;" class="fa fa-square fa-fw"></i>ช่วงบ่าย</span>
+                    <span><i style="color:#d1e273;" class="fa fa-square fa-fw"></i>ทั้งวัน</span>
+                  </div>
+                </div>
+                <div class='panel panel-default outline_calendar' id='assign_calendar'>
+
+                  {{ AssignCalendar::getcalendar("") }}
+
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                  </div>
+                </div>
+            </div>
+<!-- assignment ===============================================================================================-->
+            <div id="request" class="tab-pane fade border-notop" style="padding-top:15px;">
+
+              <div class="row pading_r_15">
+                <div class="col-sm-12 text-right" style="padding-bottom:10px;">
+                  <input type="hidden" id="day_select" name="day_select" value=""/>
+                  @if (LoginController::checkverifyuser())
+                    <button class="btn btn-primary btn-sm" type="submit" name = "btn-new" id="new_request"><i class="fa fa-plus" ></i> แจ้งวันและเวลาที่คุณสามารถทำงานได้ </button>
+                  @endif
+                </div>
+              </div>
+              <div class="row pading_r_15">
+                <div class="col-sm-12 text-right" style="padding-bottom:10px;">
+                  <a class="text-danger" href="{{$root_url}}/upload_file/manual/job request manual 4OJ.pdf" target="_blank"><i class="fa fa-info-circle fa-fw"></i>คู่มือการแจ้งวันและเวลาที่คุณสามารถทำงานได้</a>
+                </div>
+              </div>
+              <div class="row pading_r_15">
+                <div class="col-sm-12 text-right" style="padding-bottom:10px;">
+                  <span><i style="color:#200ffe;" class="fa fa-square fa-fw"></i>ช่วงเช้า</span>
+                  <span><i style="color:#fdcc8f;" class="fa fa-square fa-fw"></i>ช่วงบ่าย</span>
+                  <span><i style="color:#d1e273;" class="fa fa-square fa-fw"></i>ทั้งวัน</span>
+                </div>
+              </div>
+              <div class='panel panel-default outline_calendar' id='content_calendar'>
+
+              {{ Calendar::getcalendar("") }}
+
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                </div>
+              </div>
+
+            </div>
+        </div>
 
 </div>
 
 <script src="{{$root_url}}/public/js/calendar.js"></script>
+<script src="{{$root_url}}/public/js/assign_calendar.js"></script>
 <script type="text/javascript">
 
 $(document).on('click','#close_popup',function(){

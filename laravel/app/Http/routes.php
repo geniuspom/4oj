@@ -208,6 +208,7 @@ Route::post('adminupdateuser','AdminController@update_user');
 
 //Calendar change
 Route::post('nextcalendar','Calendar@getformjquery');
+Route::post('changeassingcalendar','Assignment\AssignCalendar@getformjquery');
 
 
 //function customer

@@ -13,27 +13,21 @@ $( document ).ready(function(){
     var eTop = $(this).offset().top;
     var eLeft = $(this).offset().left;
     var oldselect = $("#day_select").val();
-    $("#"+oldselect).removeClass( "st-bg-select" );
-    $("#day_select").val($(this).attr('id'));
-    $("#"+$("#day_select").val()).addClass( "st-bg-select" );
+    selecet_day($(this),oldselect);
   });
 
   $('#content_calendar').on('click','.st-dtitle',function(e){
     var eTop = $(this).offset().top;
     var eLeft = $(this).offset().left;
     var oldselect = $("#day_select").val();
-    $("#"+oldselect).removeClass( "st-bg-select" );
-    $("#day_select").val($(this).attr('id'));
-    $("#"+$("#day_select").val()).addClass( "st-bg-select" );
+    selecet_day($(this),oldselect);
   });
 
   $('#content_calendar').on('click','.st-c',function(e){
     var eTop = $(this).offset().top;
     var eLeft = $(this).offset().left;
     var oldselect = $("#day_select").val();
-    $("#"+oldselect).removeClass( "st-bg-select" );
-    $("#day_select").val($(this).attr('id'));
-    $("#"+$("#day_select").val()).addClass( "st-bg-select" );
+    selecet_day($(this),oldselect);
   });
 
   //select event
@@ -124,4 +118,18 @@ function gettodaycalendar(){
       }
     });
 
+}
+
+function selecet_day(element,oldselect){
+    if((element).attr('id') == "" || (element).attr('id') == null){
+    }else{
+      if(oldselect == ""){
+        $("#day_select").val($(element).attr('id'));
+        $("#content_calendar #"+$("#day_select").val()).addClass( "st-bg-select" );
+      }else{
+          $("#content_calendar #"+oldselect).removeClass( "st-bg-select" );
+          $("#day_select").val($(element).attr('id'));
+          $("#content_calendar #"+$("#day_select").val()).addClass( "st-bg-select" );
+      }
+    }
 }
