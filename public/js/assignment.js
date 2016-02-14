@@ -1,5 +1,14 @@
 $('#update_assign').on('click',function(e){
     var event_id = $("#update_assign_event_id").val();
+
+    var Popup = "<div class='container' id='popup_assign'>"+
+            "<div class='popup_bg'></div>"+
+          	"<div class='row'>"+
+            "<img width='50px' src='../public/image/bg-spinner.gif'>";
+            "</div>";
+
+
+    $("#wrapper").append(Popup);
     update_assignment(event_id);
 });
 

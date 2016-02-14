@@ -9,6 +9,32 @@ $id = Route::Input('id');
 ?>
 <?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <meta name="_token" content="{!! csrf_token() !!}"/>
+<style type="text/css">
+#popup_assign{
+  left: 0px;
+  z-index: 9999;
+  width: 100%;
+  top: 0px;
+  height: 100%;
+  position: fixed;
+}
+#popup_assign .row {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
+#popup_assign .popup_bg{
+  left: 0px;
+  width: 100%;
+  top: 0px;
+  background-color: rgb(0, 0, 0);
+  opacity: 0.6;
+  height: 100%;
+  position: fixed;
+}
+
+</style>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">

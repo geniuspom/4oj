@@ -32,18 +32,22 @@ class sendmailAssign extends Controller{
     $email = $user->email;
     $event_name = $event->event_name;
     $event_type = $event->event_type;
-    $event_date = $event->event_date;
+
+    $split_event_date = explode("-", $event->event_date);
+    $event_date = $split_event_date[2]." ".AssignCalendar::get_month_thai($split_event_date[1])." ".AssignCalendar::get_BE_year($split_event_date[0]);
+
     $staff_appointment_time = $event->staff_appointment_time;
     $customer_name = $customer->symbol." - ".$customer->name;
     $venue_name = $venue->name;
     $venue_address = $venue->address;
+    $subject = "OJ - คุณได้รับมอบหมายงานในวันที่ ". $event_date;
 
     Mail::send('Assign.New_assign_mail',
     array('name'=>$name,'event_name'=>$event_name,'event_type'=>$event_type,'event_date'=>$event_date,
     'staff_appointment_time'=>$staff_appointment_time,'customer_name'=>$customer_name,'venue_name'=>$venue_name,
     'venue_address'=>$venue_address),
-    function ($message) use ($email) {
-    $message->to($email)->subject('OJ - แจ้งการทำงาน');
+    function ($message) use ($email,$subject) {
+    $message->to($email)->subject($subject);
     });
 
   }
