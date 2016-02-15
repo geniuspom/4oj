@@ -177,61 +177,113 @@ Class AdminController extends Controller{
 
     public static function update_user(){
 
-      $user_id = Request::input('user_id');
-      $permission = Request::input('permission');
-      $validate_id_status = Request::input('validate_id_status');
+      if(Request::exists('btn-permission')){
 
-      //user_detail
-      $training_status = Request::input('training_status');
-      $grade = Request::input('grade');
-      $remark = Request::input('remark');
+        $user_id = Request::input('user_id');
+        $permission = Request::input('permission');
+        $validate_id_status = Request::input('validate_id_status');
+        $validate_email_status = Request::input('validate_email_status');
 
-      if(!empty(Request::input('training_date'))){
-        $input_training_date = explode("/", Request::input('training_date'));
-        $training_date = $input_training_date[2]."-".$input_training_date[1]."-".$input_training_date[0];
-      }else{
-        $training_date = NULL;
-      }
+        //user_detail
+        $remark = Request::input('remark');
 
-      if($validate_id_status == true){$validate_id = "1";
-      }else{$validate_id = "0";}
+        if($validate_id_status == true){$validate_id = "1";
+        }else{$validate_id = "0";}
 
-      if($training_status == true){$training_status = "1";
-      }else{$training_status = "0";}
+        if($validate_email_status == true){$validate_email = "1";
+        }else{$validate_email = "0";}
 
-      //check row of user_detail
-      $count_userdetail = Userdetail::where("id","=",$user_id)->count();
-      if($count_userdetail > 0){
-        $userdetail = Userdetail::where("id","=",$user_id)->first();
-      }else{
-        $userdetail = new Userdetail();
-        $userdetail->id = $user_id;
-      }
 
-      $user = Member::where("id","=",$user_id)->first();
 
-      $oldvalidate = $user->validate;
+        //check row of user_detail
+        $count_userdetail = Userdetail::where("id","=",$user_id)->count();
+        if($count_userdetail > 0){
+          $userdetail = Userdetail::where("id","=",$user_id)->first();
+        }else{
+          $userdetail = new Userdetail();
+          $userdetail->id = $user_id;
+        }
 
-      $mail_st = substr($oldvalidate, 1,1);
-      $upload_id = substr($oldvalidate, 2,1);
+        $user = Member::where("id","=",$user_id)->first();
 
-      $new_validate = "1".$mail_st.$upload_id.$validate_id;
+        $oldvalidate = $user->validate;
 
-      $user->permission = $permission;
-      $user->validate = $new_validate;
+        //$mail_st = substr($oldvalidate, 1,1);
+        $upload_id = substr($oldvalidate, 2,1);
 
-      //userdetail
-      $userdetail->grade = $grade;
-      $userdetail->remark = $remark;
-      $userdetail->training_status = $training_status;
-      $userdetail->training_date = $training_date;
+        $new_validate = "1".$validate_email.$upload_id.$validate_id;
 
-      if($user->save() && $userdetail->save()) {
-          return Redirect::to('profile_admin/'. $user_id)
-            ->with('status', 'แก้ไขข้อมูลสำเร็จ');
-      } else {
-          return Redirect::to('useredit_admin/'. $user_id)
-            ->withErrors('เกิดข้อผิดพลาดไม่สามารถแก้ไขข้อมูลได้');
+        $user->permission = $permission;
+        $user->validate = $new_validate;
+
+        //userdetail
+        $userdetail->remark = $remark;
+
+        if($user->save() && $userdetail->save()) {
+            return Redirect::to('profile_admin/'. $user_id)
+              ->with('status', 'แก้ไขข้อมูลสำเร็จ');
+        } else {
+            return Redirect::to('useredit_admin/'. $user_id)
+              ->withErrors('เกิดข้อผิดพลาดไม่สามารถแก้ไขข้อมูลได้');
+        }
+
+
+      }else if(Request::exists('btn-trianing')){
+
+        $user_id = Request::input('user_id');
+        $training_status = Request::input('training_status');
+        $grade = Request::input('grade');
+
+        if(!empty(Request::input('training_date'))){
+          $input_training_date = explode("/", Request::input('training_date'));
+          $training_date = $input_training_date[2]."-".$input_training_date[1]."-".$input_training_date[0];
+        }else{
+          $training_date = NULL;
+        }
+
+        //check row of user_detail
+        $count_userdetail = Userdetail::where("id","=",$user_id)->count();
+        if($count_userdetail > 0){
+          $userdetail = Userdetail::where("id","=",$user_id)->first();
+        }else{
+          $userdetail = new Userdetail();
+          $userdetail->id = $user_id;
+        }
+
+        if($training_status == true){$training_status = "1";
+        }else{$training_status = "0";}
+
+        //userdetail
+        $userdetail->grade = $grade;
+        $userdetail->training_status = $training_status;
+        $userdetail->training_date = $training_date;
+
+        if($userdetail->save()) {
+            return Redirect::to('profile_admin/'. $user_id)
+              ->with('status', 'แก้ไขข้อมูลสำเร็จ');
+        } else {
+            return Redirect::to('useredit_admin/'. $user_id)
+              ->withErrors('เกิดข้อผิดพลาดไม่สามารถแก้ไขข้อมูลได้');
+        }
+
+
+      }else if(Request::exists('btn-general')){
+
+        $user_id = Request::input('user_id');
+        $email = Request::input('email');
+
+        $user = Member::where("id","=",$user_id)->first();
+        $user->email = $email;
+
+        if($user->save()) {
+            return Redirect::to('profile_admin/'. $user_id)
+              ->with('status', 'แก้ไขข้อมูลสำเร็จ');
+        } else {
+            return Redirect::to('useredit_admin/'. $user_id)
+              ->withErrors('เกิดข้อผิดพลาดไม่สามารถแก้ไขข้อมูลได้');
+        }
+
+
       }
 
 
@@ -239,11 +291,15 @@ Class AdminController extends Controller{
 
     public static function update_user_form($user_id,$value_name){
 
-        if($value_name == "permission" || $value_name == "validate"){
+        if($value_name == "permission" || $value_name == "validate" || $value_name == "status_mail"){
 
               $user = Member::where("id","=",$user_id)->first();
 
-              $return_value = $user->$value_name;
+              if($value_name == "status_mail"){
+                $return_value = $user->validate;
+              }else{
+                $return_value = $user->$value_name;
+              }
 
               if($value_name == "permission"){
 
@@ -269,6 +325,17 @@ Class AdminController extends Controller{
 
                 $oldvalidate = $return_value;
                 $validate_id_status = substr($oldvalidate, 3,1);
+
+                if($validate_id_status == 1){
+                  $return_data = "checked";
+                }else{
+                  $return_data = "";
+                }
+
+              }else if($value_name == "status_mail"){
+
+                $oldvalidate = $return_value;
+                $validate_id_status = substr($oldvalidate, 1,1);
 
                 if($validate_id_status == 1){
                   $return_data = "checked";

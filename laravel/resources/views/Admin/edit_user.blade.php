@@ -8,6 +8,13 @@ use App\Http\Controllers\AdminController as AdminController;
 $id = Route::Input('id');
 ?>
 <?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
+<style type="text/css">
+.border-notop{
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+</style>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -38,103 +45,146 @@ $id = Route::Input('id');
                     </ul>
                   </div>
                   @endif
-                  <form class="form-horizontal" role="form" method="POST" action="{{ url('/adminupdateuser') }}">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="user_id" value="{{ $id }}">
+                  <div class="">
+                  <!-- Nav tabs -->
+                      <ul class="nav nav-tabs">
+                          <li class="active"><a data-toggle="tab" href="#permission" aria-expanded="true">สิทธิ์การใช้งาน</a>
+                          </li>
+                          <li class=""><a data-toggle="tab" href="#training" aria-expanded="false">การอบรม</a>
+                          </li>
+                          <li class=""><a data-toggle="tab" href="#general" aria-expanded="false">ข้อมูลทั่วไป</a>
+                          </li>
+                      </ul>
+                  </div>
 
-                    <div class="form-group">
-                      <label class="col-md-4 control-label">ระดับผู้ใช้งาน</label>
-                      <div class="col-md-6">
-                        {{ AdminController::update_user_form($id,'permission') }}
+                  <!-- Tab panes -->
+                  <div class="tab-content">
+                      <div id="permission" class="tab-pane fade active in border-notop" style="padding-top:15px;">
+
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/adminupdateuser') }}">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <input type="hidden" name="user_id" value="{{ $id }}">
+
+                          <div class="form-group">
+                            <label class="col-md-4 control-label">ระดับผู้ใช้งาน</label>
+                            <div class="col-md-6">
+                              {{ AdminController::update_user_form($id,'permission') }}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-md-4 control-label">สถานะการยืนยันอีเมล</label>
+                            <div class="col-md-6 ">
+                              <label style="padding-top:7px;">
+                                <input {{ AdminController::update_user_form($id,'status_mail') }} type="checkbox" name="validate_email_status" value="true" style="width:25px;height:25px;" >
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-md-4 control-label">ยืนยันการตรวจสอบสำเนาบัตรประชาชน</label>
+                            <div class="col-md-6 ">
+                              <label style="padding-top:7px;">
+                                <input {{ AdminController::update_user_form($id,'validate') }} type="checkbox" name="validate_id_status" value="true" style="width:25px;height:25px;" >
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                              <label class="col-md-4 control-label">บันทึกเพิ่มเติม</label>
+                              <div class="col-md-6">
+                                <textarea class="form-control" rows="5" name="remark" >{{ AdminController::update_user_form($id,'remark') }}</textarea>
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                              <button id="submit_bt" type="submit" name="btn-permission" class="btn btn-primary" >
+                                ยืนยันการแก้ไขข้อมูล
+                              </button>
+                              <!--<a class="btn btn-primary" href="{{ URL::previous() }}"> Cancel </a>-->
+                              <a class="btn btn-primary" href="{{$root_url}}/admin"> ยกเลิก </a>
+                            </div>
+                          </div>
+
+                        </form>
+
+
                       </div>
-                    </div>
+                      <div id="training" class="tab-pane fade border-notop" style="padding-top:15px;">
 
-                    <div class="form-group">
-                      <label class="col-md-4 control-label">ยืนยันการตรวจสอบสำเนาบัตรประชาชน</label>
-                      <div class="col-md-6 ">
-                        <label style="padding-top:7px;">
-                          <input {{ AdminController::update_user_form($id,'validate') }} type="checkbox" name="validate_id_status" value="true" style="width:25px;height:25px;" >
-                        </label>
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/adminupdateuser') }}">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <input type="hidden" name="user_id" value="{{ $id }}">
+
+                          <div class="form-group">
+                            <label class="col-md-4 control-label">สถานะการอบรม</label>
+                            <div class="col-md-6 ">
+                              <label style="padding-top:7px;">
+                                <input {{ AdminController::update_user_form($id,'training_status') }} type="checkbox" name="training_status" value="true" style="width:25px;height:25px;" >
+                              </label>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-md-4 control-label">วันที่อบรม</label>
+                            <div class="col-md-6">
+                              <div class="input-group date" id="training_date">
+                                  <input type="text" class="form-control" name="training_date" value="{{ AdminController::update_user_form($id,'training_date') }}"/>
+                                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <label class="col-md-4 control-label">เกรด</label>
+                            <div class="col-md-6">
+                                {{ AdminController::update_user_form($id,'grade') }}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                              <button id="submit_bt" name="btn-trianing" type="submit" class="btn btn-primary" >
+                                ยืนยันการแก้ไขข้อมูล
+                              </button>
+                              <!--<a class="btn btn-primary" href="{{ URL::previous() }}"> Cancel </a>-->
+                              <a class="btn btn-primary" href="{{$root_url}}/admin"> ยกเลิก </a>
+                            </div>
+                          </div>
+
+                        </form>
+
+
                       </div>
-                    </div>
+                      <div id="general" class="tab-pane fade border-notop" style="padding-top:15px;">
 
-                    <div class="form-group">
-                      <label class="col-md-4 control-label">สถานะการอบรม</label>
-                      <div class="col-md-6 ">
-                        <label style="padding-top:7px;">
-                          <input {{ AdminController::update_user_form($id,'training_status') }} type="checkbox" name="training_status" value="true" style="width:25px;height:25px;" >
-                        </label>
+                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/adminupdateuser') }}">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <input type="hidden" name="user_id" value="{{ $id }}">
+
+                          <div class="form-group">
+                            <label class="col-md-4 control-label">ชื่ออีเมล</label>
+                            <div class="col-md-6">
+                              <input type="text" class="form-control" name="email" value="{{ GetUser::getedituser($id,'email') }}"/>
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                              <button id="submit_bt" name="btn-general" type="submit" class="btn btn-primary" >
+                                ยืนยันการแก้ไขข้อมูล
+                              </button>
+                              <!--<a class="btn btn-primary" href="{{ URL::previous() }}"> Cancel </a>-->
+                              <a class="btn btn-primary" href="{{$root_url}}/admin"> ยกเลิก </a>
+                            </div>
+                          </div>
+
+                        </form>
+
                       </div>
-                    </div>
+                  </div>
 
-                    <div class="form-group">
-                      <label class="col-md-4 control-label">วันที่อบรม</label>
-                      <div class="col-md-6">
-                        <div class="input-group date" id="training_date">
-                            <input type="text" class="form-control" name="training_date" value="{{ AdminController::update_user_form($id,'training_date') }}"/>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="col-md-4 control-label">เกรด</label>
-                      <div class="col-md-6">
-                          {{ AdminController::update_user_form($id,'grade') }}
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">บันทึกเพิ่มเติม</label>
-                        <div class="col-md-6">
-                          <textarea class="form-control" rows="5" name="remark" >{{ AdminController::update_user_form($id,'remark') }}</textarea>
-                        </div>
-                    </div>
-
-                    <!--<div class="form-group">
-                      <label class="col-md-4 control-label">ระดับผู้ใช้งาน</label>
-                      <div class="col-md-6">
-                        <input type="text" class="form-control" name="name" value="{{ GetUser::getedituser($id,'name') }}">
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="col-md-4 control-label">วันเกิด *</label>
-                      <div class="col-md-6">
-                        <div class="input-group date" id="birthday">
-                            <input type="text" class="form-control" name="birthday" value=""/>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label class="col-md-4 control-label">ชื่อธนาคาร</label>
-                      <div class="col-md-6" >
-                          {{ GetUser::getedituser($id,'bank') }}
-                          <h6 class="text-muted">*ธนาคารกสิกรไทยจะไม่เสียค่าโอน</h6>
-                      </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">ที่อยู่ตามบัตรประชาชน</label>
-                        <div class="col-md-6">
-                          <textarea class="form-control" rows="5" name="address_id" >{{ GetUser::getedituser($id,'address_id') }}</textarea>
-                        </div>
-                    </div>-->
-
-                    <div class="form-group">
-                      <div class="col-md-6 col-md-offset-4">
-                        <button id="submit_bt" type="submit" class="btn btn-primary" >
-                          ยืนยันการแก้ไขข้อมูล
-                        </button>
-                        <!--<a class="btn btn-primary" href="{{ URL::previous() }}"> Cancel </a>-->
-                        <a class="btn btn-primary" href="{{$root_url}}/admin"> ยกเลิก </a>
-                      </div>
-                    </div>
-
-                  </form>
               </div>
         </div>
     </div>
