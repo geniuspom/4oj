@@ -230,6 +230,8 @@ Route::post('delete_contact','Customer\Contact@delete_contact');
 Route::post('add_venue','VenueControl@add');
 //edit
 Route::post('edit_venue','VenueControl@edit');
+//add room
+Route::post('add_room','venue\VenueManage@main');
 //end function venue
 
 
@@ -295,3 +297,8 @@ Route::get('calendar', function(){
 Route::get('calendar2', function(){
 		return View::make('Calendar.test3');
 });
+
+Route::get('test_upload', function(){
+		return View::make('Venue.test_upload');
+});
+Route::any('uploadplan','venue\uploadplan@main');
