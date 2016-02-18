@@ -61,7 +61,7 @@ Class AS_Member extends Controller{
 
   }
 
-  public static function get_all_member($user_not_include){
+  public static function get_all_member($user_not_include,$event_id){
 
       $query_data = [];
       $array_data = [];
@@ -76,10 +76,14 @@ Class AS_Member extends Controller{
       foreach($user_detail as $data){
 
         $user_id = $data->id;
+
+        $event_date = AS_Requestjob::get_event_date($event_id);
+
+        $userstatus = Check_busy::main($user_id,$event_date);
+
         $usernameall = $data->nickname . " - " . $data->name . " " . $data->surname ;
         $usergrade = AS_Member::get_user_detail($user_id,'grade');
         $sortgrade = AS_Member::get_user_detail($user_id,'sortgrade');
-        $userstatus = "";
         $assign_id = "";
         $category = "all_user";
 

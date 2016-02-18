@@ -37,10 +37,14 @@ Class AS_Requestjob extends Controller{
         foreach($user_list as $data){
 
             $user_id = $data->user_id;
+
+            $event_date = AS_Requestjob::get_event_date($event_id);
+
+            $userstatus = Check_busy::main($user_id,$event_date);
+
             $usernameall = AS_Member::get_user_data($user_id,'fullname');
             $usergrade = AS_Member::get_user_detail($user_id,'grade');
             $sortgrade = AS_Member::get_user_detail($user_id,'sortgrade');
-            $userstatus = "";
             $assign_id = "";
             $category = "request_event_user";
 
@@ -109,10 +113,12 @@ Class AS_Requestjob extends Controller{
           foreach($user_list as $data){
 
             $user_id = $data->user_id;
+
+            $userstatus = Check_busy::main($user_id,$event_date);
+
             $usernameall = AS_Member::get_user_data($user_id,'fullname');
             $usergrade = AS_Member::get_user_detail($user_id,'grade');
             $sortgrade = AS_Member::get_user_detail($user_id,'sortgrade');
-            $userstatus = "";
             $assign_id = "";
             $category = "request_job_user";
 
@@ -167,7 +173,7 @@ Class AS_Requestjob extends Controller{
       }
 
 
-      $array_data = AS_Member::get_all_member($user_not_include);
+      $array_data = AS_Member::get_all_member($user_not_include,$event_id);
 
 
       return ($array_data);
@@ -188,10 +194,14 @@ Class AS_Requestjob extends Controller{
         foreach($user_list as $data){
 
             $user_id = $data->user_id;
+
+            $event_date = AS_Requestjob::get_event_date($event_id);
+
+            $userstatus = Check_busy::main($user_id,$event_date);
+
             $usernameall = AS_Member::get_user_data($user_id,'fullname');
             $usergrade = AS_Member::get_user_detail($user_id,'grade');
             $sortgrade = AS_Member::get_user_detail($user_id,'sortgrade');
-            $userstatus = "";
             $assign_id = $data->id;
             $category = "assignment_user";
 
@@ -243,6 +253,14 @@ Class AS_Requestjob extends Controller{
         }else{
             return "all_user";
         }
+
+  }
+
+  public static function get_event_date($event_id){
+
+      $event = event::where('id','=',$event_id)->first();
+
+      return $event->event_date;
 
   }
 

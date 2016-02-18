@@ -33,7 +33,12 @@ $id = Route::Input('id');
   height: 100%;
   position: fixed;
 }
-
+.busy{
+  color:#d9534f;
+}
+.avaliable{
+  color:#5cb85c;
+}
 </style>
 <div id="page-wrapper">
   <div class="row">
@@ -56,6 +61,10 @@ $id = Route::Input('id');
                             <li class=""><a data-toggle="tab" href="#detail" aria-expanded="true">รายละเอียดงาน</a>
                             </li>
                             <li class="active"><a data-toggle="tab" href="#assignment" aria-expanded="false">มอบหมายงาน</a>
+                            </li>
+                            <li class=""><a data-toggle="tab" href="#status" aria-expanded="false">ความคืบหน้างาน</a>
+                            </li>
+                            <li class=""><a data-toggle="tab" href="#inventory" aria-expanded="false">อุปกรณ์</a>
                             </li>
                         </ul>
 
@@ -198,6 +207,105 @@ $id = Route::Input('id');
                                         </div>
                                     </div>
                             </div>
+<!-- status ===============================================================================================-->
+                            <div id="status" class="tab-pane fade" style="padding-top:15px;">
+                              <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                  <tr>
+                                    <th class="text-center">ลำดับที่</th>
+                                    <th class="text-left">ชื่องาน</th>
+                                    <th class="text-left">สถานะ</th>
+                                    <th class="text-center">รับผิดชอบโดย</th>
+                                    <th class="text-center">แผนดำเนินการต่อไป</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                      <td class="text-center">1</td>
+                                      <td class="text-left">คุยรายละเอียดงาน</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">2</td>
+                                      <td class="text-left">จัดทำใบเสนอราคา</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">3</td>
+                                      <td class="text-left">ยืนยันใบเสนอราคาและรายละเอียดอุปกรณ์</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">4</td>
+                                      <td class="text-left">จัดเตรียมและสั่งอุปกรณ์</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">5.1</td>
+                                      <td class="text-left">แจ้งลูกค้าให้ยืนยันกับทาง TSD ว่าจะลงทะเบียนโดย</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">5.2</td>
+                                      <td class="text-left">ขอไฟล์หนังสือเชิญที่มีเงื่อนไขการนับคะแนน (MS-Word หรือถ้าจำเป็น PDF)</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">5.3</td>
+                                      <td class="text-left">ขอไฟล์ XML รายชื่อผู้ถือหุ้น</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">5.4</td>
+                                      <td class="text-left">ขอแผนผังห้องประชุม ( Floor Plan )</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">5.5</td>
+                                      <td class="text-left">หากมีผู้มีส่วนได้ส่วนเสียในวาระไหน กรุณาแจ้งด้วย</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">5.6</td>
+                                      <td class="text-left">กรณีบัตรเสียให้ทำอย่างไร</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+                                    <tr>
+                                      <td class="text-center">5.7</td>
+                                      <td class="text-left">ขอรายชื่อกรรมการรับมอบฉันทะ</td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                      <td class="text-center"></td>
+                                    </tr>
+
+
+                                </tbody>
+                              </table>
+                            </div>
+<!-- inventory ===============================================================================================-->
+                            <div id="inventory" class="tab-pane fade" style="padding-top:15px;">
+                            </div>
+
                         </div>
                     </div>
                                 <!-- /.panel-body -->
