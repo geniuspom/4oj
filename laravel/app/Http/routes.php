@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\LoginController as LoginController;
+use App\Models\Database\user as user;
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -245,6 +246,8 @@ Route::post('edit_event','EventControl@edit');
 Route::post('geteventform','EventControl@getformjquery');
 //get event report from jquery
 Route::post('get_event_filter','EventControl@get_filter_jquery');
+//Update event task status
+Route::post('update_task_event','event_task\event_task_manage@update_event_task');
 //end function event
 
 
@@ -302,3 +305,25 @@ Route::get('test_upload', function(){
 		return View::make('Venue.test_upload');
 });
 Route::any('uploadplan','venue\uploadplan@main');
+
+Route::get('test_query',function(){
+	//$query = user::find(31)->event->toArray();
+
+	/*$query = user::where('id', '=', '31')->whereHas('event', function ($q) {
+    $q->where('event_date', '=', '2016-02-17');
+})->get();*/
+
+
+//$query = user::find(31)->assign('2016-02-17')->get()->toArray();
+//$query = user::find(31)->assign('2016-02-17')->count();
+//$query = App\Models\Database\venue_room::find(1);
+
+//echo $query->venue->name.",".$query->room_name.",".$query->venue->address;
+
+
+
+
+
+	//echo $query;
+	//dd($query);
+});
