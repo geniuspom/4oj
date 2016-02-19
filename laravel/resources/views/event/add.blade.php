@@ -2,6 +2,7 @@
 @section('content')
 <?php
 use App\Http\Controllers\Getdataform as Getdataform;
+use App\Http\Controllers\venue\venue_room_control as venue_room_control;
 ?>
 <meta name="_token" content="{!! csrf_token() !!}"/>
 <div id="page-wrapper">
@@ -66,7 +67,7 @@ use App\Http\Controllers\Getdataform as Getdataform;
                     <div class="form-group">
                       <label class="col-md-4 control-label">สถานที่จัดประชุม *</label>
                         <div class="col-md-6">
-                          {{ Getdataform::getvenue(old('venue_id'),'new') }}
+                          {{ venue_room_control::venue_form(old('venue_id'),'new') }}
                         </div>
                     </div>
 

@@ -4,6 +4,7 @@
 <?php
 use App\Http\Controllers\EventControl as EventControl;
 use App\Http\Controllers\Getdataform as Getdataform;
+use App\Http\Controllers\venue\venue_room_control as venue_room_control;
 $id = Route::Input('id');
 $cusid = EventControl::get($id,'customer');
 $contactid = EventControl::get($id,'custumer_contact_id');
@@ -72,7 +73,7 @@ $contactid = EventControl::get($id,'custumer_contact_id');
                     <div class="form-group">
                       <label class="col-md-4 control-label">สถานที่จัดประชุม *</label>
                         <div class="col-md-6">
-                          {{ Getdataform::getvenue($id,'edit') }}
+                          {{ venue_room_control::venue_form($id,"edit_event")}}
                         </div>
                     </div>
 

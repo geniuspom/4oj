@@ -9,6 +9,7 @@ use App\Models\validateevent as validateevent;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\contact_person as contact_person;
 use Request;
+use App\Http\Controllers\venue\venue_room_control as venue_room_control;
 
 Class EventControl extends Controller{
 
@@ -133,9 +134,8 @@ Class EventControl extends Controller{
           $event_status = Getdataform::event_status($record->event_status,'getvalue');
 
           //get venue
-          $venueid = $record->venue_id;
-          $venue = venue::where('id','=',$venueid)->first();
-          $venuename = $venue->name;
+          //$venueid = $record->venue_id;
+          $venuename = venue_room_control::venue_detail($record->id,"link");
 
           //end get venue id
 
@@ -187,11 +187,9 @@ Class EventControl extends Controller{
                 $customerid .
                 "'>" .
                 $customername .
-                "</a><td class='text-center'><a href='venue_detail/".
-                $venueid .
-                "'>" .
+                "</a><td class='text-center'>".
                 $venuename .
-                "</a></td><td class='text-center'>".
+                "</td><td class='text-center'>".
                 $event_status .
                 "</td><tr>";
         }

@@ -4,6 +4,7 @@
 use App\Http\Controllers\EventControl as EventControl;
 use App\Http\Controllers\Getdataform as Getdataform;
 use App\Http\Controllers\LoginController as LoginController;
+use App\Http\Controllers\venue\venue_room_control as venue_room_control;
 $id = Route::Input('id');
 ?>
 <?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
@@ -59,7 +60,7 @@ $id = Route::Input('id');
                     <div class="form-group">
                       <label class="col-md-5 text-right">สถานที่จัดประชุม</label>
                       <div class="col-md-6 text-info" >
-                          {{ EventControl::get($id,'venue_id') }}
+                          {{ venue_room_control::venue_detail($id,"normal") }}
                       </div>
                     </div>
 
