@@ -199,6 +199,10 @@ Route::post('activateaccount','LoginController@activate');
 Route::post('uploaduser','UploadController@profilepicture');
 //upload id card
 Route::post('uploadidcard','UploadController@uploadidcard');
+//Upload pic & id new
+Route::post('uploaduser','Member\uploadfunction@main');
+
+
 
 //Admin Function
 Route::post('admin_get_user_filter','AdminController@get_filter_jquery');
