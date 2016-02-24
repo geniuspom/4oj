@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController as LoginController;
 use App\Http\Controllers\Assignment\Assign as Assign;
 use App\Http\Controllers\venue\venue_room_control as venue_room_control;
 use App\Http\Controllers\event_task\event_task as event_task;
+use App\Http\Controllers\Inventory\inventory as inventory;
 $id = Route::Input('id');
 ?>
 <?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
@@ -390,6 +391,14 @@ $id = Route::Input('id');
                             </div>
 <!-- inventory ===============================================================================================-->
                             <div id="inventory" class="tab-pane fade" style="padding-top:15px;">
+                              <form class="form-horizontal" role="form" method="POST" action="{{ url('/update_inventory') }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="event_id" value="{{ $id }}">
+                                  {{inventory::main($id)}}
+                                <button id="submit_bt" name="btn-trianing" type="submit" class="btn btn-primary" >
+                                  บันทึก
+                                </button>
+                              </form>
                             </div>
 
                         </div>

@@ -252,6 +252,8 @@ Route::post('geteventform','EventControl@getformjquery');
 Route::post('get_event_filter','EventControl@get_filter_jquery');
 //Update event task status
 Route::post('update_task_event','event_task\event_task_manage@update_event_task');
+//Update inventory
+Route::post('update_inventory','Inventory\inventoryManage@main');
 //end function event
 
 
