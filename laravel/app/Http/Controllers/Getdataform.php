@@ -177,7 +177,8 @@ Class Getdataform extends Controller{
       $event_types = array(
                 "1" => "AGM" ,
                 "2" => "EGM" ,
-                "3" => "Etc."
+                "3" => "Etc.",
+                "4" => "อบรมการทำงาน",
             );
 
 
