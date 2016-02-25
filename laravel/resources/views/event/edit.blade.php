@@ -356,7 +356,7 @@ $(document).ready(function(){
   });
 
   //disable submit botton
-  $('#submit_bt').prop('disabled', true);
+  check_data();
 
 });
 
