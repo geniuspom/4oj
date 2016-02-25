@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Member;
 use App\Http\Controllers\Controller;
 use App\Models\images as imageDB;
 use App\Models\idcard as idcardDB;
+use App\Models\Member as Member;
 use Request;
 //use Image;
 
@@ -210,6 +211,21 @@ class uploadfunction extends Controller{
         $database->id_name = $save_name;
         $database->id_thumbnail = "upload_file/idcard/thumbnail/".$save_name;
         $database->id_user = $user_id;
+
+        //update id validate status
+        $user = Member::where('id', '=', $user_id)->first();
+
+        $validate = $user->validate;
+
+        $mail_st = substr($validate, 1,1);
+        $verify_id = substr($validate, 3,1);
+
+        $new_validate = "1".$mail_st."1".$verify_id;
+
+        $user->validate = $new_validate;
+
+        $user->save();
+        //End update id validate status
 
     }
 
