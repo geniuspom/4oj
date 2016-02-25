@@ -32,32 +32,9 @@ use App\Http\Controllers\RequestJob as RequestJob;
   </div>
   <div id="report_content">
 
-  {{ RequestJob::report_request_job('all','','') }}
+  {{ RequestJob::report_request_job('all','','',Route::Input('id')) }}
 
-</div>
-  <!-- /.row -->
-  <!--<div class="row">
-    <div class="col-lg-12">
-      <div class="table-responsive">
-          <table class="table table-bordered table-hover table-striped">
-            <thead>
-              <tr>
-                <th class="text-center">ชื่อผู้ร้องขอ</th>
-                <th class="text-center">วันเริ่ม</th>
-                <th class="text-center">วันสิ้นสุด</th>
-                <th class="text-center">ช่วงเวลา</th>
-                <th class="text-center">ชื่อกิจกรรม</th>
-                <th class="text-center">หมายเหตุ</th>
-              </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-          </table>
-        </div>
-    </div>
-  </div>-->
-  <!-- /.row -->
+  </div>
 </div>
 <!-- /#page-wrapper -->
 <script type="text/javascript">
@@ -117,7 +94,7 @@ function sendfilter(){
   });
 
   $.ajax({
-      url: 'get_report_filter',
+      url: '../get_report_filter',
       type: "post",
       data: {'filter_group': filter_group,'filter_value': filter_value,'sortby': sortby},
       success: function(data){

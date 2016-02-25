@@ -41,6 +41,7 @@ Class AdminController extends Controller{
                         ->orderBy('district')->get();
         }
 
+        echo "<p>จำนวนรายชื่อทั้งหมด : " .count($data) . "</p>";
 
         echo "<table class='table table-bordered table-hover table-striped'>
                 <thead>
@@ -152,7 +153,11 @@ Class AdminController extends Controller{
                 }
           echo  "</td><td class='text-center'><a href='useredit_admin/".
                 $record->id .
-                "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a></td><tr>";
+                "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a>
+                <a href='reportrequestjob/".$record->id."' target='_blank'>
+                <i class='fa fa-file-text fa-lg request_this_event' style='cursor:pointer;'></i>
+                </a>
+                </td><tr>";
         }
 
         echo "</tbody>

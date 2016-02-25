@@ -480,12 +480,14 @@ Class RequestJob extends Controller{
       $filter_group = "all";
     }
 
-    RequestJob::report_request_job($filter_group,$filter_value,$sort);
+    RequestJob::report_request_job($filter_group,$filter_value,$sort,"null");
 
   }
 
 
-  public static function report_request_job($filter_group,$filter_value,$sort){
+  public static function report_request_job($filter_group,$filter_value,$sort,$user_id_filter){
+
+    if($user_id_filter != 'null'){$filter_group = '1';}
 
     $root_url = dirname($_SERVER['PHP_SELF']);
 
@@ -544,7 +546,7 @@ Class RequestJob extends Controller{
             }
 
             $returndata .= "<tr>
-                            <td class=''>". $user_name ."</td>
+                            <td class=''><a target='_blank' href='". $root_url ."/profile_admin/". $user_id ."'>". $user_name ."</a></td>
                             <td class='text-center'>". $start_date ."</td>
                             <td class='text-center'>". $end_date ."</td>
                             <td class='text-center'>". $duration ."</td>
@@ -563,9 +565,13 @@ Class RequestJob extends Controller{
     //===========================================================================================
     else if($filter_group == '1'){
 
-      $query_user_splite1 = explode("[", $filter_value);
-      $query_user_splite2 = explode("]", $query_user_splite1[1]);
-      $query_user = $query_user_splite2[0];
+      if($user_id_filter != 'null'){
+        $query_user = $user_id_filter;
+      }else{
+        $query_user_splite1 = explode("[", $filter_value);
+        $query_user_splite2 = explode("]", $query_user_splite1[1]);
+        $query_user = $query_user_splite2[0];
+      }
 
       $request = request_job::where("user_id","=", $query_user)
                               ->orderBy('start_date')->get();
@@ -621,7 +627,7 @@ Class RequestJob extends Controller{
             }
 
             $returndata .= "<tr>
-                            <td class=''>". $user_name ."</td>
+                            <td class=''><a target='_blank' href='". $root_url ."/profile_admin/". $user_id ."'>". $user_name ."</a></td>
                             <td class='text-center'>". $start_date ."</td>
                             <td class='text-center'>". $end_date ."</td>
                             <td class='text-center'>". $duration ."</td>
@@ -701,7 +707,7 @@ Class RequestJob extends Controller{
             }
 
             $returndata .= "<tr>
-                            <td class=''>". $user_name ."</td>
+                            <td class=''><a target='_blank' href='". $root_url ."/profile_admin/". $user_id ."'>". $user_name ."</a></td>
                             <td class='text-center'>". $start_date ."</td>
                             <td class='text-center'>". $end_date ."</td>
                             <td class='text-center'>". $duration ."</td>
@@ -725,33 +731,46 @@ Class RequestJob extends Controller{
 
   public static function request_event(){
 
-    $event = event::where("id","=", Request::input('event_id'))->first();
+    $count_job_request = request_job::where('event_id','=',Request::input('event_id'))
+                                      ->where('user_id','=',Auth::user()->id)
+                                      ->count();
 
-    $request_name = $event->event_name;
-    $start_date = $event->event_date;
-    $end_date = $event->event_date;
-    $duration = $event->meeting_period;
+    if($count_job_request > 0){
 
-    //=====================================================================================
+      return redirect::to("event")
+              ->with('status',"คุณได้ยื่นขอทำงานนี้แล้ว");
 
-    $request = new request_job();
-    $request->request_name = $request_name;
-    $request->user_id = Auth::user()->id;
-    $request->start_date = $start_date;
-    $request->end_date = $end_date;
-    $request->duration = $duration;
-    $request->event_id = Request::input('event_id');
-    $request->multiple_day = 0;
+    }else{
 
-    $url = "event"/*.Request::input('event_id')*/;
+        $event = event::where("id","=", Request::input('event_id'))->first();
 
-    if($request->save()) {
-      return redirect::to($url)
-              ->with('status',"ยื่นขอทำงานสำเร็จ");
-    } else {
-      return redirect::to($url)
-              ->withInput(Request::except('password'))
-              ->withErrors("เกิดข้อผิดพลาด - ไม่สามารถยื่นขอทำงานนี้ได้ กรุณาติดต่อผู้ดูแลระบบ");
+        $request_name = $event->event_name;
+        $start_date = $event->event_date;
+        $end_date = $event->event_date;
+        $duration = $event->meeting_period;
+
+        //=====================================================================================
+
+        $request = new request_job();
+        $request->request_name = $request_name;
+        $request->user_id = Auth::user()->id;
+        $request->start_date = $start_date;
+        $request->end_date = $end_date;
+        $request->duration = $duration;
+        $request->event_id = Request::input('event_id');
+        $request->multiple_day = 0;
+
+        $url = "event"/*.Request::input('event_id')*/;
+
+        if($request->save()) {
+          return redirect::to($url)
+                  ->with('status',"ยื่นขอทำงานสำเร็จ");
+        } else {
+          return redirect::to($url)
+                  ->withInput(Request::except('password'))
+                  ->withErrors("เกิดข้อผิดพลาด - ไม่สามารถยื่นขอทำงานนี้ได้ กรุณาติดต่อผู้ดูแลระบบ");
+        }
+
     }
 
 

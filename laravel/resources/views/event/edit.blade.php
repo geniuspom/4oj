@@ -10,6 +10,8 @@ $cusid = EventControl::get($id,'customer');
 $contactid = EventControl::get($id,'custumer_contact_id');
 ?>
 <?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
+<script src="{{$root_url}}/public/jquery-ui/jquery-ui.js"></script>
+<meta name="_token" content="{!! csrf_token() !!}"/>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -64,8 +66,12 @@ $contactid = EventControl::get($id,'custumer_contact_id');
                     <div class="form-group">
                       <label class="col-md-4 control-label">วันเริ่ม *</label>
                       <div class="col-md-6" id="sandbox-container">
-                        <div class="input-group date">
+                        <!--<div class="input-group date">
                           <input type="text" class="form-control" name="event_date" id="event_date" value="{{ EventControl::get($id,'event_date') }}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>-->
+                        <div class="input-group date" id="event_date">
+                            <input type="text" class="form-control" name="event_date" value="{{ EventControl::get($id,'event_date') }}"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                       </div>
                     </div>
@@ -73,7 +79,7 @@ $contactid = EventControl::get($id,'custumer_contact_id');
                     <div class="form-group">
                       <label class="col-md-4 control-label">สถานที่จัดประชุม *</label>
                         <div class="col-md-6">
-                          {{ venue_room_control::venue_form($id,"edit_event")}}
+                          <input type="text" class="form-control" name="venue_id" id="Venue_value" value="{{ venue_room_control::get_room($id)}}">
                         </div>
                     </div>
 
@@ -267,13 +273,22 @@ $contactid = EventControl::get($id,'custumer_contact_id');
         </div>
       </div>
 </div>
-
+<script src="{{$root_url}}/public/js/AutoCompleteVenue.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-  $('#sandbox-container .input-group.date').datepicker({
+  /*$('#sandbox-container .input-group.date').datepicker({
     format: "dd/mm/yyyy",
     startDate: "today",
     language: "th"
+  });*/
+
+  $('#event_date').click(function(event){
+   $('#event_date input').data("DateTimePicker").show();
+  });
+  $('#event_date input').datetimepicker({
+    defaultDate: new Date(),
+    format: "DD/MM/YYYY",
+    locale: 'th'
   });
 
 

@@ -69,4 +69,24 @@ Class venue_room_control extends Controller{
 
   }
 
+  public static function get_room($event_id){
+
+    $event = event::where("id","=", $event_id)->first();
+
+    $room_id = $event->venue_id;
+
+    $venue_room = venue_room::where('id','=',$room_id)->first();
+
+    $venue_name = $venue_room->venue->name;
+    $room_name = $venue_room->room_name;
+
+    $full_name = $venue_name . " - " . $room_name;
+    $room_id = $venue_room->id;
+
+    $rooom_list = "[". $room_id ."] " . $full_name;
+
+    return $rooom_list;
+
+  }
+
 }

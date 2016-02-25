@@ -150,7 +150,7 @@ Route::group(['middleware' => 'auth'], function()
 			//End event
 
 			//report request job
-			Route::get('reportrequestjob', function(){
+			Route::get('reportrequestjob/{id}', function($id){
 					return View::make('Request_Job.report');
 			});
 
@@ -254,6 +254,11 @@ Route::post('get_event_filter','EventControl@get_filter_jquery');
 Route::post('update_task_event','event_task\event_task_manage@update_event_task');
 //Update inventory
 Route::post('update_inventory','Inventory\inventoryManage@main');
+
+
+Route::any('get_room_autocomplete','venue\AutoCompleteVenue@main');
+
+
 //end function event
 
 

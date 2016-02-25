@@ -4,6 +4,8 @@
 use App\Http\Controllers\Getdataform as Getdataform;
 use App\Http\Controllers\venue\venue_room_control as venue_room_control;
 ?>
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
+<script src="{{$root_url}}/public/jquery-ui/jquery-ui.js"></script>
 <meta name="_token" content="{!! csrf_token() !!}"/>
 <div id="page-wrapper">
   <div class="row">
@@ -57,17 +59,21 @@ use App\Http\Controllers\venue\venue_room_control as venue_room_control;
 
                     <div class="form-group">
                       <label class="col-md-4 control-label">วันเริ่ม *</label>
-                      <div class="col-md-6" id="sandbox-container">
-                        <div class="input-group date">
-                          <input type="text" class="form-control" name="event_date" id="event_date" value="{{ old('event_date') }}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                      <div class="col-md-6">
+                        <div class="input-group date" id="event_date">
+                            <input type="text" class="form-control" name="event_date" value="{{ old('event_date') }}"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
+                        <!--<div class="input-group date">
+                          <input type="text" class="form-control" name="event_date" id="event_date" value="{{ old('event_date') }}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>-->
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-md-4 control-label">สถานที่จัดประชุม *</label>
                         <div class="col-md-6">
-                          {{ venue_room_control::venue_form(old('venue_id'),'new') }}
+                          <input type="text" class="form-control" name="venue_id" id="Venue_value" value="{{ old('venue_id') }}">
                         </div>
                     </div>
 
@@ -249,13 +255,23 @@ use App\Http\Controllers\venue\venue_room_control as venue_room_control;
         </div>
       </div>
 </div>
-
+<script src="{{$root_url}}/public/js/AutoCompleteVenue.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-  $('#sandbox-container .input-group.date').datepicker({
+  /*$('#sandbox-container .input-group.date').datepicker({
     format: "dd/mm/yyyy",
     startDate: "today",
     language: "th"
+  });*/
+
+
+  $('#event_date').click(function(event){
+   $('#event_date input').data("DateTimePicker").show();
+  });
+  $('#event_date input').datetimepicker({
+    defaultDate: new Date(),
+    format: "DD/MM/YYYY",
+    locale: 'th'
   });
 
 

@@ -152,7 +152,7 @@ Class EventControl extends Controller{
           }
 
           if(LoginController::checkverifyuser()){
-            $request_botton = "<form style='display:inline;' role='form' method='POST' action='request_event') '>
+            $request_botton = "<form style='display:inline;' role='form' method='POST' action='request_event' >
                                 <input type='hidden' name='_token' value='".csrf_token()."'>
                                 <input type='hidden' name='event_id' value='".$record->id."'>
                                 <button type='submit' class='btn btn-outline btn-info btn-circle request_this_event' >
@@ -255,6 +255,10 @@ Class EventControl extends Controller{
           $input_supplier_time = explode(" ", Request::input('supplier_time'));
           $supplier_time = $input_supplier_time[0].":".$input_supplier_time[2].":00";
 
+          $input_venue = explode("]", Request::input('venue_id'));
+          $splite_venue = explode("[", $input_venue[0]);
+          $venue_id = $splite_venue[1];
+
           /*$input_setup_time = explode(" ", Request::input('setup_time'));
           $time_setup_time = $input_setup_time[1].":".$input_setup_time[3].":00";
           $split_date_setup_time = explode("/", $input_setup_time[0]);
@@ -273,7 +277,7 @@ Class EventControl extends Controller{
             $event->customer_id = Request::input('customer_id');
             $event->event_type = Request::input('event_type');
             $event->event_date = $event_date;
-            $event->venue_id = Request::input('venue_id');
+            $event->venue_id = $venue_id;
             $event->register_point = Request::input('register_point');
             $event->summary_point = Request::input('summary_point');
             $event->stert_time = $stert_time;
@@ -362,6 +366,10 @@ Class EventControl extends Controller{
         $input_supplier_time = explode(" ", Request::input('supplier_time'));
         $supplier_time = $input_supplier_time[0].":".$input_supplier_time[2].":00";
 
+        $input_venue = explode("]", Request::input('venue_id'));
+        $splite_venue = explode("[", $input_venue[0]);
+        $venue_id = $splite_venue[1];
+
         /*$input_setup_time = explode(" ", Request::input('setup_time'));
         $time_setup_time = $input_setup_time[1].":".$input_setup_time[3].":00";
         $split_date_setup_time = explode("/", $input_setup_time[0]);
@@ -379,7 +387,7 @@ Class EventControl extends Controller{
           $event->customer_id = Request::input('customer_id');
           $event->event_type = Request::input('event_type');
           $event->event_date = $event_date;
-          $event->venue_id = Request::input('venue_id');
+          $event->venue_id = $venue_id;
           $event->register_point = Request::input('register_point');
           $event->summary_point = Request::input('summary_point');
           $event->stert_time = $stert_time;
