@@ -48,13 +48,13 @@ Class AdminController extends Controller{
                   <tr>
                     <th class='text-center'>ชื่อ - นามสกุล</th>
                     <th class='text-center'>ชื่อเล่น</th>
-                    <th class='text-center'>อีเมล</th>
+                    <th class='text-center no_print'>อีเมล</th>
                     <th class='text-center'>โทรศัพท์</th>
                     <th class='text-center'>เขต</th>
                     <th class='text-center'>เกรด</th>
                     <th class='text-center'>remark</th>
                     <th class='text-center'>สถานะผู้ใช้</th>
-                    <th class='text-center'>ดำเนินการ</th>
+                    <th class='text-center no_print'>ดำเนินการ</th>
                   </tr>
                 </thead>
                 <tbody>";
@@ -124,7 +124,7 @@ Class AdminController extends Controller{
                 $record->name . " " . $record->surname .
                 "</a></td><td>".
                 $record->nickname .
-                "</td><td>".
+                "</td><td class='no_print'>".
                 $record->email .
                 "</td><td class='text-center'>".
                 $record->phone .
@@ -151,7 +151,7 @@ Class AdminController extends Controller{
                 }else if($id_st == 1 && $id_valid == 0){
                   echo "<a href='".$idpath."' target='_blank'><img src='".$root_url."/public/image/id-not.png' width='20px' /></a>";
                 }
-          echo  "</td><td class='text-center'><a href='useredit_admin/".
+          echo  "</td><td class='text-center no_print'><a href='useredit_admin/".
                 $record->id .
                 "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a>
                 <a href='reportrequestjob/".$record->id."' target='_blank'>

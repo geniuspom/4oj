@@ -499,6 +499,7 @@ Class RequestJob extends Controller{
       $returndata .= "<div class='row'>
         <div class='col-lg-12'>
           <div class='table-responsive'>
+              <p>จำนวนรายการร้องขอทำงานทั้งหมด : " .count($request) . "</p>
               <table class='table table-bordered table-hover table-striped'>
                 <thead>
                   <tr>
@@ -580,6 +581,7 @@ Class RequestJob extends Controller{
       $returndata .= "<div class='row'>
         <div class='col-lg-12'>
           <div class='table-responsive'>
+            <p>จำนวนรายการร้องขอทำงานทั้งหมด : " .count($request) . "</p>
               <table class='table table-bordered table-hover table-striped'>
                 <thead>
                   <tr>
@@ -660,6 +662,7 @@ Class RequestJob extends Controller{
       $returndata .= "<div class='row'>
         <div class='col-lg-12'>
           <div class='table-responsive'>
+              <p>จำนวนรายการร้องขอทำงานทั้งหมด : " .count($request) . "</p>
               <table class='table table-bordered table-hover table-striped'>
                 <thead>
                   <tr>

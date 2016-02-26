@@ -16,8 +16,11 @@
 
     <title>4oj</title>
 
+    <!-- Print CSS-->
+    <link href="{{$root_url}}/public/css/print.css" rel="stylesheet">
+
     <!-- Bootstrap Core CSS -->
-    <link href="{{$root_url}}/public/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{$root_url}}/public/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="{{$root_url}}/public/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
@@ -71,7 +74,7 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <nav class="no_print navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -299,17 +302,16 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <!--<div class="input-group custom-search-form">
+                        <!--<li class="sidebar-search">
+                            <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
-                          </div>-->
-                            <!-- /input-group -->
-                        </li>
+                          </div>
+                        </li>-->
                         <li>
                             <a href="{{$root_url}}"><i class="fa fa-dashboard fa-fw"></i> หน้าหลัก</a>
                         </li>

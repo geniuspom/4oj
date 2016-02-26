@@ -5,4 +5,9 @@ class Assignment extends Model{
 
     public $table = 'assignment';
 
+    public function user(){
+      return $this->belongsTo('App\Models\Member');
+    }
+
+
 }

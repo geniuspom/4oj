@@ -28,7 +28,7 @@ Route::filter('Staffcheck',function(){
 	else if($permission == 1){
 			return Redirect::to('/');
 	}
-	
+
 });
 
 
@@ -154,6 +154,10 @@ Route::group(['middleware' => 'auth'], function()
 			//edit event
 			Route::get('edit_event/{id}', function($id){
 					return View::make('event.edit');
+			});
+			//Print report
+			Route::get('report_event/{id}', function($id){
+					return View::make('event.print_report');
 			});
 			//End event
 

@@ -1,0 +1,32 @@
+@media print{
+  .no_print , .print_button{
+    display:none !important;
+  }
+  #page-wrapper{
+    margin:0px !important;
+    border:0px !important;
+    width: 100% !important;
+  }
+  .form-control{
+    display:none !important;
+  }
+
+  #result_admin{
+    max-width:100%;
+  }
+
+  table{
+    table-layout: fixed;
+    font-size: 9px;
+  }
+
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .col-md-6{
+    width: 50%;
+    float: left;
+  }
+}

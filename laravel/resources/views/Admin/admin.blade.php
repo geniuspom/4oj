@@ -12,10 +12,16 @@ use App\Http\Controllers\AdminController as AdminController;
     <!-- /.col-lg-12 -->
   </div>
 
+  <div class="row print_button">
+    <div class="col-lg-12 text-right">
+      <a onclick='window.print()' title="พิมพ์รายงาน"><i style="cursor:pointer;" class="fa fa-print fa-2x"></i></a>
+    </div>
+  </div>
+
   <div class="row">
 
     <!-- search and filter -->
-    <div class="col-md-offset-4 col-md-8 form-group" style="display:inline-flex;">
+    <div class="no_print col-md-offset-4 col-md-8 form-group" style="display:inline-flex;">
       <select class="form-control" id="filter_group" name="filter_group">
           <option value="1">เขต</option>
       </select>

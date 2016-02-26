@@ -15,9 +15,13 @@ use App\Http\Controllers\RequestJob as RequestJob;
     </div>
     <!-- /.col-lg-12 -->
   </div>
-
+  <div class="row print_button">
+    <div class="col-lg-12 text-right">
+      <a onclick='window.print()' title="พิมพ์รายงาน"><i style="cursor:pointer;" class="fa fa-print fa-2x"></i></a>
+    </div>
+  </div>
   <!-- search and filter -->
-  <div class="row">
+  <div class="row no_print">
     <div class="col-sm-6 form-group">
         <div style="display:inline-flex;">
           <select class="form-control" id="filter_group" name="filter_group">
