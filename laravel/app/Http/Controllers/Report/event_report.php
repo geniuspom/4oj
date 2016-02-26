@@ -150,20 +150,23 @@ Class event_report extends Controller{
 
       $i =1;
 
-      foreach($data['event_staff'] as $record){
+      if(!empty($data['event_staff'])){
 
-        $return_data .= '<tr>
-          <td>'. $i .'</td>
-          <td>'. $record['name'] .'</td>
-          <td class="text-center">'. $record['phone'] .'</td>
-          <td class="text-center">'. $record['position'] .'</td>
-          <td class="bg-gray"></td>
-        </tr>';
+        foreach($data['event_staff'] as $record){
 
-        $i++;
+          $return_data .= '<tr>
+            <td>'. $i .'</td>
+            <td>'. $record['name'] .'</td>
+            <td class="text-center">'. $record['phone'] .'</td>
+            <td class="text-center">'. $record['position'] .'</td>
+            <td class="bg-gray"></td>
+          </tr>';
+
+          $i++;
+
+        }
 
       }
-
 
       $return_data .=  '</tbody>
                 </table>
