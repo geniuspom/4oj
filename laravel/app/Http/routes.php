@@ -10,17 +10,25 @@ Route::controllers([
 Route::filter('Admincheck',function(){
 	$permission = LoginController::checkadmin();
 
-	if($permission != 3){
+	if($permission == 0){
+			return View('Member.Login');
+	}
+	else if($permission != 3){
 			return Redirect::to('/');
 	}
+
 });
 
 Route::filter('Staffcheck',function(){
 	$permission = LoginController::checkadmin();
 
-	if($permission == 1){
+	if($permission == 0){
+			return View('Member.Login');
+	}
+	else if($permission == 1){
 			return Redirect::to('/');
 	}
+	
 });
 
 
@@ -254,11 +262,10 @@ Route::post('get_event_filter','EventControl@get_filter_jquery');
 Route::post('update_task_event','event_task\event_task_manage@update_event_task');
 //Update inventory
 Route::post('update_inventory','Inventory\inventoryManage@main');
-
-
+//get auto complete venue room
 Route::any('get_room_autocomplete','venue\AutoCompleteVenue@main');
-
-
+//Update payment
+Route::post('update_payment','Payment\paymentManage@main');
 //end function event
 
 

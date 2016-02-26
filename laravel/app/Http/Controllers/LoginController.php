@@ -96,7 +96,7 @@ Class LoginController extends Controller{
     public function login(Request $request){
         $userinfo = $request::only('email','password');
         if(Auth::attempt($userinfo)){
-            return Redirect::to('/');
+            return Redirect::to($_SERVER['HTTP_REFERER']);
         }else{
             return redirect()->back()
                     ->with('message',"เกิดข้อผิดพลาด!! ชื่ออีเมล หรือ รหัสผ่าน ไม่ถูกต้อง. \nกรุณาลองใหม่อีกครั้ง.")
@@ -120,11 +120,20 @@ Class LoginController extends Controller{
 
     public static function checkadmin(){
 
+      if(!empty(Auth::user())){
+
         $user = Member::where("id","=",Auth::user()->id)->first();
 
         $permission = $user->permission;
 
-        return $permission;
+          return $permission;
+
+      }else{
+
+        return 0;
+
+      }
+
 
     }
 
