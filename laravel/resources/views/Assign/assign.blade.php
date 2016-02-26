@@ -8,6 +8,7 @@ use App\Http\Controllers\Assignment\Assign as Assign;
 use App\Http\Controllers\venue\venue_room_control as venue_room_control;
 use App\Http\Controllers\event_task\event_task as event_task;
 use App\Http\Controllers\Inventory\inventory as inventory;
+use App\Http\Controllers\Payment\payment as payment;
 $id = Route::Input('id');
 ?>
 <?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
@@ -42,6 +43,9 @@ $id = Route::Input('id');
 .avaliable{
   color:#5cb85c;
 }
+.valign_mid{
+  vertical-align:middle !important;
+}
 </style>
 <div id="page-wrapper">
   <div class="row">
@@ -55,7 +59,14 @@ $id = Route::Input('id');
           <div class="col-lg-12">
               <div class="panel panel-default">
                     <div class="panel-heading">
-                        {{ EventControl::get($id,'event_name') }}
+                        <div class="row">
+                            <div class="col-xs-10">
+                                {{ EventControl::get($id,'event_name') }}
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <a title="พิมพ์รายงาน" onclick="window.open('../report_event/{{$id}}')"><i class="fa fa-print fa-lg" style="cursor:pointer;"></i></a>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -68,6 +79,8 @@ $id = Route::Input('id');
                             <li class=""><a data-toggle="tab" href="#status" aria-expanded="false">ความคืบหน้างาน</a>
                             </li>
                             <li class=""><a data-toggle="tab" href="#inventory" aria-expanded="false">อุปกรณ์</a>
+                            </li>
+                            <li class=""><a data-toggle="tab" href="#pay" aria-expanded="false">จ่ายเงิน</a>
                             </li>
                         </ul>
 
@@ -216,7 +229,7 @@ $id = Route::Input('id');
                                     </div>
                             </div>
 <!-- status ===============================================================================================-->
-                            <div id="status" class="tab-pane fade" style="padding-top:15px;">
+                            <div id="status" class="tab-pane fade table-responsive" style="padding-top:15px;">
                               <form class="form-horizontal" role="form" method="POST" action="{{ url('/update_task_event') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="event_id" value="{{ $id }}">
@@ -390,7 +403,7 @@ $id = Route::Input('id');
                             </form>
                             </div>
 <!-- inventory ===============================================================================================-->
-                            <div id="inventory" class="tab-pane fade" style="padding-top:15px;">
+                            <div id="inventory" class="tab-pane fade table-responsive" style="padding-top:15px;">
                               <form class="form-horizontal" role="form" method="POST" action="{{ url('/update_inventory') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="event_id" value="{{ $id }}">
@@ -398,6 +411,14 @@ $id = Route::Input('id');
                                 <button id="submit_bt" name="btn-trianing" type="submit" class="btn btn-primary" >
                                   บันทึก
                                 </button>
+                              </form>
+                            </div>
+<!-- inventory ===============================================================================================-->
+                            <div id="pay" class="tab-pane fade table-responsive" style="padding-top:15px;">
+                              <form class="form-horizontal" role="form" method="POST" action="{{ url('/update_payment') }}">
+                                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                  <input type="hidden" name="event_id" value="{{ $id }}">
+                                    {{payment::main($id)}}
                               </form>
                             </div>
 
