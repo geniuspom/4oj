@@ -24,7 +24,7 @@ Class Customercontrol extends Controller{
     public static function getall(){
 
         $root_url = dirname($_SERVER['PHP_SELF']);
-        
+
         $customer = customer::orderBy('symbol')->get();
 
         foreach ($customer as $record){
@@ -101,13 +101,13 @@ Class Customercontrol extends Controller{
               return redirect::to('customer_detail/' . Request::input('id'))
                       ->with('status',"แก้ไขข้อมูลลูกค้าชื่อ ". Request::input('name') ." สำเร็จ");
             } else {
-              return redirect::to('edit_customer')
+              return redirect::to('edit_customer/' . Request::input('id'))
                       ->withInput(Request::except('password'))
                       ->withErrors("เกิดข้อผิดพลาด - ไม่สามารถแก้ไขข้อมูลลูกค้าได้");
             }
 
         }else{
-            return redirect::to('edit_customer')
+            return redirect::to('edit_customer/' . Request::input('id'))
                     ->withInput(Request::all())
                     ->withErrors($validate->messages());
         }
