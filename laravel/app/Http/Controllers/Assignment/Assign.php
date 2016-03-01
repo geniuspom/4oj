@@ -132,9 +132,22 @@ Class Assign extends Controller{
     }
 
       for($i=0;$i < count($data);$i++){
+
+          if(isset($data[$i]["userstatus"]['event'])){
+
+            $hover = "";
+
+            foreach($data[$i]["userstatus"]['event'] as $record){
+                $hover .= $record['event_name']."<br>";
+            }
+
+          }else{
+            $hover = "";
+          }
+
           $user_data .= "<div id='".$data[$i]["user_id"]."' class='row'>
                           <div class='col-xs-12' style='overflow: hidden;white-space: nowrap;'>
-                              <i class='fa fa-user fa-fw ".$data[$i]["userstatus"]."'></i>
+                              <i title='".$hover."' class='fa fa-user fa-fw event_assign ".$data[$i]["userstatus"]["userstatus"]."'></i>
                               <span class=''><b>". $data[$i]["usergrade"] ."</b></span>
                               <span></span>
                               <i>&nbsp;</i>

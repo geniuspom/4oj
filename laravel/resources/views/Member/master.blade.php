@@ -46,6 +46,9 @@
     <!-- jQuery UI -->
     <link href="{{$root_url}}/public/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
 
+    <!-- Tooltips -->
+    <link href="{{$root_url}}/public/poshytip/tip-darkgray/tip-darkgray.css" rel="stylesheet" type="text/css">
+
     <!-- jQuery -->
     <script src="{{$root_url}}/public/bower_components/jquery/dist/jquery.min.js"></script>
 
@@ -58,6 +61,8 @@
 
     <!-- datetimepicker JavaScript -->
     <script src="{{$root_url}}/public/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="{{$root_url}}/public/poshytip/jquery.poshytip.js"></script>
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -39,12 +39,18 @@ $id = Route::Input('id');
 }
 .busy{
   color:#d9534f;
+  cursor: pointer;
 }
 .avaliable{
   color:#5cb85c;
+  cursor: pointer;
 }
 .valign_mid{
   vertical-align:middle !important;
+}
+label {
+  display: inline-block;
+  width: 5em;
 }
 </style>
 <div id="page-wrapper">
@@ -434,6 +440,12 @@ $id = Route::Input('id');
 <script src="{{$root_url}}/public/js/assignment.js"></script>
 
 <script type="text/javascript">
+
+$('.event_assign').poshytip({
+	className: 'tip-darkgray',
+	bgImageFrameSize: 11,
+	offsetX: -25
+});
 
 </script>
 

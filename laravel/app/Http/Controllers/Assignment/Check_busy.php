@@ -16,7 +16,24 @@ Class Check_busy extends Controller{
         $status = "avaliable";
       }
 
-      return $status;
+      //return $status;
+
+      //add more
+      $event = user::find($user_id)->assign($event_date)->get();
+
+      $return['userstatus'] = $status;
+
+      if(!empty($event)){
+        foreach($event as $row){
+          $return['event'][] = ['id' => $row->id,
+                                'event_name' => $row->event_name,
+                                'event_type' => $row->event_type,
+                                'event_date' => $row->event_date,
+          ];
+        }
+      }
+
+      return $return;
 
   }
 
