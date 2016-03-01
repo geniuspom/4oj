@@ -93,13 +93,13 @@ Class VenueControl extends Controller{
               return redirect::to('venue_detail/' . Request::input('id'))
                       ->with('status',"แก้ไขข้อมูลสถานที่จัดงาน ". Request::input('name') ." สำเร็จ");
             } else {
-              return redirect::to('edit_venue')
+              return redirect::to('edit_venue/' . Request::input('id'))
                       ->withInput(Request::except('password'))
                       ->withErrors("เกิดข้อผิดพลาด - ไม่สามารถแก้ไขข้อมูลลูกค้าได้");
             }
 
         }else{
-            return redirect::to('edit_venue')
+            return redirect::to('edit_venue/' . Request::input('id'))
                     ->withInput(Request::all())
                     ->withErrors($validate->messages());
         }
