@@ -84,11 +84,14 @@
     .bg-gray{
       background-color: #eee;
     }
+    .page-break	{ display: block; page-break-before: always; }
     </style>
 </head>
 
-<body onload="window.print();window.close();">
+<!--<body onload="window.print();window.close();">-->
+<body onload="window.print();">
 {{event_report::main($id,1)}}
+<div class="page-break"></div>
 </body>
 
 </html>

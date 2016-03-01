@@ -133,7 +133,7 @@ Class event_report extends Controller{
                 <h4 class="text-center">รายชื่อทีมงานโอเจ</h4>
               </div>
             </div>
-            <div class="row" style="min-height:500px;">
+            <div class="row" style="">
               <div class="col-md-12">
                 <br>
                 <table class="table">
