@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Assignment;
 use App\Http\Controllers\Controller;
+use App\Models\event as event;
 
 //use Illuminate\Support\Facades\Redirect;
 //use Route;
@@ -61,10 +62,13 @@ Class Assign extends Controller{
 
               }
 
+              $event = event::where("id","=",$event_id)->first();
+              $event_date = $event->event_date;
+
               $usernameall = AS_Member::get_user_data($user_id,'fullname');
               $usergrade = AS_Member::get_user_detail($user_id,'grade');
               $sortgrade = AS_Member::get_user_detail($user_id,'sortgrade');
-              $userstatus = "";
+              $userstatus = Check_busy::main($user_id,$event_date);
               $assign_id = "";
               $category = "assignment_user";
 
