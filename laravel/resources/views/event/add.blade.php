@@ -255,7 +255,7 @@ use App\Http\Controllers\venue\venue_room_control as venue_room_control;
         </div>
       </div>
 </div>
-<script src="{{$root_url}}/public/js/AutoCompleteVenue.js"></script>
+<script src="{{$root_url}}/public/js/autoCompleteVenue.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
   /*$('#sandbox-container .input-group.date').datepicker({

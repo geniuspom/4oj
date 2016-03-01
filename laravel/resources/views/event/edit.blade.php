@@ -273,7 +273,7 @@ $contactid = EventControl::get($id,'custumer_contact_id');
         </div>
       </div>
 </div>
-<script src="{{$root_url}}/public/js/AutoCompleteVenue.js"></script>
+<script src="{{$root_url}}/public/js/autoCompleteVenue.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
   /*$('#sandbox-container .input-group.date').datepicker({
