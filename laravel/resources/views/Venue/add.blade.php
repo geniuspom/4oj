@@ -1,5 +1,8 @@
 @extends('Member.master')
 @section('content')
+<?php
+use App\Http\Controllers\venue\area as area;
+?>
 
 <div id="page-wrapper">
   <div class="row">
@@ -50,6 +53,14 @@
                         <input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">เขต *</label>
+                      <div class="col-md-6">
+                        {{ area::main(old('venue_area'),'form') }}
+                      </div>
+                    </div>
+
 
                     <div class="form-group">
                       <div class="col-md-6 col-md-offset-4">

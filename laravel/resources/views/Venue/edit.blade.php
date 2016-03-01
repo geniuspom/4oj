@@ -3,6 +3,7 @@
 </div>
 <?php
 use App\Http\Controllers\VenueControl as VenueControl;
+use App\Http\Controllers\venue\area as area;
 $id = Route::Input('id');
 ?>
 
@@ -54,6 +55,13 @@ $id = Route::Input('id');
                       <label class="col-md-4 control-label">โทรศัพท์ *</label>
                       <div class="col-md-6">
                         <input type="text" class="form-control" name="phone" value="{{ VenueControl::get($id,'phone') }}">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-4 control-label">เขต *</label>
+                      <div class="col-md-6">
+                        {{area::main($id,'form')}}
                       </div>
                     </div>
 

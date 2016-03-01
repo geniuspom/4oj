@@ -3,6 +3,7 @@
 <?php
 use App\Http\Controllers\VenueControl as VenueControl;
 use App\Http\Controllers\venue\VenueManage as VenueManage;
+use App\Http\Controllers\venue\area as area;
 $id = Route::Input('id');
 ?>
 <?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
@@ -102,7 +103,7 @@ $id = Route::Input('id');
                             <div class="form-group">
                               <label class="col-md-5 text-right">เขต</label>
                               <div class="col-md-6 text-info" >
-                                  {{ VenueControl::get($id,'area') }}
+                                  {{area::main($id,'text')}}
                               </div>
                             </div>
 

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\venue as venue;
+use App\Models\Database\venue as venue;
 use App\Models\validatevenue as validatevenue;
 use Illuminate\Support\Facades\Redirect;
 use Request;
@@ -26,6 +26,7 @@ Class VenueControl extends Controller{
 
         $venue = venue::orderBy('name')->get();
 
+
         foreach ($venue as $record){
 
           echo "<tr><td class='text-center'><a href='venue_detail/".
@@ -37,7 +38,7 @@ Class VenueControl extends Controller{
                 "</td><td class='text-center'>".
                 $record->phone .
                 "</td><td class='text-center'>".
-                $record->area .
+                $record->venue_area['area_name'] .
                 "</td><td class='text-center'><a href='edit_venue/".
                 $record->id .
                 "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a></td><tr>";
@@ -56,7 +57,7 @@ Class VenueControl extends Controller{
             $venue->name = Request::input('name');
             $venue->address = Request::input('address');
             $venue->phone = Request::input('phone');
-            $venue->area = Request::input('area');
+            $venue->venue_area_id = Request::input('venue_area');
 
             if($venue->save()) {
               return redirect::to('venue')
@@ -86,7 +87,7 @@ Class VenueControl extends Controller{
             $venue->name = Request::input('name');
             $venue->address = Request::input('address');
             $venue->phone = Request::input('phone');
-            $venue->area = Request::input('area');
+            $venue->venue_area_id = Request::input('venue_area');
 
             if($venue->save()) {
               return redirect::to('venue_detail/' . Request::input('id'))
