@@ -4,7 +4,7 @@ use Mail;
 use App\Models\Database\Assignment as Assignment;
 use App\Models\Member as Member;
 use App\Models\event as event;
-use App\Models\venue as venue;
+use App\Models\Database\venue_room as venue;
 use App\Models\customer as customer;
 use App\Http\Controllers\Controller;
 use Request;
@@ -23,7 +23,7 @@ class sendmailAssign extends Controller{
     $customer_id = $event->customer_id;
     $venue_id = $event->venue_id;
 
-    $venue = venue::where("id","=",$venue_id)->first();
+    $venue_room = venue::where("id","=",$venue_id)->first();
 
     $customer = customer::where("id","=",$customer_id)->first();
 
@@ -38,8 +38,8 @@ class sendmailAssign extends Controller{
 
     $staff_appointment_time = $event->staff_appointment_time;
     $customer_name = $customer->symbol." - ".$customer->name;
-    $venue_name = $venue->name;
-    $venue_address = $venue->address;
+    $venue_name = $venue_room->venue->name . " : " .$venue_room->room_name;
+    $venue_address = $venue_room->venue->address;
     $subject = "OJ - คุณได้รับมอบหมายงานในวันที่ ". $event_date;
 
     Mail::send('Assign.New_assign_mail',
