@@ -145,16 +145,21 @@ Class Assign extends Controller{
             $hover = "";
           }
 
-          $user_data .= "<div id='".$data[$i]["user_id"]."' class='row'>
-                          <div class='col-xs-12' style='overflow: hidden;white-space: nowrap;'>
-                              <i title='".$hover."' class='fa fa-user fa-fw event_assign ".$data[$i]["userstatus"]["userstatus"]."'></i>
-                              <span class=''><b>". $data[$i]["usergrade"] ."</b></span>
-                              <span></span>
-                              <i>&nbsp;</i>
-                              <span class=''>". $data[$i]["usernameall"] ."</span>
-                              <i assign_id='".$data[$i]["assign_id"]."' oldcategory='".$data[$i]["category"]."' userid='".$data[$i]["user_id"]."' class='fa fa-lg ".$button_class."' style='right:10px;cursor:pointer;padding-top:4px;position:absolute;background-color: #fff;'></i>
-                          </div>
-                        </div>";
+          if(isset($data[$i])){
+
+            $user_data .= "<div id='".$data[$i]["user_id"]."' class='row'>
+                            <div class='col-xs-12' style='overflow: hidden;white-space: nowrap;'>
+                                <i title='".$hover."' class='fa fa-user fa-fw event_assign ".$data[$i]["userstatus"]["userstatus"]."'></i>
+                                <span class=''><b>". $data[$i]["usergrade"] ."</b></span>
+                                <span></span>
+                                <i>&nbsp;</i>
+                                <span class=''>". $data[$i]["usernameall"] ."</span>
+                                <i assign_id='".$data[$i]["assign_id"]."' oldcategory='".$data[$i]["category"]."' userid='".$data[$i]["user_id"]."' class='fa fa-lg ".$button_class."' style='right:10px;cursor:pointer;padding-top:4px;position:absolute;background-color: #fff;'></i>
+                            </div>
+                          </div>";
+
+          }
+
       }
 
     return $user_data;
