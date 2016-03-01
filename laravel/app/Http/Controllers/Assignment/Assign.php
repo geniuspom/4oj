@@ -131,36 +131,38 @@ Class Assign extends Controller{
       $button_class = "fa-plus-circle text-success add_assign";
     }
 
-      for($i=0;$i < count($data);$i++){
 
-          if(isset($data[$i]["userstatus"]['event'])){
+    if(isset($data)){
+
+      foreach($data as $record){
+
+          if(isset($record['userstatus']['event'])){
 
             $hover = "";
 
-            foreach($data[$i]["userstatus"]['event'] as $record){
-                $hover .= $record['event_name']."<br>";
+            foreach($record['userstatus']['event'] as $row){
+                $hover .= $row['event_name']."<br>";
             }
 
           }else{
             $hover = "";
           }
 
-          if(isset($data[$i])){
-
-            $user_data .= "<div id='".$data[$i]["user_id"]."' class='row'>
+            $user_data .= "<div id='".$record["user_id"]."' class='row'>
                             <div class='col-xs-12' style='overflow: hidden;white-space: nowrap;'>
-                                <i title='".$hover."' class='fa fa-user fa-fw event_assign ".$data[$i]["userstatus"]["userstatus"]."'></i>
-                                <span class=''><b>". $data[$i]["usergrade"] ."</b></span>
+                                <i title='".$hover."' class='fa fa-user fa-fw event_assign ".$record["userstatus"]["userstatus"]."'></i>
+                                <span class=''><b>". $record["usergrade"] ."</b></span>
                                 <span></span>
                                 <i>&nbsp;</i>
-                                <span class=''>". $data[$i]["usernameall"] ."</span>
-                                <i assign_id='".$data[$i]["assign_id"]."' oldcategory='".$data[$i]["category"]."' userid='".$data[$i]["user_id"]."' class='fa fa-lg ".$button_class."' style='right:10px;cursor:pointer;padding-top:4px;position:absolute;background-color: #fff;'></i>
+                                <span class=''>". $record["usernameall"] ."</span>
+                                <i assign_id='".$record["assign_id"]."' oldcategory='".$record["category"]."' userid='".$record["user_id"]."' class='fa fa-lg ".$button_class."' style='right:10px;cursor:pointer;padding-top:4px;position:absolute;background-color: #fff;'></i>
                             </div>
                           </div>";
 
-          }
 
       }
+
+    }
 
     return $user_data;
 
