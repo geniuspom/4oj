@@ -10,7 +10,7 @@ class validatevenue extends Model {
     $rules = array(
         'name' => 'Required|Between:5,255|Unique:venue',
         'address' => 'Required',
-        'phone' => 'Required|Numeric',
+        //'phone' => 'Required|Numeric',
         //'area' => 'Required',
     );
 
@@ -22,7 +22,7 @@ class validatevenue extends Model {
     $rules = array(
       'name' => 'Required|Between:5,255',
       'address' => 'Required',
-      'phone' => 'Required|Numeric',
+      //'phone' => 'Required|Numeric',
       //'area' => 'Required',
     );
 
