@@ -143,9 +143,9 @@ Class EventControl extends Controller{
           $event_date = $split_event_date[2]."/".$split_event_date[1]."/".$split_event_date[0];
 
 
-          if($record->meeting_period == 1){
+          if($record->meeting_period == 2){
             $meeting_period = "ช่วงเช้า";
-          }else if($record->meeting_period == 2){
+          }else if($record->meeting_period == 3){
             $meeting_period = "ช่วงบ่าย";
           }else{
             $meeting_period = "ทั้งวัน";
