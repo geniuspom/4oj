@@ -9,5 +9,8 @@ class Assignment extends Model{
       return $this->belongsTo('App\Models\Member');
     }
 
+    public function event(){
+      return $this->belongsTo('App\Models\Database\event');
+    }
 
 }

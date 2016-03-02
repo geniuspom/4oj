@@ -334,6 +334,14 @@
                             <a href="{{$root_url}}/venue"><i class="fa fa-building fa-fw"></i> สถานที่จัดงาน</a>
                         </li>
                         @endif
+                        @if (LoginController::checkpermission(3))
+                        <li>
+                            <a href="{{$root_url}}/payment_report/null"><i class="fa fa-money fa-fw"></i> การจ่ายเงิน</a>
+                        </li>
+                        <li>
+                            <a href="{{$root_url}}/sendemail"><i class="fa fa-envelope-o fa-fw"></i> ส่งอีเมล</a>
+                        </li>
+                        @endif
                         <!--<li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

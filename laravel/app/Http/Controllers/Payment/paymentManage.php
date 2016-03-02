@@ -88,4 +88,46 @@ Class paymentManage extends Controller{
 
     }
 
+    public static function Update_Status(){
+
+      $payselect = Request::input('payselect');
+      $paystatus = Request::input('paystatus');
+
+      if(!empty(Request::input('removepay_select'))){
+          $removepay_select = explode(",", Request::input('removepay_select'));
+
+          foreach($removepay_select as $record){
+              if(!empty($record)){
+                  $Payupdate = AssignmentDB::where('id','=',$record)->first();
+                  $Payupdate->pay_status = 0;
+                  $Payupdate->save();
+              }
+          }
+
+      }
+
+      if(isset($payselect)){
+        $assign_id_select = array_keys($payselect);
+
+          foreach($assign_id_select as $record){
+              $Payupdate = AssignmentDB::where('id','=',$record)->first();
+              $Payupdate->pay_status = 1;
+              $Payupdate->save();
+          }
+      }
+
+      if(isset($paystatus)){
+        $assign_id_status = array_keys($paystatus);
+
+          foreach($assign_id_status as $record){
+              $Payupdate = AssignmentDB::where('id','=',$record)->first();
+              $Payupdate->pay_status = 2;
+              $Payupdate->save();
+          }
+
+      }
+
+
+    }
+
 }
