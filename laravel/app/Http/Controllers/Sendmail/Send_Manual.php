@@ -26,7 +26,7 @@ Class Send_Manual extends Controller{
         $root_url = dirname($_SERVER['PHP_SELF']);
         $Host_name = $_SERVER['HTTP_HOST'];
 
-        $link = $Host_name . $root_url;
+        $link = "http://www.ojconsultinggroup.com/" . $root_url;
 
         if(isset($email) && !empty($email)){
 
