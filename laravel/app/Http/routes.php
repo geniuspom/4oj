@@ -96,6 +96,16 @@ Route::group(['middleware' => 'auth'], function()
 					return View::make('Assign.assign');
 			});
 
+			//Payment report
+			Route::get('payment_report/{id}',function($id){
+					return View::make('Payment.report');
+			});
+			//Send mail
+			Route::get('sendemail',function(){
+					return View::make('sendmail.sendmail');
+			});
+
+
 
 		});
 
@@ -213,6 +223,12 @@ Route::post('uploaduser','UploadController@profilepicture');
 Route::post('uploadidcard','UploadController@uploadidcard');
 //Upload pic & id new
 Route::post('uploaduser','Member\uploadfunction@main');
+//Send email function
+Route::post('send_manual_email','Sendmail\Send_Manual@main');
+
+
+//get auto complete user
+Route::any('get_user_autocomplete','Member\AutoCompleteMember@main');
 
 
 
@@ -270,6 +286,10 @@ Route::post('update_inventory','Inventory\inventoryManage@main');
 Route::any('get_room_autocomplete','venue\AutoCompleteVenue@main');
 //Update payment
 Route::post('update_payment','Payment\paymentManage@main');
+//get payment
+Route::post('get_payment','Payment\report@main');
+//Update payment status
+Route::post('update_payment_status','Payment\paymentManage@Update_Status');
 //end function event
 
 
