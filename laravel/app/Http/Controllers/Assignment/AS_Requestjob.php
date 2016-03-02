@@ -141,6 +141,9 @@ Class AS_Requestjob extends Controller{
               return $b["sortgrade"] - $a["sortgrade"];
           });
 
+          //แก้ร้องขอซ้ำ
+          $array_data = array_map("unserialize", array_unique(array_map("serialize", $array_data)));;
+
           return $array_data;
 
       }else{
