@@ -29,6 +29,16 @@ $("input[name='filter_value']").on("keypress", function (e) {
 
 });
 
+$(document).on("click", "button[name='submit']", function() {
+
+    if(checkbeforesave()){
+      return true;
+    }else{
+      return false;
+    }
+});
+
+
 function sendfilter(){
 
   var fullpath = window.location.href;
@@ -55,5 +65,59 @@ function sendfilter(){
         $("#report_content").html(data);
       }
     });
+
+}
+
+function checkbeforesave(){
+
+    var customer = $("input[name='customer_id']").val();
+    var comment = $("textarea[name='comment']").val();
+    var assign = $("input[name='assigned_id']").val();
+
+    var status = true;
+
+    if(customer == "" || customer.length < 5){
+      alert("กรุณากรอกชื่อบริษัท");
+      $("input[name='customer_id']").focus();
+      return;
+    }
+
+    if(comment == "" || comment.length < 5){
+      alert("กรุณากรอกข้อความอย่างน้อย 5 อักษร");
+      $("textarea[name='comment']").focus();
+      return;
+    }
+
+    if(status == true){
+
+      customer = customer.split(" ");
+      customer = customer[0].replace("[", "");
+      customer = customer.replace("]", "");
+      customer = parseInt(customer);
+
+      if(isNaN(customer)){
+        alert("ชื่อบริษัทไม่ถูกต้อง กรุณาเลือกจากรายการที่แสดงขึ้นมา");
+        $("textarea[name='customer_id']").focus();
+        return;
+      }
+
+      if(assign != ""){
+
+        assign = assign.split(" ");
+        assign = assign[0].replace("[", "");
+        assign = assign.replace("]", "");
+        assign = parseInt(assign);
+
+        if(isNaN(assign)){
+          alert("ชื่อมอบหมายงานไม่ถูกต้อง กรุณาเลือกจากรายการที่แสดงขึ้นมา");
+          $("textarea[name='customer_id']").focus();
+          return;
+        }
+
+      }
+
+    }
+
+    return status;
 
 }
