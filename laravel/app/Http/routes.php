@@ -176,6 +176,25 @@ Route::group(['middleware' => 'auth'], function()
 					return View::make('Request_Job.report');
 			});
 
+			//report call report
+			Route::get('call_report', function(){
+					return View::make('Call_report.report');
+			});
+			//add call report
+			Route::get('add_call_report', function(){
+					return View::make('Call_report.add');
+			});
+			//edit call report
+			Route::get('edit_call_report/{id}', function($id){
+					return View::make('Call_report.edit');
+			});
+			//detail call report
+			Route::get('detail_call_report/{id}', function($id){
+					return View::make('Call_report.detail');
+			});
+
+
+
 		});
 
 });
@@ -255,6 +274,8 @@ Route::post('add_contact','Customer\Contact@add_contact');
 Route::post('edit_contact','Customer\Contact@edit_contact');
 //delete COntact
 Route::post('delete_contact','Customer\Contact@delete_contact');
+//Autocomplete customer
+Route::any('get_customer_autocomplete','Customer\autoCompleteCustomer@main');
 //end function customer
 
 
@@ -310,6 +331,10 @@ Route::post('request_event','RequestJob@request_event');
 Route::post('update_assignment','Assignment\AssignManage@main');
 Route::post('request_assign_jquery','Assignment\Assign@jquery_data');
 
+
+//function call report
+Route::post('update_call_report','Call_report\Manage_callreport@main');
+Route::post('get_call_report','Call_report\report@main');
 
 //upload
 Route::get('upload','UploadController@getIndex');

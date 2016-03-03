@@ -333,6 +333,9 @@
                         <li>
                             <a href="{{$root_url}}/venue"><i class="fa fa-building fa-fw"></i> สถานที่จัดงาน</a>
                         </li>
+                        <li>
+                            <a href="{{$root_url}}/call_report"><i class="fa fa-phone fa-fw"></i> Call Report</a>
+                        </li>
                         @endif
                         @if (LoginController::checkpermission(3))
                         <li>
