@@ -59,21 +59,54 @@ use App\Http\Controllers\LoginController as LoginController;
   <!-- /.row -->
 </div>
 <!-- /#page-wrapper -->
-
 <script type="text/javascript">
     $(document).ready(function(){
 
     });
 
     $(document).on('click', '.request_this_event' , function() {
-      var txt;
-      var r = confirm("คุณต้องการยื่นขอทำงานนี้นี้หรือไม่");
-      if (r == true) {
-          return true;
-      } else {
-          return false;
-      }
+
+      var id = $(this).attr("id");
+
+      $.confirm({
+        text: "<p style='font-size:16px;text-align:center;'>ขอขอบคุณที่ให้ความสนใจที่จะร่วมงานนี้ <br> หากคุณได้รับเลือกให้เข้าทำงานนี้ บริษัทจะมีการ<span style='color:#f00'>ส่งอีเมลยืนยัน</span>ไปที่อีเมลของคุณ<br><br>คุณต้องการยืนยันที่จะยื่นขอทำงานนี้หรือไม่</p>",
+        title: "ยืนยันการยื่นขอทำงาน",
+        confirmButton: "ยืนยัน",
+        cancelButton: "ยกเลิก",
+        confirmButtonClass: "btn-success",
+        cancelButtonClass: "btn-danger",
+        confirm: function() {
+          $("#submit_" + id).click();
+        },
+        cancel: function() {
+
+        }
+      });
+
     });
+
+
+function alert_popup(){
+
+  $.confirm({
+    text: "<p style='font-size:16px;text-align:center;'>ขอขอบคุณที่ให้ความสนใจที่จะร่วมงานนี้ <br> หากคุณได้รับเลือกให้เข้าทำงานนี้ บริษัทจะมีการ<span style='color:#f00'>ส่งอีเมลยืนยัน</span>ไปที่อีเมลของคุณ<br><br>คุณต้องการยืนยันที่จะยื่นขอทำงานนี้หรือไม่</p>",
+    title: "ยืนยันการยื่นขอทำงาน",
+    confirmButton: "ยืนยัน",
+    cancelButton: "ยกเลิก",
+    confirmButtonClass: "btn-success",
+    cancelButtonClass: "btn-danger",
+    confirm: function() {
+      return true;
+    },
+    cancel: function() {
+      return false;
+    }
+
+  });
+
+
+}
+
 
 
 /*
