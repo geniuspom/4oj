@@ -40,7 +40,8 @@ class Authenticate {
 			}
 			else
 			{
-				return redirect()->guest('login');
+				//return redirect()->guest('login');
+				return View('Member.Login');
 			}
 		}
 
