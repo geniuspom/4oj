@@ -3,6 +3,7 @@
 <?php
 use App\Http\Controllers\AdminController as AdminController;
 ?>
+<?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <meta name="_token" content="{!! csrf_token() !!}"/>
 <div id="page-wrapper">
   <div class="row">
@@ -14,14 +15,13 @@ use App\Http\Controllers\AdminController as AdminController;
 
   <div class="row print_button">
     <div class="col-lg-12 text-right">
-      <a onclick='window.print()' title="พิมพ์รายงาน"><i style="cursor:pointer;" class="fa fa-print fa-2x"></i></a>
     </div>
   </div>
 
   <div class="row">
 
     <!-- search and filter -->
-    <div class="no_print col-md-offset-4 col-md-8 form-group" style="display:inline-flex;">
+    <div class="no_print col-xs-12 form-group" style="display:inline-flex;">
       <select class="form-control" id="filter_group" name="filter_group">
           <option value="1">เขต</option>
       </select>
@@ -30,9 +30,10 @@ use App\Http\Controllers\AdminController as AdminController;
           <option value="0">ต่างจังหวัด</option>
           {{ AdminController::get_distric_select() }}
       </select>
+      <input placeholder="ค้นหา.." type="text" class="input-xs form-control" id="filter" name="filter" value="" style="margin-left:5px;"/>
+      <a onclick='window.print()' title="พิมพ์รายงาน"><i style="cursor:pointer;padding-left:5px;" class="fa fa-print fa-2x"></i></a>
       <!--<input type="text" class="input-xs form-control" id="date_filter_value" name="date_filter_value" value="" style="margin-left:5px;"/>-->
     </div>
-
   </div>
 
 
@@ -47,7 +48,7 @@ use App\Http\Controllers\AdminController as AdminController;
   <!-- /.row -->
 </div>
 <!-- /#page-wrapper -->
-
+<script src="{{$root_url}}/public/js/admin.js"></script>
 <script type="text/javascript">
 
 /*

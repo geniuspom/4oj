@@ -41,11 +41,12 @@ Class AdminController extends Controller{
                         ->orderBy('district')->get();
         }
 
-        echo "<p>จำนวนรายชื่อทั้งหมด : " .count($data) . "</p>";
+        echo "<p>จำนวนรายชื่อทั้งหมด : <b id='row_sum'>" .count($data) . "</b></p>";
 
         echo "<table class='table table-bordered table-hover table-striped'>
                 <thead>
                   <tr>
+                    <th class='text-center'>#</th>
                     <th class='text-center'>ชื่อ - นามสกุล</th>
                     <th class='text-center'>ชื่อเล่น</th>
                     <th class='text-center no_print'>อีเมล</th>
@@ -120,7 +121,9 @@ Class AdminController extends Controller{
           $mail_st = substr($u_status, 1,1);
           $id_st = substr($u_status, 2,1);
           $id_valid = substr($u_status, 3,1);
-          echo "<tr><td><a href='profile_admin/". $record->id ."'>".
+          echo "<tr><td>".
+                $record->id .
+                "</td><td><a href='profile_admin/". $record->id ."'>".
                 $record->name . " " . $record->surname .
                 "</a></td><td>".
                 $record->nickname .
@@ -157,7 +160,7 @@ Class AdminController extends Controller{
                 <a href='reportrequestjob/".$record->id."' target='_blank'>
                 <i class='fa fa-file-text fa-lg request_this_event' style='cursor:pointer;'></i>
                 </a>
-                </td><tr>";
+                </td></tr>";
         }
 
         echo "</tbody>
