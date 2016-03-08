@@ -156,7 +156,7 @@ Class EventControl extends Controller{
                                 <input type='hidden' name='_token' value='".csrf_token()."'>
                                 <input type='hidden' name='event_id' value='".$record->id."'>
                                 <a class='btn btn-success btn-circle request_this_event' id='".$record->id."'>
-                                  <i class='fa fa-sign-in fa-lg request_this_event' style='cursor:pointer;'></i>
+                                  <i class='fa fa-sign-in fa-lg request_this_event' style='cursor:pointer;' id='".$record->id."'></i>
                                 </a>
                                 <button type='submit' class='btn btn-success btn-circle hidden' id='submit_".$record->id."'>
                                   <i class='fa fa-sign-in fa-lg request_this_event' style='cursor:pointer;'></i>
