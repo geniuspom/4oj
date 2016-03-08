@@ -116,3 +116,36 @@ function remove_assignment(type,event_id,user_id,not_include,include){
     });
 
 }
+
+
+$('#seach_value').keypress(function(e) {
+
+  if(e.which == 13) {
+    search_user();
+  }
+
+});
+
+$('#clear-filter').click(function(){
+  $("#all_user .all-user-list").show();
+  $("#seach_value").val("");
+});
+
+function search_user(){
+
+  var search_value = $("#seach_value").val();
+
+  if(search_value != ""){
+      $("#all_user .all-user-list").hide();
+
+      $('#all_user .all-user-list').each(function(){
+             if($(this).text().toUpperCase().indexOf(search_value.toUpperCase()) != -1){
+                 $(this).show();
+             }
+          });
+
+  }else{
+      $("#all_user .all-user-list").show();
+  }
+
+}

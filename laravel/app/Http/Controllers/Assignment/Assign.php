@@ -152,13 +152,13 @@ Class Assign extends Controller{
             $hover = "";
           }
 
-            $user_data .= "<div id='".$record["user_id"]."' class='row'>
+            $user_data .= "<div id='".$record["user_id"]."' class='row all-user-list'>
                             <div class='col-xs-12' style='overflow: hidden;white-space: nowrap;'>
                                 <i title='".$hover."' class='fa fa-user fa-fw event_assign ".$record["userstatus"]["userstatus"]."'></i>
                                 <span class=''><b>". $record["usergrade"] ."</b></span>
                                 <span></span>
                                 <i>&nbsp;</i>
-                                <span class=''>". $record["usernameall"] ."</span>
+                                <span class='user-list-name'>". $record["usernameall"] ."</span>
                                 <i assign_id='".$record["assign_id"]."' oldcategory='".$record["category"]."' userid='".$record["user_id"]."' class='fa fa-lg ".$button_class."' style='right:10px;cursor:pointer;padding-top:4px;position:absolute;background-color: #fff;'></i>
                             </div>
                           </div>";

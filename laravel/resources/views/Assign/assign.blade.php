@@ -13,46 +13,6 @@ $id = Route::Input('id');
 ?>
 <?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
 <meta name="_token" content="{!! csrf_token() !!}"/>
-<style type="text/css">
-#popup_assign{
-  left: 0px;
-  z-index: 9999;
-  width: 100%;
-  top: 0px;
-  height: 100%;
-  position: fixed;
-}
-#popup_assign .row {
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-}
-#popup_assign .popup_bg{
-  left: 0px;
-  width: 100%;
-  top: 0px;
-  background-color: rgb(0, 0, 0);
-  opacity: 0.6;
-  height: 100%;
-  position: fixed;
-}
-.busy{
-  color:#d9534f;
-  cursor: pointer;
-}
-.avaliable{
-  color:#5cb85c;
-  cursor: pointer;
-}
-.valign_mid{
-  vertical-align:middle !important;
-}
-label {
-  display: inline-block;
-  width: 5em;
-}
-</style>
 <div id="page-wrapper">
   <div class="row">
     <div class="col-lg-12">
@@ -81,6 +41,8 @@ label {
                             <li class=""><a data-toggle="tab" href="#detail" aria-expanded="true">รายละเอียดงาน</a>
                             </li>
                             <li class="active"><a data-toggle="tab" href="#assignment" aria-expanded="false">มอบหมายงาน</a>
+                            </li>
+                            <li class=""><a data-toggle="tab" href="#assign_status" aria-expanded="false">สรุปคน</a>
                             </li>
                             <li class=""><a data-toggle="tab" href="#status" aria-expanded="false">ความคืบหน้างาน</a>
                             </li>
@@ -227,6 +189,10 @@ label {
                                         <div class="panel panel-red">
                                             <div class="panel-heading">
                                               <h3 class="panel-title">รายชื่อทั้งหมด</h3>
+                                              <div>
+                                                <input placeholder="กรอกชื่อที่ต้องการค้นหา.." type="text" id="seach_value" name="seach_value" value="">
+                                                <a id="clear-filter" class="btn btn-default"> clear </a>
+                                              </div>
                                             </div>
                                             <div class="panel-body" id="all_user">
                                               {{Assign::main("Get_all_user",$id)}}
@@ -436,7 +402,7 @@ label {
           </div>
       </div>
 </div>
-
+<link href="{{$root_url}}/public/css/assignment.css" rel="stylesheet">
 <script src="{{$root_url}}/public/js/assignment.js"></script>
 
 <script type="text/javascript">
