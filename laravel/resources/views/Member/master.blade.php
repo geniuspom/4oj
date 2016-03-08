@@ -345,6 +345,9 @@
                             <a href="{{$root_url}}/payment_report/null"><i class="fa fa-money fa-fw"></i> การจ่ายเงิน</a>
                         </li>
                         <li>
+                            <a href="{{$root_url}}/admin"><i class="fa fa-user fa-fw"></i> รายชื่อผู้สมัคร</a>
+                        </li>
+                        <li>
                             <a href="{{$root_url}}/sendemail"><i class="fa fa-envelope-o fa-fw"></i> ส่งอีเมล</a>
                         </li>
                         @endif
