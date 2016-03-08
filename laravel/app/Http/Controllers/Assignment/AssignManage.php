@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Assignment;
 use App\Models\Database\Assignment as Assignment;
 use App\Http\Controllers\Controller;
 use Request;
+use Illuminate\Support\Facades\Redirect;
 
 Class AssignManage extends Controller{
 
@@ -65,6 +66,55 @@ Class AssignManage extends Controller{
       }
 
     }
+
+  }
+
+  public static function getdata_response($id){
+
+      $Assignment = Assignment::where('id','=', $id)->first();
+
+      if(count($Assignment) > 0){
+          $data = $Assignment->event;
+
+          return $data;
+      }
+
+  }
+
+  public static function getstatus_response($value){
+
+      if($value == "Confirm"){
+        return "ยืนยัน";
+      }else{
+        return "ปฏิเสธ";
+      }
+
+  }
+
+  public static function response(){
+
+    $root_url = dirname($_SERVER['PHP_SELF']);
+
+    $assign_id = Request::input('id');
+    $status = Request::input('status');
+
+    if($status == "Confirm"){
+      $status = 2;
+    }else if($status == "Reject"){
+      $status = 3;
+    }else{
+      return redirect::to(".." .$root_url . '/');
+      exit();
+    }
+
+    $assignment = Assignment::where('id','=',$assign_id)->first();
+
+    if(count($assignment) > 0){
+      $assignment->assign_status = $status;
+      $assignment->save();
+    }
+
+    return redirect::to(".." .$root_url . '/');
 
   }
 

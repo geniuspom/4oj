@@ -16,6 +16,8 @@ class sendmailAssign extends Controller{
 
     $root_url = dirname($_SERVER['PHP_SELF']);
 
+    $root_url = "http://ojconsultinggroup.com".$root_url;
+
     $assingment = Assignment::where("id","=",$assign_id)->first();
 
     $user = Member::where("id","=",$assingment->user_id)->first();
@@ -29,7 +31,8 @@ class sendmailAssign extends Controller{
 
     $customer = customer::where("id","=",$customer_id)->first();
 
-
+    $userid = $user->id;
+    $idcard = $user->id_card;
     $name = $user->name." ".$user->surname;
     $email = $user->email;
     $event_name = $event->event_name;
@@ -45,7 +48,7 @@ class sendmailAssign extends Controller{
     $subject = "OJ - คุณได้รับมอบหมายงานในวันที่ ". $event_date;
 
     Mail::queue('Assign.New_assign_mail',
-    array('root_url'=>$root_url,'id'=>$assign_id,'name'=>$name,'event_name'=>$event_name,'event_type'=>$event_type,'event_date'=>$event_date,
+    array('root_url'=>$root_url,'userid'=>$userid,'idcard'=>$idcard,'id'=>$assign_id,'name'=>$name,'event_name'=>$event_name,'event_type'=>$event_type,'event_date'=>$event_date,
     'staff_appointment_time'=>$staff_appointment_time,'customer_name'=>$customer_name,'venue_name'=>$venue_name,
     'venue_address'=>$venue_address),
     function ($message) use ($email,$subject) {

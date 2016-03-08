@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\LoginController as LoginController;
 use App\Models\Database\user as user;
+use App\Models\urllogin as urllogin;
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -28,6 +29,25 @@ Route::filter('Staffcheck',function(){
 	else if($permission == 1){
 			return Redirect::to('/');
 	}
+
+});
+
+//Response assign event
+Route::get('response/{user_id}/{card}/{assign_id}/{status}', function($user_id,$card,$assign_id,$status){
+
+	$userlogin = urllogin::find($user_id);
+
+	$dbid_card = $userlogin->id_card;
+
+	if($card == $dbid_card){
+
+		Auth::login($userlogin);
+		return View::make('Assign.response');
+
+	}else{
+		return View::make('Member.Login');
+	}
+
 
 });
 
@@ -75,7 +95,6 @@ Route::group(['middleware' => 'auth'], function()
 
 		//View event
 		Route::get('send_email_verify', 'LoginController@send_email_verify');
-
 
 		//Check admin
 		Route::group(['before' => 'Admincheck'], function(){
@@ -330,6 +349,7 @@ Route::post('request_event','RequestJob@request_event');
 //function assignment
 Route::post('update_assignment','Assignment\AssignManage@main');
 Route::post('request_assign_jquery','Assignment\Assign@jquery_data');
+Route::post('response_assign','Assignment\AssignManage@response');
 
 
 //function call report
@@ -389,8 +409,20 @@ Route::get('test_query',function(){
 
 
 
-
-
 	//echo $query;
 	//dd($query);
 });
+
+Route::get('test', function(){
+	return View::make('testing');
+});
+
+/*use Illuminate\Support\Facades\Mail;
+
+Route::get('testsend', function(){
+
+		Mail::queue('testqueues', ["name" => "test"], function ($message) {
+		  $message->to('pakorn@ojconsultinggroup.com','pakorn')->subject('test queue mail');
+		});
+
+});*/

@@ -65,7 +65,11 @@
           </td>
 			   </tr>
 			   <tr>
-				   <td style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:15px;text-align:left;">&nbsp;</td>
+				   <td style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:15px;text-align:left;">
+              กรุณา
+              <a href="{{ $root_url }}/response/{{ $userid }}/{{ $idcard }}/{{ $id }}/Confirm" style="color:rgb(0, 138, 205);text-decoration:none;" target="_blank">ตอบรับทำงานนี้</a> หรือ
+              <a href="{{ $root_url }}/response/{{ $userid }}/{{ $idcard }}/{{ $id }}/Reject" style="color:rgb(255, 0, 0);text-decoration:none;" target="_blank">ปฎิเสธทำงานนี้</a>
+           </td>
 			   </tr>
 			   <tr>
 				   <td style="word-break:break-word;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;color:#333;font-size:15px;font-weight:300;line-height:20px;padding-bottom:34px;text-align:left;">
