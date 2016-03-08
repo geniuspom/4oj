@@ -41,7 +41,7 @@ Class VenueControl extends Controller{
                 $record->venue_area['area_name'] .
                 "</td><td class='text-center'><a href='edit_venue/".
                 $record->id .
-                "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a></td><tr>";
+                "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a></td></tr>";
         }
 
     }

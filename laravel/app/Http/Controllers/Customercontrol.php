@@ -43,7 +43,7 @@ Class Customercontrol extends Controller{
                 $record->website .
                 "</a></td><td class='text-center'><a href='edit_customer/".
                 $record->id .
-                "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a></td><tr>";
+                "'><img src='".$root_url."/public/image/file_edit.png' width='20px' /></a></td></tr>";
         }
 
     }

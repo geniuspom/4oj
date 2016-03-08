@@ -348,3 +348,30 @@ function save_edit(edit_form_id,room_id){
 
 
 }
+
+$('#filter').keypress(function(e) {
+
+  if(e.which == 13) {
+    search_customer();
+  }
+
+});
+
+function search_customer(){
+
+  var search_value = $("#filter").val();
+
+  if(search_value != ""){
+      $("#result_venue tbody tr").addClass('hidden');
+
+      $('#result_venue tbody tr').each(function(){
+             if($(this).text().toUpperCase().indexOf(search_value.toUpperCase()) != -1){
+                 $(this).removeClass('hidden');
+             }
+      });
+
+  }else{
+      $("#result_venue tbody tr").removeClass('hidden');
+  }
+
+}
