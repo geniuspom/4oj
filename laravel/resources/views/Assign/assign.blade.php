@@ -5,6 +5,7 @@ use App\Http\Controllers\EventControl as EventControl;
 //use App\Http\Controllers\Getdataform as Getdataform;
 use App\Http\Controllers\LoginController as LoginController;
 use App\Http\Controllers\Assignment\Assign as Assign;
+use App\Http\Controllers\Assignment\Assign_result as Assign_result;
 use App\Http\Controllers\venue\venue_room_control as venue_room_control;
 use App\Http\Controllers\event_task\event_task as event_task;
 use App\Http\Controllers\Inventory\inventory as inventory;
@@ -199,6 +200,14 @@ $id = Route::Input('id');
                                             </div>
                                         </div>
                                     </div>
+                            </div>
+<!-- assign_status ===============================================================================================-->
+                            <div id="assign_status" class="tab-pane fade table-responsive" style="padding-top:15px;">
+                              <form class="form-horizontal" role="form" method="POST" action="{{ url('/update_assign_status') }}">
+                                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                  <input type="hidden" name="event_id" value="{{ $id }}">
+                                  {{Assign_result::main($id)}}
+                              </form>
                             </div>
 <!-- status ===============================================================================================-->
                             <div id="status" class="tab-pane fade table-responsive" style="padding-top:15px;">

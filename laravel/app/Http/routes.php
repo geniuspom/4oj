@@ -350,6 +350,7 @@ Route::post('request_event','RequestJob@request_event');
 Route::post('update_assignment','Assignment\AssignManage@main');
 Route::post('request_assign_jquery','Assignment\Assign@jquery_data');
 Route::post('response_assign','Assignment\AssignManage@response');
+Route::post('update_assign_status','Assignment\Assign_result@updatedata');
 
 
 //function call report
