@@ -25,11 +25,10 @@ class sendmail extends Controller{
     public static function sendEmailReminder($name,$email,$validatecode){
 
       $link = 'http://www.ojconsultinggroup.com/4oj/activate/'. $validatecode;
+      $data = ['email'=>$email,'name'=>$name,'link'=>$link,'validatecode'=>$validatecode,'subject'=>'Validate your account!'];
 
-      Mail::send('Member.mailvalidate', array('name'=>$name,'link'=>$link,'validatecode'=>$validatecode), function ($message) use ($email) {
-
-          $message->to($email)->subject('Validate your account!');
-
+      Mail::queue('member.mailvalidate',$data,function ($message) use ($data) {
+        $message->to($data['email'])->subject($data['subject']);
       });
 
     }
@@ -67,11 +66,13 @@ class sendmail extends Controller{
                   $id = $record->id;
                 }
 
+                $email = Request::input('email');
                 $link = 'http://www.ojconsultinggroup.com/4oj/reset/'. $id . '/token/' . $sforgot_code;
+                $data = array('code'=>$sforgot_code,'name'=>$name,'link'=>$link);
 
-                Mail::send('Member.mailforgot', array('code'=>$sforgot_code,'name'=>$name,'link'=>$link), function ($message) {
+                Mail::queue('Member.mailforgot', $data, function ($message) use ($email,$data) {
 
-                    $message->to(Request::input('email'))->subject('Your Password Reset Link!');
+                    $message->to($email)->subject('Your Password Reset Link!');
 
                 });
 

@@ -6,6 +6,8 @@ use App\Models\validateuser as validateuser;
 use App\Models\institute as institute;
 use Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\Sendmail as Sendmail;
+use App\Http\Controllers\Sendverify as Sendverify;
 use Request;
 
 Class LoginController extends Controller{
@@ -65,7 +67,7 @@ Class LoginController extends Controller{
 
                 //ส่ง email
 
-                app('App\Http\Controllers\Sendmail')->sendEmailReminder($request::input('name') . " " . $request::input('surname'),$request::input('email'),$validatecode);
+                Sendverify::sendEmailReminder($request::input('name') . " " . $request::input('surname'),$request::input('email'),$validatecode);
 
                 //จบส่ง email
 
@@ -295,7 +297,7 @@ $user->email_valid_code = NULL;
 
       //ส่ง email
 
-      app('App\Http\Controllers\Sendmail')->sendEmailReminder($name . " " . $surname,$email,$validatecode);
+      Sendverify::sendEmailReminder($name . " " . $surname,$email,$validatecode);
 
       //จบส่ง email
 

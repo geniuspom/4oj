@@ -46,13 +46,12 @@ class sendmailAssign extends Controller{
     $venue_name = $venue_room->venue->name . " : " .$venue_room->room_name;
     $venue_address = $venue_room->venue->address;
     $subject = "OJ - คุณได้รับมอบหมายงานในวันที่ ". $event_date;
-
-    Mail::queue('Assign.New_assign_mail',
-    array('root_url'=>$root_url,'userid'=>$userid,'idcard'=>$idcard,'id'=>$assign_id,'name'=>$name,'event_name'=>$event_name,'event_type'=>$event_type,'event_date'=>$event_date,
+    $data = array('root_url'=>$root_url,'userid'=>$userid,'idcard'=>$idcard,'id'=>$assign_id,'name'=>$name,'event_name'=>$event_name,'event_type'=>$event_type,'event_date'=>$event_date,
     'staff_appointment_time'=>$staff_appointment_time,'customer_name'=>$customer_name,'venue_name'=>$venue_name,
-    'venue_address'=>$venue_address),
-    function ($message) use ($email,$subject) {
-    $message->to($email)->subject($subject);
+    'venue_address'=>$venue_address,'subject'=>$subject,'email'=>$email);
+
+    Mail::queue('Assign.New_assign_mail',$data,function ($message) use ($data) {
+      $message->to($data['email'])->subject($data['subject']);
     });
 
   }
