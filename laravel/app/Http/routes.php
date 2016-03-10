@@ -352,6 +352,9 @@ Route::post('request_assign_jquery','Assignment\Assign@jquery_data');
 Route::post('response_assign','Assignment\AssignManage@response');
 Route::post('update_assign_status','Assignment\Assign_result@updatedata');
 
+//after event data
+Route::post('update_after_event','After_event\after_event_Manage@updatedata');
+
 
 //function call report
 Route::post('update_call_report','Call_report\Manage_callreport@main');

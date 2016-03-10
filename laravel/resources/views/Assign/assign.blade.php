@@ -10,6 +10,7 @@ use App\Http\Controllers\venue\venue_room_control as venue_room_control;
 use App\Http\Controllers\event_task\event_task as event_task;
 use App\Http\Controllers\Inventory\inventory as inventory;
 use App\Http\Controllers\Payment\payment as payment;
+use App\Http\Controllers\After_event\after_event as after_event;
 $id = Route::Input('id');
 ?>
 <?php $root_url = dirname($_SERVER['PHP_SELF']); ?>
@@ -39,17 +40,19 @@ $id = Route::Input('id');
                     <div class="panel-body">
                     <!-- Nav tabs -->
                         <ul class="nav nav-tabs">
-                            <li class=""><a data-toggle="tab" href="#detail" aria-expanded="true">รายละเอียดงาน</a>
+                            <li class=""><a data-toggle="tab" href="#detail" aria-expanded="true">รายละเอียด</a>
                             </li>
-                            <li class="active"><a data-toggle="tab" href="#assignment" aria-expanded="false">มอบหมายงาน</a>
+                            <li class="active"><a data-toggle="tab" href="#assignment" aria-expanded="false">มอบหมาย</a>
                             </li>
                             <li class=""><a data-toggle="tab" href="#assign_status" aria-expanded="false">สรุปคน</a>
                             </li>
-                            <li class=""><a data-toggle="tab" href="#status" aria-expanded="false">ความคืบหน้างาน</a>
+                            <li class=""><a data-toggle="tab" href="#status" aria-expanded="false">ความคืบหน้า</a>
                             </li>
                             <li class=""><a data-toggle="tab" href="#inventory" aria-expanded="false">อุปกรณ์</a>
                             </li>
                             <li class=""><a data-toggle="tab" href="#pay" aria-expanded="false">จ่ายเงิน</a>
+                            </li>
+                            <li class=""><a data-toggle="tab" href="#after_event" aria-expanded="false">บันทึก</a>
                             </li>
                         </ul>
 
@@ -400,6 +403,17 @@ $id = Route::Input('id');
                                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                   <input type="hidden" name="event_id" value="{{ $id }}">
                                     {{payment::main($id)}}
+                              </form>
+                            </div>
+<!-- after event ===============================================================================================-->
+                            <div id="after_event" class="tab-pane fade table-responsive" style="padding-top:15px;">
+                              <form class="form-horizontal" role="form" method="POST" action="{{ url('/update_after_event') }}">
+                                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                  <input type="hidden" name="event_id" value="{{ $id }}">
+                                    {{after_event::main($id)}}
+                                  <button id="submit_bt" name="btn-trianing" type="submit" class="btn btn-primary" >
+                                    บันทึก
+                                  </button>
                               </form>
                             </div>
 
