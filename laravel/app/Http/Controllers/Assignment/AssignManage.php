@@ -54,7 +54,20 @@ Class AssignManage extends Controller{
 
   public static function remove_assign($remove_id){
 
-    for($i = 0;$i < count($remove_id);$i++){
+    foreach($remove_id as $record){
+
+      $Assignment = Assignment::where('id', '=', $record)->first();
+
+      if(count($Assignment) > 0){
+
+        $Assignment->delete();
+
+      }
+
+
+    }
+
+    /*for($i = 0;$i < count($remove_id);$i++){
 
       $count_result = Assignment::where('id', '=', $remove_id)->count();
 
@@ -65,7 +78,7 @@ Class AssignManage extends Controller{
 
       }
 
-    }
+    }*/
 
   }
 
