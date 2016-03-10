@@ -342,6 +342,9 @@
                         @endif
                         @if (LoginController::checkpermission(3))
                         <li>
+                            <a href="{{$root_url}}/officepayment_report/null"><i class="fa fa-money fa-fw"></i> บันทึกค่าจ้างในออฟฟิศ</a>
+                        </li>
+                        <li>
                             <a href="{{$root_url}}/payment_report/null"><i class="fa fa-money fa-fw"></i> การจ่ายเงิน</a>
                         </li>
                         <li>

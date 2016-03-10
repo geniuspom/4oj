@@ -70,19 +70,23 @@ $(document).on('click', '#update_payment', function() {
   return false;
 });
 
-$(document).on('change', '.pay_select', function() {
+$(document).on('change', '.pay_status', function() {
 
   var status = $(this).prop('checked');
 
   var selected = $(this).attr('id');
-  var id = selected.replace("payselect_", "");
-  var tag = "#paystatus_" + id;
+  var type = selected.split("_");
+  var id = type[1];
 
   if(status == false){
 
-    $(tag).prop('checked', false);
-
-    var removepay_select = $('#removepay_select').val();
+    if(type[0] == "asst"){
+      var removepay_select = $('#removepay_select').val();
+      var remove_att = '#removepay_select';
+    }else{
+      var removepay_select = $('#removeoffice_select').val();
+      var remove_att = '#removeoffice_select';
+    }
 
     if(removepay_select != ""){
       removepay_select += ",";
@@ -90,7 +94,7 @@ $(document).on('change', '.pay_select', function() {
 
     removepay_select += id;
 
-    $('#removepay_select').val(removepay_select);
+    $(remove_att).val(removepay_select);
 
   }
 
@@ -100,7 +104,7 @@ $(document).on('change', '.pay_select', function() {
 
 $(document).on('change', '.pay_status', function() {
 
-    var status = $(this).prop('checked');
+    /*var status = $(this).prop('checked');
 
     var selected = $(this).attr('id');
     var id = selected.replace("paystatus_", "");
@@ -110,7 +114,7 @@ $(document).on('change', '.pay_status', function() {
 
       $(tag).prop('checked', true);
 
-    }
+    }*/
 
     sum_pay();
 
@@ -158,7 +162,7 @@ function update_payment(formdata){
       success: function(data){
         //$("#report_content").html(data);
         alert("บันทึกสำเร็จ");
-        location.reload(); 
+        location.reload();
       }
     });
 
@@ -173,9 +177,10 @@ function sum_pay(){
 
   for(var i = 0; i < value.length; i++){
     var id = (value[i].replace("%5D=true", "")).split("%5B");
-    if(id[0] == "payselect"){
+    if(id[0] == "ofst" || id[0] == "asst"){
       all_pay = parseInt(all_pay) + parseInt($("#payamt_" + id[1]).val());
     }
+
   }
 
   all_pay = all_pay.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");

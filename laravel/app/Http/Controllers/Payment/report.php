@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Payment;
 use App\Models\Database\Assignment as Payment;
+use App\Models\Database\office_salary as office_salary;
 use App\Http\Controllers\Controller;
 use Request;
 use Illuminate\Support\Facades\Redirect;
@@ -32,11 +33,11 @@ Class report extends Controller{
 
       $returnhtml =   "<form class='form-horizontal' id='payment_form' >
                       <textarea class='hidden' id='removepay_select' name='removepay_select' rows='1' class='form-control'></textarea>
+                      <textarea class='hidden' id='removeoffice_select' name='removeoffice_select' rows='1' class='form-control'></textarea>
                       <table class='table table-bordered table-hover table-striped'>
                       <thead>
                       <tr>
                       <th class='text-center'>#</th>
-                      <th class='text-center'>เลือกจ่ายเงิน</th>
                       <th class='text-center'>จ่ายเงินแล้ว</th>
                       <th class='text-center'>ชื่อ</th>
                       <th class='text-center'>ชื่องานประชุม</th>
@@ -53,25 +54,30 @@ Class report extends Controller{
 
           foreach($data as $record){
 
-            if($record['pay_status'] == 1){
-                $select_pay = '<i class="fa fa-check fa-2x text-success only_print"></i><input checked="" class="no_print pay_select" type="checkbox" style="width:25px;height:25px;" value="true" id="payselect_'. $record['id'] .'" name="payselect['. $record['id'] .']">';
-                $pay_status = '<i class="fa fa-times fa-2x text-danger only_print"></i><input class="no_print pay_status" type="checkbox" style="width:25px;height:25px;" value="true" id="paystatus_'. $record['id'] .'" name="paystatus['. $record['id'] .']">';
-                $pay_amt = '<input type="hidden" id="payamt_'. $record['id'] .'" value="'. $record['pay_amt'] . '" >';
-                $pay_sum .= $pay_amt;
-            }else if($record['pay_status'] == 2){
-                $select_pay = '<i class="fa fa-check fa-2x text-success only_print"></i><input checked="" class="no_print pay_select" type="checkbox" style="width:25px;height:25px;" value="true" id="payselect_'. $record['id'] .'" name="payselect['. $record['id'] .']">';
-                $pay_status = '<i class="fa fa-check fa-2x text-success only_print"></i><input checked="" class="no_print pay_status" type="checkbox" style="width:25px;height:25px;" value="true" id="paystatus_'. $record['id'] .'" name="paystatus['. $record['id'] .']">';
-                $pay_amt = '<input type="hidden" id="payamt_'. $record['id'] .'" value="'. $record['pay_amt'] . '" >';
+            if($record['db'] == "assignment"){
+              $checkname = "asst";
             }else{
-                $select_pay = '<i class="fa fa-times fa-2x text-danger only_print"></i><input class="no_print pay_select" type="checkbox" style="width:25px;height:25px;" value="true" id="payselect_'. $record['id'] .'" name="payselect['. $record['id'] .']">';
-                $pay_status = '<i class="fa fa-times fa-2x text-danger only_print"></i><input class="no_print pay_status" type="checkbox" style="width:25px;height:25px;" value="true" id="paystatus_'. $record['id'] .'" name="paystatus['. $record['id'] .']">';
+              $checkname = "ofst";
+            }
+
+            if($record['pay_status'] == 1){
+                //$select_pay = '<i class="fa fa-check fa-2x text-success only_print"></i><input checked="" class="no_print pay_select" type="checkbox" style="width:25px;height:25px;" value="true" id="payselect_'. $record['id'] .'" name="payselect['. $record['id'] .']">';
+                //$pay_status = '<i class="fa fa-times fa-2x text-danger only_print"></i><input class="no_print pay_status" type="checkbox" style="width:25px;height:25px;" value="true" id="'.$checkname.'_'. $record['id'] .'" name="'.$checkname.'['. $record['id'] .']">';
+                //$pay_amt = '<input type="hidden" id="payamt_'. $record['id'] .'" value="'. $record['pay_amt'] . '" >';
+                //$pay_sum .= $pay_amt;
+            }else if($record['pay_status'] == 2){
+                //$select_pay = '<i class="fa fa-check fa-2x text-success only_print"></i><input checked="" class="no_print pay_select" type="checkbox" style="width:25px;height:25px;" value="true" id="payselect_'. $record['id'] .'" name="payselect['. $record['id'] .']">';
+                $pay_status = '<i class="fa fa-check fa-2x text-success only_print"></i><input checked="" class="no_print pay_status" type="checkbox" style="width:25px;height:25px;" value="true" id="'.$checkname.'_'. $record['id'] .'" name="'.$checkname.'['. $record['id'] .']">';
+                $pay_amt = '<input type="hidden" id="payamt_'. $record['id'] .'" value="'. $record['pay_amt'] . '" >';
+                //$pay_sum .= $record['pay_amt'];
+            }else{
+                //$select_pay = '<i class="fa fa-times fa-2x text-danger only_print"></i><input class="no_print pay_select" type="checkbox" style="width:25px;height:25px;" value="true" id="payselect_'. $record['id'] .'" name="payselect['. $record['id'] .']">';
+                $pay_status = '<i class="fa fa-times fa-2x text-danger only_print"></i><input class="no_print pay_status" type="checkbox" style="width:25px;height:25px;" value="true" id="'.$checkname.'_'. $record['id'] .'" name="'.$checkname.'['. $record['id'] .']">';
                 $pay_amt = '<input type="hidden" id="payamt_'. $record['id'] .'" value="'. $record['pay_amt'] . '" >';
             }
 
             $returnhtml .=  "<tr><td class='text-center vcenter'>".
                             $i .
-                            "</td><td class='text-center vcenter'>".
-                            $select_pay .
                             "</td><td class='text-center vcenter'>".
                             $pay_status .
                             "</td><td class='text-center vcenter'>".
@@ -113,13 +119,26 @@ Class report extends Controller{
                             ->where('pay_amt','!=',0)
                             ->whereNotNull('pay_amt')
                             ->get();
+        $office_salary = office_salary::where('user_id','=',$filter_value)
+                            ->where('pay_amt','!=',0)
+                            ->whereNotNull('pay_amt')
+                            ->get();
       }else if($filter_value == 3){
         $paymant = Payment::where('pay_amt','!=',0)
                             ->whereNotNull('pay_amt')
                             ->orderBy('user_id')
                             ->get();
+        $office_salary = office_salary::where('pay_amt','!=',0)
+                            ->whereNotNull('pay_amt')
+                            ->orderBy('user_id')
+                            ->get();
       }else{
         $paymant = Payment::where('pay_status','=',$filter_value)
+                            ->where('pay_amt','!=',0)
+                            ->whereNotNull('pay_amt')
+                            ->orderBy('user_id')
+                            ->get();
+        $office_salary = office_salary::where('pay_status','=',$filter_value)
                             ->where('pay_amt','!=',0)
                             ->whereNotNull('pay_amt')
                             ->orderBy('user_id')
@@ -141,9 +160,27 @@ Class report extends Controller{
                                 'pay_amt' => $record->pay_amt,
                                 'pay_status' => $record->pay_status,
                                 'note' => $record->note,
+                                'db' => 'assignment',
               ];
 
           }
+
+          foreach($office_salary as $record){
+
+              $return_data[] = [
+                                'id' => $record->id,
+                                'user_id' => $record->user_id,
+                                'user_name' => $record->user->nickname . " - " . $record->user->name . " " . $record->user->surname,
+                                'event_id' => 0,
+                                'event_name' => $record->pay_name,
+                                'pay_amt' => $record->pay_amt,
+                                'pay_status' => $record->pay_status,
+                                'note' => $record->note,
+                                'db' => 'office_salary',
+              ];
+
+          }
+
 
           return $return_data;
 

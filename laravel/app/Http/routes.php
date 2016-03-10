@@ -119,6 +119,20 @@ Route::group(['middleware' => 'auth'], function()
 			Route::get('payment_report/{id}',function($id){
 					return View::make('Payment.report');
 			});
+
+			//Office payment
+			Route::get('officepayment_report/{id}',function($id){
+					return View::make('Payment.OfficePayment_report');
+			});
+			Route::get('add_officepayment',function(){
+					return View::make('Payment.OfficePayment_add');
+			});
+			Route::get('edit_officepayment/{id}',function($id){
+					return View::make('Payment.OfficePayment_edit');
+			});
+
+
+
 			//Send mail
 			Route::get('sendemail',function(){
 					return View::make('sendmail.sendmail');
@@ -359,6 +373,12 @@ Route::post('update_after_event','After_event\after_event_Manage@updatedata');
 //function call report
 Route::post('update_call_report','Call_report\Manage_callreport@main');
 Route::post('get_call_report','Call_report\report@main');
+
+//function office salary
+Route::post('add_officepayment','Payment\office_payment@Update_DB');
+Route::post('edit_officepayment','Payment\office_payment@Update_DB');
+Route::post('get_officepayment','Payment\office_payment@get_filter_data');
+
 
 //upload
 Route::get('upload','UploadController@getIndex');

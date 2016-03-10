@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Payment;
 use App\Models\Database\Assignment as AssignmentDB;
+use App\Models\Database\office_salary as office_salary;
 use App\Http\Controllers\Controller;
 use Request;
 use Illuminate\Support\Facades\Redirect;
@@ -90,8 +91,8 @@ Class paymentManage extends Controller{
 
     public static function Update_Status(){
 
-      $payselect = Request::input('payselect');
-      $paystatus = Request::input('paystatus');
+      $assignstatus = Request::input('asst');
+      $officestatus = Request::input('ofst');
 
       if(!empty(Request::input('removepay_select'))){
           $removepay_select = explode(",", Request::input('removepay_select'));
@@ -106,23 +107,37 @@ Class paymentManage extends Controller{
 
       }
 
-      if(isset($payselect)){
-        $assign_id_select = array_keys($payselect);
+      if(!empty(Request::input('removeoffice_select'))){
+          $removepay_select = explode(",", Request::input('removeoffice_select'));
+
+          foreach($removepay_select as $record){
+              if(!empty($record)){
+                  $officeupdate = office_salary::where('id','=',$record)->first();
+                  $officeupdate->pay_status = 0;
+                  $officeupdate->save();
+              }
+          }
+
+      }
+
+
+      if(isset($assignstatus)){
+        $assign_id_select = array_keys($assignstatus);
 
           foreach($assign_id_select as $record){
               $Payupdate = AssignmentDB::where('id','=',$record)->first();
-              $Payupdate->pay_status = 1;
+              $Payupdate->pay_status = 2;
               $Payupdate->save();
           }
       }
 
-      if(isset($paystatus)){
-        $assign_id_status = array_keys($paystatus);
+      if(isset($officestatus)){
+        $office_id_status = array_keys($officestatus);
 
-          foreach($assign_id_status as $record){
-              $Payupdate = AssignmentDB::where('id','=',$record)->first();
-              $Payupdate->pay_status = 2;
-              $Payupdate->save();
+          foreach($office_id_status as $record){
+              $officeupdate = office_salary::where('id','=',$record)->first();
+              $officeupdate->pay_status = 2;
+              $officeupdate->save();
           }
 
       }
