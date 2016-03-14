@@ -30,6 +30,14 @@ Class AdminController extends Controller{
 
         $root_url = dirname($_SERVER['PHP_SELF']);
 
+        $count_MS = Userdetail::where('shirts', 'LIKE', 'MS')->count();
+        $count_MM = Userdetail::where('shirts', 'LIKE', 'MM')->count();
+        $count_ML = Userdetail::where('shirts', 'LIKE', 'ML')->count();
+
+        $count_WS = Userdetail::where('shirts', 'LIKE', 'WS')->count();
+        $count_WM = Userdetail::where('shirts', 'LIKE', 'WM')->count();
+        $count_WL = Userdetail::where('shirts', 'LIKE', 'WL')->count();
+
         if($filter_value == 'all'){
             $data = Member::orderBy('id')->get();
         }else if($filter_value == 0){
@@ -43,6 +51,10 @@ Class AdminController extends Controller{
 
         echo "<p>จำนวนรายชื่อทั้งหมด : <b id='row_sum'>" .count($data) . "</b></p>";
 
+        echo "<p>จำนวนเสื้อผู้ชายทั้งหมด MS : <b>".$count_MS."</b> , MM : <b>".$count_MM."</b> , ML : <b>".$count_ML."</b> </p>";
+
+        echo "<p>จำนวนเสื้อผู้หญิงทั้งหมด WS : <b>".$count_WS."</b> , WM : <b>".$count_WM."</b> , WL : <b>".$count_WL."</b> </p>";
+
         echo "<table class='table table-bordered table-hover table-striped'>
                 <thead>
                   <tr>
@@ -53,6 +65,7 @@ Class AdminController extends Controller{
                     <th class='text-center'>โทรศัพท์</th>
                     <th class='text-center'>เขต</th>
                     <th class='text-center'>เกรด</th>
+                    <th class='text-center'>ขนาดเสื้อ</th>
                     <th class='text-center'>remark</th>
                     <th class='text-center'>สถานะผู้ใช้</th>
                     <th class='text-center no_print'>ดำเนินการ</th>
@@ -106,6 +119,7 @@ Class AdminController extends Controller{
 
             $grade = $Userdetail->grade;
             $remark = $Userdetail->remark;
+            $shirts = $Userdetail->shirts;
 
             if($grade == 0){$grade = "none";}else if($grade == 1){$grade = "D";}
             else if($grade == 2){$grade = "C";}else if($grade == 3){$grade = "B";}
@@ -113,6 +127,7 @@ Class AdminController extends Controller{
 
           }else{
             $grade = "none";
+            $shirts = "none";
             $remark = "";
           }
           //end get user detail
@@ -135,6 +150,8 @@ Class AdminController extends Controller{
                 $district .
                 "</td><td class='text-center'>".
                 $grade .
+                "</td><td class='text-center'>".
+                $shirts .
                 "</td><td>".
                 $remark .
                 "</td><td class='text-center'>";
@@ -279,11 +296,15 @@ Class AdminController extends Controller{
 
         $user_id = Request::input('user_id');
         $email = Request::input('email');
+        $shirts = Request::input('shirts');
 
         $user = Member::where("id","=",$user_id)->first();
         $user->email = $email;
 
-        if($user->save()) {
+        $userdetail = Userdetail::where("id","=",$user_id)->first();
+        $userdetail->shirts = $shirts;
+
+        if($user->save() && $userdetail->save()) {
             return Redirect::to('profile_admin/'. $user_id)
               ->with('status', 'แก้ไขข้อมูลสำเร็จ');
         } else {

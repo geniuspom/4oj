@@ -56,4 +56,25 @@ class sendmailAssign extends Controller{
 
   }
 
+  public static function Send_new_assign(){
+
+    $event_id = Request::input('event_id');
+
+    $assingment = Assignment::where("event_id","=",$event_id)->get();
+
+    if(count($assingment) > 0){
+
+      foreach($assingment as $record){
+
+        $assign_id = $record->id;
+
+        sendmailAssign::New_Assign($assign_id);
+
+      }
+
+
+    }
+
+  }
+
 }

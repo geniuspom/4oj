@@ -365,6 +365,8 @@ Route::post('update_assignment','Assignment\AssignManage@main');
 Route::post('request_assign_jquery','Assignment\Assign@jquery_data');
 Route::post('response_assign','Assignment\AssignManage@response');
 Route::post('update_assign_status','Assignment\Assign_result@updatedata');
+Route::post('sendmail_assign','Assignment\sendmailAssign@Send_new_assign');
+
 
 //after event data
 Route::post('update_after_event','After_event\after_event_Manage@updatedata');

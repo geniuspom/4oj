@@ -44,7 +44,7 @@ Class AssignManage extends Controller{
           $save_id = $Assignment->id;
         }
 
-        sendmailAssign::New_Assign($save_id);
+        //sendmailAssign::New_Assign($save_id);
 
       }
 

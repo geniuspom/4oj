@@ -171,6 +171,13 @@ $id = Route::Input('id');
                           </div>
 
                           <div class="form-group">
+                            <label class="col-md-4 control-label">ขนาดเสื้อ</label>
+                            <div class="col-md-6">
+                              {{ GetUser::getedituser($id,'shirts') }}
+                            </div>
+                          </div>
+
+                          <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                               <button id="submit_bt" name="btn-general" type="submit" class="btn btn-primary" >
                                 ยืนยันการแก้ไขข้อมูล

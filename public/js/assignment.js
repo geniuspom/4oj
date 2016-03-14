@@ -118,6 +118,39 @@ function remove_assignment(type,event_id,user_id,not_include,include){
 }
 
 
+$('#sendmail').on('click',function(e){
+    var event_id = $("#assign_status input[name=event_id]").val();
+
+    var Popup = "<div class='container' id='popup_assign'>"+
+            "<div class='popup_bg'></div>"+
+          	"<div class='row'>"+
+            "<img width='50px' src='../public/image/bg-spinner.gif'>";
+            "</div>";
+
+
+    $("#wrapper").append(Popup);
+    send_assign_email(event_id);
+});
+
+function send_assign_email(event_id){
+
+  $.ajaxSetup({
+     headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+  });
+
+  $.ajax({
+      url: '../sendmail_assign',
+      type: "post",
+      data: {'event_id' : event_id},
+      success: function(data){
+          alert("ส่งอีเมล์สำเร็จ");
+          location.reload();
+      }
+    });
+
+}
+
+
 $('#seach_value').keypress(function(e) {
 
   if(e.which == 13) {

@@ -121,7 +121,11 @@ Class Assign_result extends Controller{
 
       $return_data .= '<button id="submit_bt" name="btn-trianing" type="submit" class="btn btn-primary" >
                           บันทึก
-                      </button>';
+                      </button>
+                      <a id="sendmail" class="btn btn-primary" >
+                          ส่งอีเมล
+                      </a>
+                      ';
 
     }
 

@@ -8,6 +8,7 @@ use App\Models\institute as institute;
 use App\Models\province as province;
 use App\Models\district as district;
 use App\Models\idcard as idcard;
+use App\Models\Userdetail as Userdetail;
 use Illuminate\Support\Facades\Redirect;
 use Route;
 use Request;
@@ -147,6 +148,35 @@ Class GetUser extends Controller{
           $split_birthday = explode("-", $vdata);
           $vdata = $split_birthday[2]."/".$split_birthday[1]."/".$split_birthday[0];
           echo $vdata;
+        }else if($value == 'shirts'){
+
+          $shirts = Userdetail::where('id','=',$id)->first();
+
+          if(count($shirts) > 0){
+            $shirts = $shirts->shirts;
+          }else{
+            $shirts = "";
+          }
+
+          $size = [
+                    "1" => "MS",
+                    "2" => "MM",
+                    "3" => "ML",
+                    "4" => "WS",
+                    "5" => "WM",
+                    "6" => "WL",
+          ];
+
+          echo '<select class="form-control" id="shirts" name="shirts">';
+              foreach ($size as $recode){
+                  echo "<option value='".$recode."'" ;
+                      if ($shirts == $recode){
+                          echo " selected='selected'";
+                      }
+                  echo ">".$recode."</option>";
+              }
+          echo '</select>';
+
         }else{
           echo $vdata;
         }
