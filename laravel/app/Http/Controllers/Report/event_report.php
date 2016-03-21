@@ -2,7 +2,10 @@
 namespace App\Http\Controllers\Report;
 use App\Http\Controllers\Controller;
 use App\Models\Database\event as event;
+use App\Models\Database\user as user;
 use App\Models\Database\venue_room as venue_room;
+use App\Models\Database\even_job_status as even_job_status;
+use App\Http\Controllers\Inventory\inventoryManage as inventoryManage;
 use Request;
 
 Class event_report extends Controller{
@@ -12,8 +15,23 @@ Class event_report extends Controller{
       //payment::generate_html(paymentManage::Get_DB($event_id));
       $data = event_report::get_report_data($event_id);
 
-      if($page == 1){
-          event_report::generate_page_1($data,$page);
+      switch ($page) {
+        case 1:
+          event_report::generate_page_1($data);
+          break;
+
+        case 2:
+          event_report::generate_page_2($event_id);
+          break;
+
+        case 3:
+          event_report::generate_page_3($event_id);
+          break;
+
+
+        default:
+          # code...
+          break;
       }
 
   }
@@ -44,7 +62,7 @@ Class event_report extends Controller{
                     </tr>
                     <tr>
                       <td>ชื่อลูกค้า :</td>
-                      <td class="value" colspan="3">test</td>
+                      <td class="value" colspan="3">'. $data['event_detail']['customer_name'].'</td>
                     </tr>
                     <tr>
                       <td>สถานที่ :</td>
@@ -183,58 +201,271 @@ Class event_report extends Controller{
 
   public static function get_report_data($event_id){
 
-      $event = event::find($event_id)->first();
+      $event = event::where('id','=',$event_id)->first();
 
-      $customer = event::find($event_id)->customer()->first();
+      //$customer = event::find($event_id)->customer()->first();
 
-      $venue_room = event::find($event_id)->venue()->first();
+      //dd($event->customer->toArray());
 
-      $venue_id = $venue_room->venue_id;
+      //$venue_room = event::find($event_id)->venue()->first();
 
-      $customer_contact = event::find($event_id)->customer_contact()->first();
+      //$venue_room = $event->venue;
 
-      $oj_contact = event::find($event_id)->oj_contact()->first();
+      //$venue_id = $venue_room->venue_id;
 
-      $venue = venue_room::find($venue_id)->venue()->first();
+      //$customer_contact = event::find($event_id)->customer_contact()->first();
 
-      $event_assign = event::find($event_id)->user()->get();
+      //$oj_contact = event::find($event_id)->oj_contact()->first();
+
+      //$venue = venue_room::find($venue_id)->venue()->first();
+
+      //$event_assign = event::find($event_id)->user()->get();
+
+      //dd($event->user->toArray());
 
       $data["event_detail"] = [
                                 "event_name" => $event->event_name,
                                 "event_date" => $event->event_date,
-                                "customer_name" => $customer->name,
-                                "venue" => $venue->name,
-                                "venue_room" => $venue_room->room_name,
-                                "venue_address" => $venue->address,
+                                "customer_name" => $event->customer->name,
+                                "venue" => $event->venue->venue->name,
+                                "venue_room" => $event->venue->room_name,
+                                "venue_address" => $event->venue->venue->address,
                                 "supplier_time" => $event->supplier_time,
                                 "staff_appointment_time" => $event->staff_appointment_time,
                                 "register_time" => $event->register_time,
                                 "stert_time" => $event->stert_time,
                                 "register_point" => $event->register_point,
                                 "summary_point" => $event->summary_point,
-                                "customer_contact_name" => $customer_contact->name,
-                                "customer_contact_phone" => $customer_contact->phone,
+                                "customer_contact_name" => $event->customer_contact->name,
+                                "customer_contact_phone" => $event->customer_contact->phone,
                                 "hotel_contact_name" => $event->hotel_contact_name,
                                 "hotel_contact_phone" => $event->hotel_contact_phone,
                                 "supplier_contact_name" => $event->supplier_contact_name,
                                 "supplier_contact_phone" => $event->supplier_contact_phone,
-                                "oj_contact_name" => $oj_contact->nickname . " - " . $oj_contact->name . " " .$oj_contact->surname,
-                                "oj_contact_phone" => $oj_contact->phone,
+                                "oj_contact_name" => $event->oj_contact->nickname . " - " . $event->oj_contact->name . " " .$event->oj_contact->surname,
+                                "oj_contact_phone" => $event->oj_contact->phone,
                               ];
 
-      foreach($event_assign as $record){
+      foreach($event->user as $record){
+
+        switch ($record->pivot->position) {
+          case 1:
+            $positon = "Admin";
+            break;
+
+          case 2:
+            $positon = "Register";
+            break;
+
+          default:
+            $positon = "";
+            break;
+        }
 
       $data["event_staff"][] = [
                               "name" => $record->nickname. " - " . $record->name . " " .$record->surname,
                               "phone" => $record->phone,
-                              "position" => "",
+                              "position" => $positon,
                               ];
 
       }
 
-      //dd($data);
-
       return $data;
+
+  }
+
+  public static function generate_page_2($event_id){
+
+    $data = inventoryManage::Get_DB($event_id);
+
+    $return_data = '<div class="container">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h4 class="text-center">รายละเอียดอุปกรณ์</h4>
+                        </div>
+                      </div>
+                    </div>
+                    <table class="table table-bordered table-hover table-striped inventory">
+                    <thead>
+                      <tr>
+                        <th class="text-center" style="width:3%">ลำดับ</th>
+                        <th class="text-center">รายการ</th>
+                        <th class="text-center">Amt</th>
+                        <th class="text-center">OJ</th>
+                        <th class="text-center">Sup</th>
+                        <th class="text-center">Cus</th>
+                        <th class="text-center">รับ</th>
+                        <th class="text-center">คืน</th>
+                        <th class="text-left">Remark/Note</th>
+                      </tr>
+                    </thead>
+                    <tbody>';
+
+    if(count($data['inventory_amt']) == 0){
+
+      for($i = 1; $i <= count($data['inventory_name']);$i++){
+          $return_data .= '<tr>
+                              <td class="text-center">'.$i.'</td>
+                              <td>'. $data['inventory_name'][$i]['name'] .'</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td>'. $data['inventory_name'][$i]['remark'] .'</td>
+                          </tr>';
+      }
+
+    }else{
+
+      for($i = 1; $i <= count($data['inventory_name']);$i++){
+          $return_data .= '<tr>
+                              <td class="text-center">'.$i.'</td>
+                              <td>'. $data['inventory_name'][$i]['name'] .'</td>
+                              <td class="text-center">'. ($data['inventory_amt'][$i]['amt_all'] == 0 ? "" : $data['inventory_amt'][$i]['amt_all']) .'</td>
+                              <td class="text-center">'. ($data['inventory_amt'][$i]['amt_oj'] == 0 ? "" : $data['inventory_amt'][$i]['amt_oj']) .'</td>
+                              <td class="text-center">'. ($data['inventory_amt'][$i]['amt_sup'] == 0 ? "" : $data['inventory_amt'][$i]['amt_sup']) .'</td>
+                              <td class="text-center">'. ($data['inventory_amt'][$i]['amt_cus'] == 0 ? "" : $data['inventory_amt'][$i]['amt_cus']) .'</td>
+                              <td class="text-center">'. ($data['inventory_amt'][$i]['amt_receive'] == 0 ? "" : $data['inventory_amt'][$i]['amt_receive']) .'</td>
+                              <td class="text-center">'. ($data['inventory_amt'][$i]['amt_return'] == 0 ? "" : $data['inventory_amt'][$i]['amt_return']) .'</td>
+                              <td>'. $data['inventory_name'][$i]['remark'] .'</td>
+                          </tr>';
+      }
+
+    }
+
+    $return_data .= '</tbody></table>';
+
+    echo $return_data;
+
+
+  }
+
+  public static function generate_page_3($event_id){
+
+    $event_job_status = even_job_status::where('id','=',$event_id)->first();
+
+    $topics = [
+              "1"=>"คุยรายละเอียดงาน",
+              "2"=>"จัดทำใบเสนอราคา",
+              "3"=>"ยืนยันใบเสนอราคาและรายละเอียดอุปกรณ์",
+              "4"=>"จัดเตรียมและสั่งอุปกรณ์",
+              "5"=>"แจ้งลูกค้าให้ยืนยันกับทาง TSD ว่าจะลงทะเบียนโดยใช้บาร์โค๊ด",
+              "6"=>"ขอไฟล์หนังสือเชิญที่มีเงื่อนไขการนับคะแนน (MS-Word หรือถ้าจำเป็น PDF)",
+              "7"=>"ขอไฟล์ XML รายชื่อผู้ถือหุ้น",
+              "8"=>"ขอแผนผังห้องประชุม ( Floor Plan )",
+              "9"=>"หากมีผู้มีส่วนได้ส่วนเสียในวาระไหน กรุณาแจ้งด้วย",
+              "10"=>"กรณีบัตรเสียให้ทำอย่างไร",
+              "11"=>"ขอรายชื่อกรรมการรับมอบฉันทะ",
+              "12"=>"จัดทำตัวอย่างบัตรลงคะแนน",
+              "13"=>"บันทึกไฟล์ SQL",
+              "14"=>"กรอกแบบฟอร์มวาระการประชุมและส่งให้ลูกค้าตรวจสอบ",
+              "15"=>"ยืนยันแบบฟอร์มวาระการประชุมลูกค้า (โทรเพื่อ Check ทุกอย่างที่ลูกค้ากรอกมาใน Workdetail)",
+              "16"=>"นัดชมสถานที่",
+              "17"=>"ยืนยันรายละเอียดอุปกรณ์ (Final) (โทร) 	",
+              "18"=>"ยืนยันรายละเอียดอุปกรณ์ Supplier (Final) (โทร)",
+              "19"=>"จัดทีมงานและนัดหมาย",
+              "20"=>"สรุปใบงานให้หัวหน้างาน",
+              "21"=>"ส่ง Feedback Survey",
+    ];
+
+    $number = [
+              "1"=>"1",
+              "2"=>"2",
+              "3"=>"3",
+              "4"=>"4",
+              "5"=>"5.1",
+              "6"=>"5.2",
+              "7"=>"5.3",
+              "8"=>"5.4",
+              "9"=>"5.5",
+              "10"=>"5.6",
+              "11"=>"5.7",
+              "12"=>"6",
+              "13"=>"7",
+              "14"=>"8",
+              "15"=>"9",
+              "16"=>"10",
+              "17"=>"11",
+              "18"=>"12",
+              "19"=>"13",
+              "20"=>"14",
+              "21"=>"15",
+    ];
+
+    $return_data = '<div class="container">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h4 class="text-center">สรุปความคืบหน้า</h4>
+                        </div>
+                      </div>
+                    </div>
+                    <table class="table table-bordered table-hover table-striped">
+                      <thead>
+                          <tr>
+                              <th class="text-center">ลำดับที่</th>
+                              <th class="text-left">ชื่องาน</th>
+                              <th class="text-center">สถานะ</th>
+                              <th class="text-center">รับผิดชอบโดย</th>
+                              <th class="text-center">แผนดำเนินการต่อไป</th>
+                          </tr>
+                      </thead>
+                      <tbody>';
+
+    $si = 1;
+
+    for($i = 1 ; $i <= count($topics); $i++){
+
+      if(count($event_job_status) > 0){
+
+        $status = str_replace(".","_",$number[$i])."_status";
+        $response = str_replace(".","_",$number[$i])."_respons";
+        $plan = str_replace(".","_",$number[$i])."_Plan";
+
+        $v_status = $event_job_status->$status;
+        $v_response = $event_job_status->$response;
+        $v_plan = $event_job_status->$plan;
+
+        switch ($v_status) {
+          case 1:
+            $v_status = "Complete";
+            break;
+
+          default:
+            $v_status = "";
+            break;
+        }
+
+        if($v_response != 0){
+          $user = user::where('id','=',$v_response)->first();
+
+          $v_response = $user->nickname . " - " . $user->name . " " . $user->surname;
+        }else{
+          $v_response = "";
+        }
+
+      }else{
+        $v_status = "";
+        $v_response = "";
+        $v_plan = "";
+      }
+
+
+      $return_data .= '<tr>
+                          <td class="text-center">'. $number[$i] .'</td>
+                          <td class="text-left">'.  $topics[$i] .'</td>
+                          <td class="text-center">'.$v_status.'</td>
+                          <td class="text-center">'.$v_response.'</td>
+                          <td class="text-center">'.$v_plan.'</td>
+                      </tr>';
+
+    }
+
+    $return_data .=  '</tbody>
+                    </table>';
+
+    echo $return_data;
 
   }
 

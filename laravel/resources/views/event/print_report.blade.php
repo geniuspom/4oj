@@ -85,6 +85,9 @@
       background-color: #eee;
     }
     .page-break	{ display: block; page-break-before: always; }
+    .inventory{
+      font-size: 10px;
+    }
     </style>
 </head>
 
@@ -92,6 +95,9 @@
 <body onload="window.print();">
 {{event_report::main($id,1)}}
 <div class="page-break"></div>
+{{event_report::main($id,2)}}
+<div class="page-break"></div>
+{{event_report::main($id,3)}}
 </body>
 
 </html>

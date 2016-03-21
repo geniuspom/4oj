@@ -6,7 +6,7 @@ class event extends Model{
     public $table = 'event';
 
     public function user(){
-      return $this->belongsToMany('App\Models\Database\user','assignment');
+      return $this->belongsToMany('App\Models\Database\user','assignment')->withPivot('position');
     }
 
     public function customer(){
