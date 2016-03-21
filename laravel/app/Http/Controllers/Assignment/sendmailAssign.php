@@ -68,7 +68,11 @@ class sendmailAssign extends Controller{
 
         $assign_id = $record->id;
 
-        sendmailAssign::New_Assign($assign_id);
+        $assign_status = $record->assign_status;
+
+        if($assign_status == 1){
+          sendmailAssign::New_Assign($assign_id);
+        }
 
       }
 
